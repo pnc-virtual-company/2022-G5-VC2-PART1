@@ -10,9 +10,13 @@
   "dependencies": {
     "@mdi/font": "5.9.55",
     "core-js": "^3.8.3",
+<<<<<<< HEAD
+    "node_js": "^0.1.0",
+=======
     "roboto-fontface": "*",
+>>>>>>> ffeeb7efbc04afd9dd1966abae3b72040578ed77
     "vue": "^3.2.13",
-    "vue-router": "^4.1.3",
+    "vue-router": "^4.0.3",
     "vuetify": "npm:@vuetify/nightly@next",
     "webfontloader": "^1.0.0"
   },

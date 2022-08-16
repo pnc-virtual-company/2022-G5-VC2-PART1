@@ -1,41 +1,19 @@
 <template>
+  <nav>
+    <router-link to="/">Create List of Student</router-link> |
+    <router-link to="/about">ManagementSystem</router-link> 
+  </nav>
+  <router-view/>
+
   <div>
-    <h3 @click="isNavigation()">Student</h3>
-    <h3 @click="isNavAdmin()()">Admin</h3>
-    <div v-if="isStudent">
-      <StudentVIew />
-    </div>
-    <div v-if="isAmin">
-      <AdminVIew />
-    </div>
+  <Navigation/>
   </div>
 </template>
 
-<script>
-import StudentVIew from "./views/StudentView.vue";
-import AdminVIew from "./views/AminView.vue";
-export default {
-  data() {
-    return {
-      isStudent: false,
-      isAmin: false,
-    };
-  },
-  components: {
-    StudentVIew,
-    AdminVIew,
-  },
-  methods: {
-    isNavigation() {
-      this.isStudent = true;
-    },
-    isNavAdmin() {
-      this.isAmin = true;
-    },
-  },
-};
+<script setup>
+import Navigation from './navigation/NavigationBar.vue';
 </script>
 
-<style >
+<style lang="scss" scoped>
 
 </style>
