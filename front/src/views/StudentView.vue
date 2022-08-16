@@ -25,6 +25,7 @@
 </template>
 
 <script>
+// import StudentList from '../components/ListAllstudent.vue'
 export default {
   data: () => ({
     drawer: null,
@@ -40,6 +41,9 @@ export default {
       { status: "Rejected"},
     ],
   }),
+  components: {
+    // StudentList
+  },
 };
 </script>
 <style scoped>
