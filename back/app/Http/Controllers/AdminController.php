@@ -36,6 +36,7 @@ class AdminController extends Controller
         $admin -> age = $request->age;
         $admin -> profile_image = $request->profile_image;
         $admin->save();
+
     }
 
     /**

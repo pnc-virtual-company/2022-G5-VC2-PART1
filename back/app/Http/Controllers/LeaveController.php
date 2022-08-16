@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\leave;
+use App\Models\Leave;
 use Illuminate\Http\Request;
 
 class LeaveController extends Controller
@@ -16,6 +16,7 @@ class LeaveController extends Controller
     {
         //
         return leave::all();
+
     }
 
     /**
@@ -38,6 +39,7 @@ class LeaveController extends Controller
         $leave->admin_id = $request->admin_id;
         $leave->student_id = $request->student_id;
         $leave->save();
+
     }
 
     /**
@@ -46,7 +48,7 @@ class LeaveController extends Controller
      * @param  \App\Models\leave  $leave
      * @return \Illuminate\Http\Response
      */
-    public function show(leave $leave)
+    public function show(Leave $leave)
     {
         //
     }
@@ -58,7 +60,7 @@ class LeaveController extends Controller
      * @param  \App\Models\leave  $leave
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, leave $leave)
+    public function update(Request $request, Leave $leave)
     {
         //
     }
@@ -66,10 +68,11 @@ class LeaveController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+<<<<<<< HEAD
      * @param  \App\Models\leave  $leave
      * @return \Illuminate\Http\Response
      */
-    public function destroy(leave $leave)
+    public function destroy(Leave $leave)
     {
         //
     }

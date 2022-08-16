@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Admin extends Model
 {
     use HasFactory;
-
     protected $fillable=[
         'first_name',
         'last_name',
@@ -32,6 +31,4 @@ class Admin extends Model
         'created_at',
         'updated_at'
     ];
-
-
 }

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\student;
-Use Illuminate\Support\Facades\Hash;
+
+use App\Models\Student;
 use Illuminate\Http\Request;
+Use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -38,11 +39,12 @@ class StudentController extends Controller
         $student -> profile_image = $request->profile_image;
         $student -> admin_id = $request->admin_id;
         $student->save();
+
     }
 
     /**
      * Display the specified resource.
-     *
+     
      * @param  \App\Models\student  $student
      * @return \Illuminate\Http\Response
      */
@@ -59,7 +61,7 @@ class StudentController extends Controller
      * @param  \App\Models\student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, student $student)
+    public function update(Request $request, Student $student)
     {
         //
     }
@@ -70,7 +72,7 @@ class StudentController extends Controller
      * @param  \App\Models\student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy(student $student)
+    public function destroy(Student $student)
     {
         //
     }
