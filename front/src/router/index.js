@@ -1,19 +1,30 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import CreatelistView from '../views/CreatelistView.vue'
-import ManagementSystem from '../views/ManagementSystem.vue'
-
+import DashBoard from "../components/DashBoard.vue"
+import NewRequest from "../components/NewRequest.vue"
+import CheckListStudent from "../components/CheckList.vue"
+import StudentList from "../components/StudentList.vue"
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: CreatelistView
+    name: 'dashboard',
+    component: DashBoard
   },
   {
-    path: '/about',
-    name: 'about',
-    component: ManagementSystem
-  }
+    path: '/request',
+    name: 'request',
+    component: NewRequest
+  },
+  {
+    path: '/checkList',
+    name: 'checkList',
+    component: CheckListStudent
+  },
+  {
+    path: '/studentlist',
+    name: 'studentlist',
+    component: StudentList
+  },
 ]
 
 const router = createRouter({
