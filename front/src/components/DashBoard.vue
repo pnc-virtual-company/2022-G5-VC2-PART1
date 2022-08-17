@@ -4,6 +4,7 @@ Student Leave Management System
 </div>
     <div>
     <StudentStatusVue></StudentStatusVue>
+   
     </div>
 </template>
 

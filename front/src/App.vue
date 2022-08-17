@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h3 @click="isNavigation()">Student</h3>
-    <h3 @click="isNavAdmin()()">Admin</h3>
+    <h3 v-if="!isStudent && !isAmin" @click="isNavigation()">Student</h3>
+    <h3 v-if="!isAmin && !isStudent" @click="isNavAdmin()()">Admin</h3>
     <div v-if="isStudent">
       <StudentVIew />
     </div>
