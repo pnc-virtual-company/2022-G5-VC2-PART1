@@ -52,5 +52,8 @@
         <button class="btn btn-primary" type="submit">Submit form</button>
       </div>
     </form>
+<!-- =======
+    <h1>This is an about page</h1>
+>>>>>>> fd7af782166ec1b544335f4ae104e71a1839e8f3 -->
   </div>
 </template>

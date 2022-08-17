@@ -48,9 +48,10 @@ class LeaveController extends Controller
      * @param  \App\Models\leave  $leave
      * @return \Illuminate\Http\Response
      */
-    public function show(Leave $leave)
+    public function show($id)
     {
         //
+        return leave::where("id", $id)->get();
     }
 
     /**
@@ -68,7 +69,6 @@ class LeaveController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-<<<<<<< HEAD
      * @param  \App\Models\leave  $leave
      * @return \Illuminate\Http\Response
      */

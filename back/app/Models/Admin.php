@@ -3,32 +3,35 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Admin extends Model
+class Admin extends Authenticatable
 {
-    use HasFactory;
-    protected $fillable=[
-        'first_name',
-        'last_name',
+    use HasApiTokens, HasFactory, Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
         'email',
         'password',
+        'first_name',
+        'last_name',
         'age',
         'profile_image'
     ];
 
-    public function student(){
-        return $this->hasMany(student::class);
-    }
-
-    public function leave(){
-        return $this->hasMany(leave::class);
-    }
-
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
     protected $hidden = [
         'password',
-        'remember_token',
-        'created_at',
-        'updated_at'
+        // 'remember_token',
     ];
 }
