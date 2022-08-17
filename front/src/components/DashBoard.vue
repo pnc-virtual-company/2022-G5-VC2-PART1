@@ -4,7 +4,6 @@ Student Leave Management System
 </div>
     <div>
     <ListStudentBoard></ListStudentBoard>
-
     </div>
 </template>
 
