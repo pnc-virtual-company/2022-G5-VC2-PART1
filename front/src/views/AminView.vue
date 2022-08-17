@@ -15,9 +15,11 @@
       </template>
     </Navigation-Bar>
   </div>
+
 </template>
 
 <script>
+
 export default {
   data: () => ({
     drawer: null,
@@ -27,6 +29,7 @@ export default {
     ],
     right: null,
   }),
+  
 };
 </script>
 <style scoped>
