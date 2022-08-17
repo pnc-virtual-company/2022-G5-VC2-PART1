@@ -3,15 +3,12 @@
 Student Leave Management System
 </div>
     <div>
-    <StudentStatusVue></StudentStatusVue>
-
     <ListStudentBoard></ListStudentBoard>
 
     </div>
 </template>
 
 <script setup>
-import StudentStatusVue from './StudentStatus.vue';
 import ListStudentBoard from "./ListStudentDashboard.vue"
 </script>
 
