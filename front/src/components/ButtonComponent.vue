@@ -1,6 +1,6 @@
 <template>
     <div>
-        klasjdfsa
+        <button><slot></slot></button>
     </div>
 </template>
 

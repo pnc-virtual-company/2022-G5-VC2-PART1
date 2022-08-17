@@ -25,8 +25,8 @@ export default {
 =======
 >>>>>>> fd7af782166ec1b544335f4ae104e71a1839e8f3 -->
   <div>
-    <h3 @click="isNavigation()">Student</h3>
-    <h3 @click="isNavAdmin()()">Admin</h3>
+    <h3 v-if="!isStudent && !isAmin" @click="isNavigation()"><router-link to="/">ADMIN</router-link> </h3>
+    <h3 v-if="!isAmin && !isStudent" @click="isNavAdmin()"><router-link to="studentlist">ADMIN</router-link> </h3>
     <div v-if="isStudent">
       <StudentVIew />
     </div>

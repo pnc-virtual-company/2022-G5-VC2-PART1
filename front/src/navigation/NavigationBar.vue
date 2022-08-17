@@ -20,7 +20,8 @@
           <slot name="v-list-item"></slot>
         </v-list>
         <div class="button">
-          <button>Log Out</button>
+        <hr>
+          <Button-View>Log Out</Button-View>
         </div>
       </v-navigation-drawer>
     </div>
@@ -41,10 +42,6 @@
 export default {
   data: () => ({
     drawer: null,
-    items: [
-      { title: "Dashboard", icon: "mdi-home", to: "/" },
-      { title: "New Request", icon: "mdi-view-dashboard", to: "/request" },
-    ],
 
     right: null,
   }),
@@ -57,7 +54,7 @@ img {
 .account {
   border-bottom: solid 2px rgb(255, 255, 255);
 }
-.v-list-item--active {
+.v-list-item--active{
   background-color: rgb(255, 255, 255);
   color: rgb(0, 0, 0);
 }
@@ -68,5 +65,8 @@ img {
   position: absolute;
   bottom: 1em;
   left:4em;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
 }
 </style>

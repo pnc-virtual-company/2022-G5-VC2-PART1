@@ -8,13 +8,15 @@
             :to="item.to"
             link
           > 
-         <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-         
-            </v-list-item-content>
+          <div style="display:flex">
+          <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+          
+              </v-list-item-content>
+          </div>
           </v-list-item>
       </template>
     </Navigation-Bar>
@@ -25,6 +27,7 @@
 </template>
 
 <script>
+// import StudentList from '../components/ListAllstudent.vue'
 export default {
   data: () => ({
     drawer: null,
@@ -40,6 +43,9 @@ export default {
       { status: "Rejected"},
     ],
   }),
+  components: {
+    // StudentList
+  },
 };
 </script>
 <style scoped>
