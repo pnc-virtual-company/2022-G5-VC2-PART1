@@ -4,6 +4,7 @@ import router from './router'
 import vuetify from './plugins/vuetify'
 import Navigation from "./navigation/NavigationBar.vue"
 import Button from "./components/ButtonComponent.vue"
+
 import { loadFonts } from './plugins/webfontloader'
 loadFonts()
 

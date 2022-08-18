@@ -1,20 +1,18 @@
 <template>
 
   <div class="">
- 
-    <ListStudentBoard></ListStudentBoard>
-    <!-- <CardViewBoardVue></CardViewBoardVue> -->
+    <ListStudentDashboardVue></ListStudentDashboardVue>
     
   </div>
 </template>
 
 <script >
-import ListStudentBoard from "./ListStudentDashboard.vue";
+
+import ListStudentDashboardVue from './ListStudentDashboard.vue';
 
  export default {
   components:{
-ListStudentBoard,
-// CardViewBoardVue
+  ListStudentDashboardVue,
   },
  }
 </script>

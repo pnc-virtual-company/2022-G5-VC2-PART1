@@ -1,19 +1,32 @@
 <template>
-<StudentStatusVue @sendStatus="checkListByStatus"></StudentStatusVue>
-<CardViewBoardVue :filterSearchListStudent="studentLists"></CardViewBoardVue>
-  <div class="studentList d-flex justify-center">
-  <div class="w-100 ">
-    <div class="m-4 d-flex  w-25">
-       <!-- <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Search"
-      ></v-text-field> -->
-      <v-select  :items="items" class="" label="All" v-model="search" dense></v-select>
-      <Button-View class="m-2" @click="checkLeave()">SEARCH</Button-View>
+  <StudentStatusVue @sendStatus="checkStatus"></StudentStatusVue>
+  
+  <div class="ml-5 d-flex ">
+    <v-col cols="12" sm="12" md="3" xs="12">
+    <div class="input-group">
+      <div class="form-outline">
+        <input type="search" id="form1" class="form-control pa-4" />
+      </div>
+      <button type="button" class="btn btn-primary">
+        <i class="fas fa-search"></i>
+      </button>
     </div>
+    </v-col>
+    <v-col class="d-flex pa-1 ma-1" cols="12" sm="12" md="4" xs="12">
+     
+      <v-select
+        class="fs-1 "
+        label="Leave Type"
+        v-model="search"
+      ></v-select>
+      <Button-View class="search-icon mb-7 btn btn-primary" @click="checkLeave()"
+        ><i class="fa-solid fa-magnifying-glass"></i
+      ></Button-View>
+    </v-col>
+  </div>
+  <div v-if="!isClick">
     <table
-      class="secondary text-no-wrap rounded-t-lg "
+      class="secondary text-no-wrap rounded-t-lg"
       :class="`elevation-${hover ? 24 : 6}`"
     >
       <tr>
@@ -25,7 +38,7 @@
         <th>Status</th>
         <th>Request Date</th>
       </tr>
-      <tr v-for="student of filterSearchListStudent" :key="student">
+      <tr v-for="student in filterSearchListStudent" :key="student">
         <td>{{ student.start_date }}</td>
         <td>{{ student.end_date }}</td>
         <td>{{ student.reason }}</td>
@@ -36,21 +49,42 @@
       </tr>
     </table>
   </div>
+  <div v-if="isClick">
+    <table
+      class="secondary text-no-wrap rounded-t-lg"
+      :class="`elevation-${hover ? 24 : 6}`"
+    >
+      <tr>
+        <th>Star Date</th>
+        <th>End Date</th>
+        <th>Reason</th>
+        <th>Duration</th>
+        <th>Leave Type</th>
+        <th>Status</th>
+        <th>Request Date</th>
+      </tr>
+      <tr v-for="value in filterCheckStatus" :key="value">
+        <td>{{ value.start_date }}</td>
+        <td>{{ value.end_date }}</td>
+        <td>{{ value.reason }}</td>
+        <td>{{ value.duration }}</td>
+        <td>{{ value.leave_type }}</td>
+        <td>{{ value.status }}</td>
+        <td>{{ value.request_date }}</td>
+      </tr>
+    </table>
   </div>
-  
 </template>
 
 <script>
-import StudentStatusVue from './StudentStatus.vue';
-import CardViewBoardVue from "./CardViewBoard.vue";
+import StudentStatusVue from "./StudentStatus.vue";
 export default {
-    components:{
-        StudentStatusVue,
-        CardViewBoardVue
-    },
+  components: {
+    StudentStatusVue,
+  },
   data() {
     return {
-        items: ['all','Sick leave', 'Family', 'Visit', 'Urgen'],
+      items: ["all", "Sick leave", "Family", "Visit", "Urgen"],
       studentLists: [
         {
           start_date: "12/03/2014",
@@ -108,30 +142,38 @@ export default {
         },
       ],
       search: null,
-      searchText:null,
-      searchStatus:null,
+      searchText: null,
+      searchStatus: null,
+      isClick: false,
     };
   },
-  methods:{
-    checkListByStatus(status){
-        this.searchStatus = status
-        console.log(status);
+  methods: {
+    checkStatus(status) {
+      this.searchStatus = status;
+      this.isClick = true;
     },
-    checkLeave(){
-        this.searchText = this.search
-    }
+    checkLeave() {
+      this.searchText = this.search;
+      this.isClick = false;
+    },
   },
   computed: {
     filterSearchListStudent() {
-      if (!this.searchText) {
+      if (!this.searchText || this.searchText == "all") {
         return this.studentLists;
-      }else if (this.searchText =='all'){
-        return this.studentLists;
+      } else {
+        return this.studentLists.filter(({ leave_type }) =>
+          leave_type.toLowerCase().includes(this.searchText.toLowerCase())
+        );
       }
-       else {
-       return this.studentLists
-      .filter(
-        ({ leave_type})=>(leave_type).toLowerCase().includes(this.searchText.toLowerCase()))
+    },
+    filterCheckStatus() {
+      if (!this.searchStatus) {
+        return this.studentLists;
+      } else {
+        return this.studentLists.filter(({ status }) =>
+          status.toLowerCase().includes(this.searchStatus.toLowerCase())
+        );
       }
     },
   },
@@ -139,11 +181,15 @@ export default {
 </script>
 
 <style scoped>
+label {
+  font-size: 20em;
+  font-weight: bold;
+}
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 95%;
-  margin:auto;
+  margin: auto;
 }
 
 td,
@@ -166,7 +212,11 @@ tr th:hover {
 tr:hover {
   background: rgb(88, 86, 86);
 }
-.w-25{
+.w-25 {
   width: 25%;
+}
+.search-icon {
+  background: blue;
+  font-size: 2em;
 }
 </style>

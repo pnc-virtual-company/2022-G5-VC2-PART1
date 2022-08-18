@@ -27,10 +27,11 @@
     </div>
     <v-app-bar app>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-app-bar-title>Student Management System</v-app-bar-title>
+        <v-app-bar-title class="fw-bold fs ">Student Management System</v-app-bar-title>
+        <v-spacer></v-spacer>
         <v-spacer></v-spacer>
         <v-btn img>
-        <img src="http://www.passerellesnumeriques.org/misc/logo-en.png" alt="" width="120" >
+        <img :src="require('../assets/logo.jpg')" alt="" width="45" >
         </v-btn>
       </v-app-bar>
     <v-main>
@@ -68,5 +69,8 @@ img{
 i{
   font-size: 30px;
   margin: 10px;
+}
+.fs{
+  font-size: 25px;
 }
 </style>
