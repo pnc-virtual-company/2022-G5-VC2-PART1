@@ -16,6 +16,7 @@
       <v-select
         class="fs-1 "
         label="Leave Type"
+        :items="items"
         v-model="search"
       ></v-select>
       <Button-View class="search-icon mb-7 btn btn-primary" @click="checkLeave()"
