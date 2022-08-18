@@ -27,14 +27,7 @@
 export default {
     data(){
         return {
-            studentLists:[
-                {start_date:'12/03/2014', end_date:'12/03/2014',reason:'sick', duration:'3',leave_type: 'sick leave', status: 'approved',request_date: '12/03/2014'},
-                {start_date:'12/03/2014', end_date:'12/03/2014',reason:'sick', duration:'3',leave_type: 'sick leave', status: 'approved',request_date: '12/03/2014'},
-                {start_date:'12/03/2014', end_date:'12/03/2014',reason:'sick', duration:'3',leave_type: 'sick leave', status: 'approved',request_date: '12/03/2014'},
-                {start_date:'12/03/2014', end_date:'12/03/2014',reason:'sick', duration:'3',leave_type: 'sick leave', status: 'approved',request_date: '12/03/2014'},
-                {start_date:'12/03/2014', end_date:'12/03/2014',reason:'sick', duration:'3',leave_type: 'sick leave', status: 'approved',request_date: '12/03/2014'},
-                {start_date:'12/03/2014', end_date:'12/03/2014',reason:'sick', duration:'3',leave_type: 'sick leave', status: 'approved',request_date: '12/03/2014'},
-            ]
+            studentLists:[]        
         }
     }
 }

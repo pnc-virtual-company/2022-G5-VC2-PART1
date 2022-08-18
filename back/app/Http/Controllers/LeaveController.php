@@ -28,17 +28,25 @@ class LeaveController extends Controller
     public function store(Request $request)
     {
         //
-        $leave = new leave();
-        $leave->type = $request->type;
-        $leave->start_date = $request->start_date;
-        $leave->start_time = $request->start_time;
-        $leave->end_date = $request->end_date;
-        $leave->end_time = $request->end_time;
-        $leave->cause = $request->cause;
-        $leave->status = $request->status;
-        $leave->admin_id = $request->admin_id;
-        $leave->student_id = $request->student_id;
-        $leave->save();
+        $leave = $request->validate([
+            'type' => 'required|String',
+            'start_date' => 'required|Date',
+            'end_date' => 'required|Date',
+            'duration' => 'required|numeric',
+            'cause' => 'String',
+            'status' => 'String',
+            'admin_id' => 'required|Integer',
+            'student_id' => 'required|Integer',
+        ]);
+        leave::create($leave);
+        // $leave->type = $request->type;
+        // $leave->start_date = $request->start_date;
+        // $leave->end_date = $request->end_date;
+        // $leave->cause = $request->cause;
+        // $leave->status = $request->status;
+        // $leave->admin_id = $request->admin_id;
+        // $leave->student_id = $request->student_id;
+        // $leave->save();
 
     }
 
@@ -48,10 +56,9 @@ class LeaveController extends Controller
      * @param  \App\Models\leave  $leave
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Leave $leave)
     {
         //
-        return leave::where("id", $id)->get();
     }
 
     /**
