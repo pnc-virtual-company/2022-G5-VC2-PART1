@@ -1,15 +1,14 @@
 <template>
     <div>
-        <form @submit.prevent>
+        <form @submit.prevent="addRequest">
         <h3 class="text-center">Request Leave Form</h3><hr>
         <div class="form">
             <div class="form-input">
             <p>Type leave :</p>
                 <select class="cars form-select" placeholder="Name" v-model="typeLeave" required>
-                    <option value="volvo">Family's event</option>
-                    <option value="saab">Sick leave</option>
-                    <option value="opel">Opel</option>
-                    <option value="audi">Audi</option>
+                    <option value="Family's event">Family's event</option>
+                    <option value="Sick leave">Sick leave</option>
+                    <option value="Brother or Sister Marriage">Brother or Sister Marriage</option>
                 </select>
                 <p>Start Date :</p>
                 <div class="time">
@@ -35,16 +34,18 @@
             <div class="reason">
                 <h5>Duration: <span>{{calculateDuration}} days</span></h5>
                 <p>Cause (Reason)</p>
-                <textarea class="text-reason" placeholder="text"></textarea>
+                <textarea class="text-reason" placeholder="text" v-model="cause"></textarea>
             </div>
         </div>
             <div class="bt text-center" >
-                <button  class="btn btn-primary" @click="addRequest">Submit</button>
+                <button  class="btn btn-primary" type="submit">Submit</button>
             </div>
         </form>
     </div>
 </template>
 <script>
+import router from "@/router";
+import axios from "../axios-http.js"
     export default {
     data(){
         return{
@@ -55,40 +56,51 @@
             status:"padding",
             start_time:null,
             end_time:null,
-            duration:null
+            duration:null,
+            cause:null,
         }
     },
     methods:{
         addRequest(){
-            this.request.push({
-                type:this.typeLeave,
-                start_day:this.Start_Day,
-                end_date:this.End_Day,
-                status:this.status,
-                start_time:this.start_time,
-                end_time:this.end_time,
+            if(this.typeLeave!=null && this.Start_Day!=null && 
+            this.End_Day!=null && this.end_time!=null && this.end_time!=null){
+                axios
+                .post("/leaves",
+                {
+                    type:this.typeLeave,
+                    start_date:this.Start_Day,
+                    end_date:this.End_Day,
+                    status:this.status,
+                    duration:this.changeDuration(),
+                    cause:this.cause,
+                    student_id:1,
+                    admin_id:1
+                })
+                .then(()=> {
+                    console.log("Add successfully");
                 });
-            console.log(this.request);
+                router.push("/")   
+            }
+
         },
         changeDuration(){
+            const baseTime = ((new Date(this.End_Day).getTime() - new Date(this.Start_Day).getTime())/(1000*3600*24));
             if(this.Start_Day!==null && this.End_Day!==null && this.start_time!==null && this.end_time!==null){
-                if(this.Start_Day===this.End_Day && (this.start_time==="Morning" && this.end_time==="Afternoon")){
-                    this.duration=((new Date(this.End_Day).getTime() - new Date(this.Start_Day).getTime())/(1000*3600*24))+0.5
+                if(this.start_time===this.end_time){
+                    this.duration=baseTime+0.5
+                }else if(this.Start_Day===this.End_Day && (this.start_time==="Morning" && this.end_time==="Afternoon")){
+                    this.duration=baseTime+1
                 }else if(this.start_time==="Morning" && this.end_time==="Afternoon"){
-                    this.duration=((new Date(this.End_Day).getTime() - new Date(this.Start_Day).getTime())/(1000*3600*24))+0.5
-                }else if(this.start_time==="Afternoon" && this.end_time==="Morning"){
-                    this.duration=((new Date(this.End_Day).getTime() - new Date(this.Start_Day).getTime())/(1000*3600*24))-0.5
-                }else{
-                    this.duration=(new Date(this.End_Day).getTime() - new Date(this.Start_Day).getTime())/(1000*3600*24)
+                    this.duration=baseTime+1
                 }
             }
             return this.duration;
-        }
+        },
     },
     computed:{
         calculateDuration(){
             return this.changeDuration();
-        }
+        },
     },
 
     }

@@ -10,11 +10,10 @@ class leave extends Model
     use HasFactory;
     protected $fillable=[
         'type',
-        'start_time',
         'start_date',
-        'end_time',
         'end_date',
         'cause',
+        'duration',
         'status',
         'admin_id',
         'student_id'
@@ -29,8 +28,6 @@ class leave extends Model
     }
 
     protected $hidden = [
-        'password',
-        'remember_token',
         'created_at',
         'updated_at'
     ];

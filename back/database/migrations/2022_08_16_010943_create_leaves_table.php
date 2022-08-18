@@ -19,11 +19,10 @@ return new class extends Migration
             $table->date("start_date");
             $table->date("end_date");
             $table->string("cause");
+            $table->double("duration");
             $table->string("status")->default('padding');
             $table->foreignId('admin_id')->constrained()->onDelete('cascade');
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
-            $table->string("start_time");
-            $table->string("end_time");
             $table->timestamps();
         });
     }
