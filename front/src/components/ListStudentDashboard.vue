@@ -1,6 +1,5 @@
 <template>
   <StudentStatusVue @sendStatus="checkStatus"></StudentStatusVue>
-  
   <div class="ml-5 d-flex ">
     <v-col cols="12" sm="12" md="3" xs="12">
     <div class="input-group">
