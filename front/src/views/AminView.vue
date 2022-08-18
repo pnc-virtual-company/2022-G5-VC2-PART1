@@ -45,6 +45,10 @@ img {
 }
 .v-list-item {
   text-decoration: none;
+  color: white;
+}
+.v-list-item--active {
+  color: rgb(0, 0, 0);
 }
 .button {
   border-top: 2px solid white;

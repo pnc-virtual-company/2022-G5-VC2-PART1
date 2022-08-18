@@ -11,23 +11,24 @@
               width="70"
             />
           </div>
-          <div class="mt-3">
-            <span class="m-2">Somnak Kalan</span>
-            <p class="ml-2">PNC</p>
+          <div class="mt-3 text-white ">
+            <span class="m-2 fw-bold">Somnak Kalan</span>
+            <p class="">PNC</p>
           </div>
         </div>
-        <v-list style="background: #037c5f">
+        <v-list  style="background: #037c5f">
           <slot name="v-list-item"></slot>
         </v-list>
+
         <div class="button">
-        <hr>
-          <Button-View>Log Out</Button-View>
+          <Button-View class="text-white"><i class="fa-solid fa-right-from-bracket "></i></Button-View>
         </div>
       </v-navigation-drawer>
     </div>
     <v-app-bar app>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-app-bar-title></v-app-bar-title>
+        <v-app-bar-title>Student Management System</v-app-bar-title>
+        <v-spacer></v-spacer>
         <v-btn img>
         <img src="http://www.passerellesnumeriques.org/misc/logo-en.png" alt="" width="120" >
         </v-btn>
@@ -48,25 +49,24 @@ export default {
 };
 </script>
 <style scoped>
-img {
-  border-radius: 40px;
-}
+
 .account {
   border-bottom: solid 2px rgb(255, 255, 255);
 }
-.v-list-item--active{
-  background-color: rgb(255, 255, 255);
-  color: rgb(0, 0, 0);
-}
-.v-list-item {
-  text-decoration: none;
+img{
+  border-radius: 40px;
 }
 .button {
-  position: absolute;
+  position: relative;
   bottom: 1em;
-  left:4em;
+  top: 21em;
+  border-top: 2px solid;
   color: white;
   font-size: 20px;
   font-weight: bold;
+}
+i{
+  font-size: 30px;
+  margin: 10px;
 }
 </style>

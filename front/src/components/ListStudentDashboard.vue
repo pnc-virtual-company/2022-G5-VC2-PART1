@@ -1,12 +1,19 @@
 <template>
 <StudentStatusVue @sendStatus="checkListByStatus"></StudentStatusVue>
-  <div class="studentList">
-    <div class="m-4 d-flex w-50">
-      <v-select :items="items" label="All" v-model="search" dense></v-select>
+<CardViewBoardVue :filterSearchListStudent="studentLists"></CardViewBoardVue>
+  <div class="studentList d-flex justify-center">
+  <div class="w-100 ">
+    <div class="m-4 d-flex  w-25">
+       <!-- <v-text-field
+        v-model="search"
+        append-icon="mdi-magnify"
+        label="Search"
+      ></v-text-field> -->
+      <v-select  :items="items" class="" label="All" v-model="search" dense></v-select>
       <Button-View class="m-2" @click="checkLeave()">SEARCH</Button-View>
     </div>
     <table
-      class="secondary text-no-wrap rounded-t-lg"
+      class="secondary text-no-wrap rounded-t-lg "
       :class="`elevation-${hover ? 24 : 6}`"
     >
       <tr>
@@ -29,13 +36,17 @@
       </tr>
     </table>
   </div>
+  </div>
+  
 </template>
 
 <script>
 import StudentStatusVue from './StudentStatus.vue';
+import CardViewBoardVue from "./CardViewBoard.vue";
 export default {
     components:{
-        StudentStatusVue
+        StudentStatusVue,
+        CardViewBoardVue
     },
   data() {
     return {
@@ -98,15 +109,16 @@ export default {
       ],
       search: null,
       searchText:null,
+      searchStatus:null,
     };
   },
   methods:{
     checkListByStatus(status){
-        this.searchText = status
+        this.searchStatus = status
+        console.log(status);
     },
     checkLeave(){
         this.searchText = this.search
-        console.log(this.searchText);
     }
   },
   computed: {
@@ -119,9 +131,7 @@ export default {
        else {
        return this.studentLists
       .filter(
-        ({ leave_type, status }) => [leave_type, status]
-          .some(value => value.toLowerCase().includes(this.searchText))
-      );
+        ({ leave_type})=>(leave_type).toLowerCase().includes(this.searchText.toLowerCase()))
       }
     },
   },
@@ -132,8 +142,8 @@ export default {
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
-  width: 78%;
-  margin-left: 22px;
+  width: 95%;
+  margin:auto;
 }
 
 td,
@@ -155,5 +165,8 @@ tr th:hover {
 }
 tr:hover {
   background: rgb(88, 86, 86);
+}
+.w-25{
+  width: 25%;
 }
 </style>

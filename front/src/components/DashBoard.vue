@@ -1,16 +1,22 @@
 <template>
-<div class="m-0 p-0 ml-5">
-Student Leave Management System
-</div>
-    <div>
+
+  <div class="">
+ 
     <ListStudentBoard></ListStudentBoard>
-    </div>
+    <!-- <CardViewBoardVue></CardViewBoardVue> -->
+    
+  </div>
 </template>
 
-<script setup>
-import ListStudentBoard from "./ListStudentDashboard.vue"
+<script >
+import ListStudentBoard from "./ListStudentDashboard.vue";
+
+ export default {
+  components:{
+ListStudentBoard,
+// CardViewBoardVue
+  },
+ }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
