@@ -12,11 +12,12 @@
     </div>
     </v-col>
     <v-col class="d-flex pa-1 ma-1" cols="12" sm="12" md="4" xs="12">
-     
       <v-select
         class="fs-1 "
         label="Leave Type"
+        :items="items"
         v-model="search"
+        
       ></v-select>
       <Button-View class="search-icon mb-7 btn btn-primary" @click="checkLeave()"
         ><i class="fa-solid fa-magnifying-glass"></i
