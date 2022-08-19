@@ -81,7 +81,14 @@ import axios from "../axios-http.js"
                 });
                 router.push("/")   
             }
+            this.sendEmail();
 
+        },
+        sendEmail(){
+            axios.get("/send-mail")
+            .then((response)=> {
+                console.log(response.data);
+            })
         },
         changeDuration(){
             const baseTime = ((new Date(this.End_Day).getTime() - new Date(this.Start_Day).getTime())/(1000*3600*24));
