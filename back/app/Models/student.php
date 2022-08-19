@@ -19,7 +19,13 @@ class student extends Model
         'admin_id',
     ];
 
-   
+    public function Admin(){
+        return $this->belongsTo(student::class);
+    }
+
+    public function leave(){
+        return $this->hasMany(leave::class);
+    }
 
     protected $hidden = [
         'password',

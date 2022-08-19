@@ -1,3 +1,4 @@
+
 <template>
     <div>
         <form @submit.prevent="addRequest">
@@ -12,7 +13,7 @@
                 </select>
                 <p>Start Date :</p>
                 <div class="time">
-                    <input type="date" v-model="Start_Day" required>
+                    <input type="date" v-model="Start_Day" :min="getCurrentDate()" required>
                     <div class="date">
                         <select class="time-d form-select" v-model="start_time" required>
                             <option value="Morning">Morning</option>
@@ -22,10 +23,10 @@
                 </div>
                     <p>End Date :</p>
                 <div class="time">
-                    <input type="date" v-model="End_Day" required>
+                    <input type="date" v-model="End_Day" :min="Start_Day" required>
                     <div class="date">
                         <select class="time-d form-select" v-model="end_time" required>
-                            <option value="Morning">Morning</option>
+                            <option value="Morning" v-if="isValidTime">Morning</option>
                             <option value="Afternoon">Afternoon</option>
                         </select>
                     </div>
@@ -46,7 +47,7 @@
 <script>
 import router from "@/router";
 import axios from "../axios-http.js"
-    export default {
+export default {
     data(){
         return{
             request:[],
@@ -58,6 +59,7 @@ import axios from "../axios-http.js"
             end_time:null,
             duration:null,
             cause:null,
+            isValidTime:true
         }
     },
     methods:{
@@ -70,19 +72,18 @@ import axios from "../axios-http.js"
                     type:this.typeLeave,
                     start_date:this.Start_Day,
                     end_date:this.End_Day,
-                    cause:this.cause,
-                    duration:this.changeDuration(),
                     status:this.status,
-                    admin_id:1,
+                    duration:this.changeDuration(),
+                    cause:this.cause,
                     student_id:1,
+                    admin_id:1
                 })
                 .then(()=> {
                     console.log("Add successfully");
                 });
                 router.push("/")   
             }
-
-        },
+},
         changeDuration(){
             const baseTime = ((new Date(this.End_Day).getTime() - new Date(this.Start_Day).getTime())/(1000*3600*24));
             if(this.Start_Day!==null && this.End_Day!==null && this.start_time!==null && this.end_time!==null){
@@ -94,8 +95,25 @@ import axios from "../axios-http.js"
                     this.duration=baseTime+1
                 }
             }
+            if(this.Start_Day===this.End_Day && this.start_time==="Afternoon"){
+                this.isValidTime = false
+            }
             return this.duration;
         },
+        getCurrentDate(){
+            var date = new Date();
+            var tdate = date.getDate();
+            var month = date.getMonth()+1;
+            if(tdate < 10){
+                tdate = "0"+tdate;
+            }
+            if(month < 10){
+                month = "0"+month;
+            }
+            var year = date.getFullYear();
+            var minDate = year+"-"+month+"-"+tdate;
+            return minDate;
+        }
     },
     computed:{
         calculateDuration(){
@@ -114,6 +132,9 @@ import axios from "../axios-http.js"
         margin: auto;
         padding-bottom: 40px;
         border-radius: 10px;
+    }
+    .dateInput{
+        border:1px solid rgba(0, 0, 0, 0.25);
     }
     .form{
         border-top:blue;

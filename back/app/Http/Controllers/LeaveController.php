@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\leave;
+use App\Models\Leave;
 use Illuminate\Http\Request;
 
 class LeaveController extends Controller
@@ -39,15 +39,6 @@ class LeaveController extends Controller
             'student_id' => 'required|Integer',
         ]);
         leave::create($leave);
-        // $leave->type = $request->type;
-        // $leave->start_date = $request->start_date;
-        // $leave->end_date = $request->end_date;
-        // $leave->cause = $request->cause;
-        // $leave->status = $request->status;
-        // $leave->admin_id = $request->admin_id;
-        // $leave->student_id = $request->student_id;
-        // $leave->save();
-
     }
 
     /**
