@@ -70,11 +70,11 @@ import axios from "../axios-http.js"
                     type:this.typeLeave,
                     start_date:this.Start_Day,
                     end_date:this.End_Day,
-                    status:this.status,
-                    duration:this.changeDuration(),
                     cause:this.cause,
+                    duration:this.changeDuration(),
+                    status:this.status,
+                    admin_id:1,
                     student_id:1,
-                    admin_id:1
                 })
                 .then(()=> {
                     console.log("Add successfully");

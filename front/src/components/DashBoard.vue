@@ -4,6 +4,7 @@
     <ListStudentDashboardVue></ListStudentDashboardVue>
     
   </div>
+  
 </template>
 
 <script >

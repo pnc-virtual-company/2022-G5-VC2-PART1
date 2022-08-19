@@ -10,7 +10,7 @@
         <v-card class="w-card w-75 m-auto">
           <div class="d-flex">
             <div :class="value.background"><img  :src="value.img" width="70" alt=""></div>
-            <div class="card-body-status mt-5 ml-6">
+            <div class="card-body-status  ml-4">
               <div class="card-text-status font-weight-bold fs-5">{{value.status}}</div>
               <div class="card-number-status">
                 <slot>{{value.amount}}</slot>
@@ -66,5 +66,8 @@ export default {
 .v-container{
   width: 99%;
 }
-
+strong:hover{
+  color: rgb(43, 90, 92);
+  transition: 0.5s;
+}
 </style>

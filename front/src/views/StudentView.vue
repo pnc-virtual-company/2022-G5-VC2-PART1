@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Navigation-Bar>
-      <template #v-list-item>
-        <v-list-item v-for="item in items" :key="item.title" :to="item.to" link>
+    <Navigation-Bar transition="scroll-x-reverse-transition">
+      <template #v-list-item >
+        <v-list-item v-for="item in items" :key="item.title" :to="item.to" link >
           <div style="display: flex">
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
@@ -52,6 +52,7 @@ img {
 }
 .v-list-item--active {
   background-color: rgb(255, 255, 255);
+  transition: 0.5s;
 }
 .v-list-item {
   text-decoration: none;

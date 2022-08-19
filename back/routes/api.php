@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\LeaveController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +20,6 @@ use App\Http\Controllers\StudentController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::apiResource("leaves",LeaveController::class);
-Route::apiResource("admin",AdminController::class);
-Route::apiResource("students",StudentController::class);
+Route::apiResource('admin',AdminController::class);
+Route::apiResource('leaves',StudentController::class);
+Route::apiResource('students',LeaveController::class);
