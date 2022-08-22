@@ -1,5 +1,7 @@
 <template>
+
   <div class="text-center">
+      <FormLogin v-if="!isStudent && !isAmin"/>
     <h3 v-if="!isStudent && !isAmin" @click="isNavigation()">
       <router-link to="/">STUDENT</router-link>
     </h3>
@@ -17,16 +19,19 @@
 <script>
 import StudentVIew from "./views/StudentView.vue";
 import AdminVIew from "./views/AminView.vue";
+import FormLogin from "./views/FormLogin.vue";
 export default {
   data() {
     return {
       isStudent: false,
       isAmin: false,
+       
     };
   },
   components: {
     StudentVIew,
     AdminVIew,
+    FormLogin,
   },
   methods: {
     isNavigation() {
@@ -36,5 +41,6 @@ export default {
       this.isAmin = true;
     },
   },
+  
 };
 </script>
