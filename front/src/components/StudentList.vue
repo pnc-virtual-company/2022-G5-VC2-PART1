@@ -1,6 +1,5 @@
 <template>
   <div class="card">
-    <!-- <form action="card"> -->
       <div class="card-title">
         <li>Name</li>
         <li>Sex</li>
@@ -22,7 +21,6 @@
           </li>
         </ul>
       </div>
-    <!-- </form> -->
   </div>
   <div justify="center">
     <v-dialog v-model="dialog" width="100%">
