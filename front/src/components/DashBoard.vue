@@ -92,13 +92,14 @@ export default {
   },
   methods: {
     changeColorStatus(status) {
-      if (status == "Rejected") {
-        return { color: "red", fontWeight: "bold" };
-      } else if (status == "Approved") {
-        return { color: "green", fontWeight: "bold" };
+      if (status == "rejected") {
+        return { backgroundColor: "red",color:'black', fontWeight: "bold", padding:4 +'px',borderRadius:4+'px' };
+      } else if (status == "approved") {
+        return { backgroundColor: "green",color:'black', fontWeight: "bold", padding:4 +'px',borderRadius:4+'px' };
       } else if (status == "padding") {
-        return { backgroundColor: "orange", padding:4 +'px',borderRadius:4+'px' };
+        return { backgroundColor: "orange",color:'black', padding:4 +'px',borderRadius:4+'px' };
       }
+      
     },
     checkStatus(status) {
       this.searchStatus = status;
@@ -154,11 +155,10 @@ table {
   margin: auto;
 }
 
-td,
-th {
+td{
   /* border: 1px solid #dddddd; */
-  text-align: left;
-  padding: 5px;
+  text-align: center;
+  padding: 15px;
 }
 
 tr:nth-child(even) {
@@ -166,10 +166,12 @@ tr:nth-child(even) {
 }
 tr:nth-child(odd) {
   background-color: #998c8c;
+  color:white;
 }
 th {
   background: rgb(60, 60, 251);
   color: #fff;
+  padding: 10px;
 }
 tr th:hover {
   background: rgb(255, 255, 255);
@@ -178,6 +180,7 @@ tr th:hover {
 }
 tr:hover {
   background: rgb(173, 209, 215);
+  color:black;
   transition: 0.5s;
 }
 .w-25 {

@@ -94,7 +94,7 @@ export default {
       typeLeave: "",
       Start_Day: null,
       End_Day: null,
-      status: "padding",
+      status: "rejected",
       start_time: null,
       end_time: null,
       duration: null,

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date("end_date");
             $table->string("cause");
             $table->double("duration");
-            $table->string("status")->default('padding');
+            $table->string("status")->default('rejected');
             $table->foreignId('admin_id')->constrained()->onDelete('cascade');
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
             $table->timestamps();

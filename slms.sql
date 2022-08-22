@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 18, 2022 at 08:45 AM
+-- Generation Time: Aug 22, 2022 at 06:27 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -40,13 +40,6 @@ CREATE TABLE `admins` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `admins`
---
-
-INSERT INTO `admins` (`id`, `email`, `first_name`, `last_name`, `age`, `profile_image`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'ngahoeun33@gmail.com', 'Nga', 'Hoeun', 21, 'ffghfgdhfjgfgh', '$2y$10$fWRrsRFjIlPnBPwgbbWJgOkzziJYNVa5bJBi0WXuqj2MAyFhv4.Ba', NULL, '2022-08-17 21:16:59', '2022-08-17 21:16:59');
-
 -- --------------------------------------------------------
 
 --
@@ -75,22 +68,13 @@ CREATE TABLE `leaves` (
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `cause` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `duration` double(8,2) NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'padding',
+  `duration` double NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'rejected',
   `admin_id` bigint(20) UNSIGNED NOT NULL,
   `student_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `leaves`
---
-
-INSERT INTO `leaves` (`id`, `type`, `start_date`, `end_date`, `cause`, `duration`, `status`, `admin_id`, `student_id`, `created_at`, `updated_at`) VALUES
-(3, 'Party', '2022-08-18', '2022-08-18', 'My mom is sick.', 0.50, 'padding', 1, 1, '2022-08-17 21:17:03', '2022-08-17 21:17:03'),
-(4, 'Family\'s event', '2022-08-18', '2022-08-19', 'sdfc', 1.50, 'padding', 1, 1, '2022-08-17 22:49:42', '2022-08-17 22:49:42'),
-(5, 'Family\'s event', '2022-08-19', '2022-08-19', 'adsfdgfg', 1.00, 'padding', 1, 1, '2022-08-17 23:33:45', '2022-08-17 23:33:45');
 
 -- --------------------------------------------------------
 
@@ -109,12 +93,12 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(91, '2014_10_12_100000_create_password_resets_table', 1),
-(92, '2019_08_19_000000_create_failed_jobs_table', 1),
-(93, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(94, '2022_08_16_010721_create_admins_table', 1),
-(95, '2022_08_16_010823_create_students_table', 1),
-(96, '2022_08_16_010943_create_leaves_table', 1);
+(1, '2014_10_12_100000_create_password_resets_table', 1),
+(2, '2019_08_19_000000_create_failed_jobs_table', 1),
+(3, '2019_12_14_000001_create_personal_access_tokens_table', 1),
+(4, '2022_08_16_010721_create_admins_table', 1),
+(5, '2022_08_16_010823_create_students_table', 1),
+(6, '2022_08_16_010943_create_leaves_table', 1);
 
 -- --------------------------------------------------------
 
@@ -157,22 +141,16 @@ CREATE TABLE `students` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `age` int(11) NOT NULL,
+  `gender` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `class` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `profile_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `admin_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `students`
---
-
-INSERT INTO `students` (`id`, `first_name`, `last_name`, `age`, `email`, `password`, `class`, `profile_image`, `admin_id`, `created_at`, `updated_at`) VALUES
-(1, 'Sreyne', 'Ven', 21, 'sreyne123@gmail.com', '$2y$10$11GSMnHFKmodZtblV10f/.Zh.7tT/bIVlGOxfyakYH3t2rbQ5Zo8q', 'WEP A', 'asdfghjk', 1, '2022-08-17 21:17:01', '2022-08-17 21:17:01');
 
 --
 -- Indexes for dumped tables
@@ -236,7 +214,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -248,13 +226,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `leaves`
 --
 ALTER TABLE `leaves`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -266,7 +244,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
