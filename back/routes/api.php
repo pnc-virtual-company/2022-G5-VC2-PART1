@@ -38,5 +38,9 @@ Route::get('/send-mail', [MailController::class, 'sendEmail']);
 Route::post('/login',[AdminController::class,'login']);
 
 // For login Student 
+<<<<<<< HEAD
 // Route::post('/login',[StudentController::class,'login']);
+=======
+Route::post('/loginStudent',[StudentController::class,'login']);
+>>>>>>> 22f0228576bc1cf020f3e73d86c6c873af7a7f10
 

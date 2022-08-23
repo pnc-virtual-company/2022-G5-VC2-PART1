@@ -9,6 +9,11 @@
                 <h2>Student Leave Management System</h2> 
             </div>
             <div class="inp">
+                <select v-model="role">
+                    <option disabled value="">Please select one</option>
+                    <option>Student</option>
+                    <option>Teacher</option>
+                </select>
                 <input 
                 type="text" 
                 id="email" 
@@ -33,28 +38,33 @@
 
 <script>
 import axios from "axios"
-import router from "@/router";
+// import router from "@/router";
 export default {
     data(){
         return{
             email: "", 
             password: "",
             apiUrl: "http://127.0.0.1:8000/api/",
-            adminInfo:[]
+            admin:[],
+            students:[],
+            role: ''
         }
     },
     methods:{
         loginUser(){
             if(this.email !== "" && this.password !==""){
-                axios.post(this.apiUrl+'login' ,{email: this.email, password: this.password})
-                .then((response) =>{
-                    console.log(response.data);
-                })
+                if (this.role == 'Teacher') {
+                    axios.post(this.apiUrl+'login' ,{email: this.email, password: this.password})
+                    .then((response) =>{
+                        console.log(response.data);
+                    })
+                } else if (this.role == 'Student') {
+                    axios.post(this.apiUrl+'loginStudent' ,{email: this.email, password: this.password})
+                    .then((response) =>{
+                        console.log(response.data);
+                    })
+                }
             }
-            if(this.adminInfo[0].email==this.email && this.adminInfo[0].password==this.password){
-                router.push("/studentlist");
-            }
-            console.log(this.adminInfo[0].password);
         },
         myFunction(){
             let x = document.getElementById("myInput");
@@ -65,11 +75,7 @@ export default {
             }
         }
     },
-    mounted(){
-        axios.get(this.apiUrl+"admin").then(response=>{
-            this.adminInfo = response.data
-        })
-    }
+
 }
 
 </script>

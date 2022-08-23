@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\Student;
-use Illuminate\Http\Request;
+use App\Models\student;
 Use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
+
 
 class StudentController extends Controller
 {
@@ -40,6 +43,8 @@ class StudentController extends Controller
         $student -> profile_image = $request->profile_image;
         $student -> admin_id = $request->admin_id;
         $student->save();
+        $token=$student->createToken('student-token')->plainTextToken;
+        return response()->json(['token' => $token]);
 
     }
 
@@ -76,6 +81,7 @@ class StudentController extends Controller
          $student -> profile_image = $request->profile_image;
          $student -> admin_id = $request->admin_id;
          $student->save();
+
     }
 
     /**
@@ -89,6 +95,7 @@ class StudentController extends Controller
         return student::destroy($id);
     }
 
+<<<<<<< HEAD
     // public function login(Request $request) {
     //     $user = student::where('email',$request->email)->first();
     //     if (!$user || !Hash::check ($request->password,$user->password)) {
@@ -97,4 +104,14 @@ class StudentController extends Controller
     //     $token = $user->createToken('token_name')->plainTextToken;
     //     return response()->json(['sms'=>'Success fully','token'=>$token]);
     // }
+=======
+    public function login(Request $request) {
+        $user = student::only('email','password')->first();
+        if (!Hash::check ($request->password,$user->password)) {
+            return response()->json(['sms'=>'invalid']);
+        } 
+        $token = $user->createToken('token_student')->plainTextToken;
+        return response()->json(['sms'=>'Success fully','token'=>$token]);
+    }
+>>>>>>> 22f0228576bc1cf020f3e73d86c6c873af7a7f10
 }
