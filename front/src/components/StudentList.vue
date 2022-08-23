@@ -5,23 +5,45 @@
         class="card-user"
         v-for="(student, index) of studentnames"
         :key="student"
-        
       >
         <li>
-          <v-img class="profile_img" :src="student.img" @click="showPopup(index)"></v-img>
+          <v-img
+            class="profile_img"
+            :src="student.img"
+            @click="showPopup(index)"
+          ></v-img>
         </li>
         <li>{{ student.name }}</li>
         <li>{{ student.class }}</li>
         <v-dialog v-model="popup" persistent max-width="290">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn color="danger" dark v-bind="attrs" v-on="on" @click = "alertDialog()" >Delete</v-btn>
+            <v-btn
+              color="danger"
+              dark
+              v-bind="attrs"
+              v-on="on"
+              @click="alertDialog(index)"
+              >Delete</v-btn
+            >
           </template>
           <v-card class="cencel-delete">
             <v-card-title class="text-h5">Are you sure to delete?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn class="cencel" color=" darken-1" text @click="popup = false">Cencel</v-btn>
-              <v-btn class="studentDelete" color=" darken-1" text @click="deleteStudent(index)">Delete</v-btn>
+              <v-btn
+                class="cencel"
+                color=" darken-1"
+                text
+                @click="popup = false"
+                >Cencel</v-btn
+              >
+              <v-btn
+                class="studentDelete"
+                color=" darken-1"
+                text
+                @click="deleteStudent()"
+                >Delete</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -32,7 +54,9 @@
     <v-dialog v-model="dialog" width="100%">
       <v-card class="modal justify-center">
         <div class="img-class relative">
-          <button @click="dialog = false" class="btn btn-danger ml-60">X</button>
+          <button @click="dialog = false" class="btn btn-danger ml-60">
+            X
+          </button>
           <div class="profile">
             <v-img class="image" :src="studentnames[index].img"></v-img>
             <p>{{ studentnames[index].number }}</p>
@@ -74,6 +98,25 @@
       </v-card>
     </v-dialog>
   </div>
+  <!------------------------------------------------- cardstudent -------------------------------------->
+
+  <v-card class="mx-auto card-student mb-6 ">
+    <div class="studentcard d-flex pa-4">
+      <v-list-item-avatar tile size="80" color="grey">
+        <v-img
+          class="image"
+          src="https://qodebrisbane.com/wp-content/uploads/2019/07/This-is-not-a-person-2-1.jpeg"
+        ></v-img>
+      </v-list-item-avatar>
+      <v-list-item-title class="text-h5 ml-4 mt-3"> Somnak </v-list-item-title>
+    </div>
+    <v-list-item three-line>
+      <v-list-item-content >
+        <p>Dear teacher at my home have partty. I promission to go home join partty with my family.Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eius sapiente, deserunt reprehenderit labore quae! A quos autem odio.</p>
+        <v-list-item-subtitle ><h5>approved</h5></v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
+  </v-card>
 </template>
 
 <script>
@@ -335,7 +378,7 @@ export default {
       ],
       dialog: false,
       index: null,
-      popup:false
+      popup: false,
     };
   },
   methods: {
@@ -344,14 +387,14 @@ export default {
 
       this.index = index;
     },
-    alertDialog(index){
+    alertDialog(index) {
       this.popup = true;
       this.index = index;
     },
-    deleteStudent(){
-        this.studentnames.splice(this.index, 1);
-        this.popup = false;
-    }
+    deleteStudent() {
+      this.studentnames.splice(this.index, 1);
+      this.popup = false;
+    },
   },
 };
 </script>
@@ -447,16 +490,36 @@ tr:nth-child(even) {
   display: block;
   align-items: center;
 }
-.cencel-delete{
+.cencel-delete {
   margin-left: 850px;
   padding: 12px;
 }
-.cencel{
+.cencel {
   background: rgb(65, 117, 222);
   color: #fff;
 }
-.studentDelete{
+.studentDelete {
   background: rgb(244, 64, 64);
   color: #fff;
+}
+
+/*--------------------------------------------- cardstundent--------------------------- */
+.card-student{
+  border-top: 24px solid rgb(75, 75, 249);
+  box-shadow: 2px 2px 6px 1px #cccc;
+  width: 90%;
+}
+.approv-btn{
+  border: 10px solid blue;
+  background: rgb(47, 47, 209);
+  border-radius: 10px;
+}
+h5{
+  margin-top: 12px;
+  color: blue;
+  margin-left: 860px;
+}
+p{
+  /* margin-right: 100px; */
 }
 </style>
