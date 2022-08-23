@@ -53,7 +53,6 @@ class AdminController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -77,11 +76,11 @@ class AdminController extends Controller
         //
     }
     public function login(Request $request) {
-        $user = Admin::where('email',"$request->email")->first();
-        if (!$user || Hash::check ($user->password,$request->password)) {
+        $user = Admin::where('email',$request->email)->first();
+        if (!$user || !Hash::check ($request->password,$user->password)) {
             return response()->json(['sms'=>'invalid']);
         } 
         $token = $user->createToken('token_name')->plainTextToken;
-        return response()->json(['sms'=>'successed','token'=>$token]);
+        return response()->json(['sms'=>'Success fully','token'=>$token]);
     }
 }
