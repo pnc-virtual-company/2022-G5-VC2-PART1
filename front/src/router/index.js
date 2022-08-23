@@ -3,6 +3,7 @@ import DashBoard from "../components/DashBoard.vue"
 import NewRequest from "../components/NewRequest.vue"
 import CheckListStudent from "../components/CheckList.vue"
 import StudentList from "../components/StudentList.vue"
+import CardStudent from "../components/CardStudent.vue"
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/studentlist',
     name: 'studentlist',
     component: StudentList
+  },
+  {
+    path: '/cardstudent',
+    name: 'cardstudent',
+    component: CardStudent
   },
 ]
 
