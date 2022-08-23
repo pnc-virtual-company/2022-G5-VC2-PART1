@@ -16,7 +16,7 @@
               </div>
               <div class="card-number-status">
                 <p v-if="value.status== 'Approved'">{{ getApproved }}</p>
-                <p v-if="value.status== 'Padding'">{{ getPadding }}</p>
+                <p v-if="value.status== 'Pending'">{{ getPadding }}</p>
                 <p v-if="value.status== 'Rejected'">{{ getRejected }}</p>
               </div>
             </div>
@@ -46,7 +46,7 @@ export default {
         img: "https://cdn-icons-png.flaticon.com/512/4157/4157035.png",
       },
       {
-        status: "Padding",
+        status: "Pending",
 
         background: "yellow",
         img: "https://cdn3.iconfinder.com/data/icons/arrows-set-12/512/reset-256.png",
@@ -95,7 +95,7 @@ export default {
     getPadding(){
       let count = null
       this.listLeaves.forEach(leave => {
-        if(leave.status==="padding"){
+        if(leave.status==="pending"){
           count++;
         }
       });

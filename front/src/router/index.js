@@ -5,6 +5,7 @@ import CheckListStudent from "../components/CheckList.vue"
 import admin from "../components/StudentList.vue"
 import formLogin from "../views/FormLogin.vue"
 import accountStudent from "../components/StudentProfile.vue"
+import adminProfile from "../components/AdminProfile.vue"
 
 const routes = [
   {
@@ -37,6 +38,11 @@ const routes = [
     path: '/admin',
     name: 'admin',
     component: admin
+  },
+  {
+    path: '/adminProfile',
+    name: 'adminProfile',
+    component: adminProfile
   },
 ]
 

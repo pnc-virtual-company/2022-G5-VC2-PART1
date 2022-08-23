@@ -94,7 +94,7 @@ export default {
       typeLeave: "",
       Start_Day: null,
       End_Day: null,
-      status: "rejected",
+      status: "pending",
       start_time: null,
       end_time: null,
       duration: null,
@@ -129,7 +129,7 @@ export default {
             console.log("Add successfully");
          
           });
-        router.push("/");
+        router.push("/student");
       }
 
       this.sendEmail();

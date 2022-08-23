@@ -2,7 +2,7 @@
   <div>
     <Navigation-Bar transition="scroll-x-reverse-transition">
      <template #account> 
-       <router-link to="/accountStudent">
+       <router-link class="item-link" to="/accountStudent">
         <div class="account p-3 mt-15 d-flex">
           <img
             class=""
@@ -41,7 +41,7 @@ export default {
   data: () => ({
   drawer: null,
     items: [
-      { title: "Dashboard", icon: "mdi-home", to: "/admin" },
+      { title: "Dashboard", icon: "mdi-home", to: "/student" },
       { title: "New Request", icon: "mdi-view-dashboard", to: "/request" },
     ],
     right: null,
@@ -84,5 +84,8 @@ img {
 }
 .account {
   border-bottom: solid 2px rgb(255, 255, 255);
+}
+.item-link{
+  text-decoration: none;
 }
 </style>

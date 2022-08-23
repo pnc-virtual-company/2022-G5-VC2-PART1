@@ -96,7 +96,7 @@ export default {
         return { backgroundColor: "red",color:'black', fontWeight: "bold", padding:4 +'px',borderRadius:4+'px' };
       } else if (status == "approved") {
         return { backgroundColor: "green",color:'black', fontWeight: "bold", padding:4 +'px',borderRadius:4+'px' };
-      } else if (status == "padding") {
+      } else if (status == "pending") {
         return { backgroundColor: "orange",color:'black', padding:4 +'px',borderRadius:4+'px' };
       }
       

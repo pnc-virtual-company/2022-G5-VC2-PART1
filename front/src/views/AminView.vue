@@ -1,8 +1,8 @@
 <template>
   <div>
     <Navigation-Bar>
-    <template #account>
-
+      <template #account>
+      <router-link class="item-link" to="/adminProfile">
         <div class="account p-3 mt-15 d-flex">
           <img
             class=""
@@ -17,12 +17,13 @@
             </div>
           </div>
         </div>
-
+      
+      </router-link>
       </template>
-    <template #padding-alert>
-          <v-badge color="green" :content="countPending">
-            <i class="fa-solid fa-bell icon-bell"></i>
-          </v-badge>
+      <template #padding-alert>
+        <v-badge color="green" :content="countPending">
+          <i class="fa-solid fa-bell icon-bell"></i>
+        </v-badge>
       </template>
       <template #v-list-item>
         <v-list-item v-for="item in items" :key="item.title" :to="item.to" link>
@@ -38,76 +39,27 @@
       </template>
     </Navigation-Bar>
   </div>
-
 </template>
 
 <script>
-
+import axios from '../axios-http'
 export default {
   data: () => ({
     drawer: null,
     items: [
-      { title: "List Student", icon: "mdi-home", to: "/studentlist" },
+      { title: "List Student", icon: "mdi-home", to: "/admin" },
       { title: "Check List", icon: "mdi-view-dashboard", to: "/checkList" },
     ],
     right: null,
-    studentLists: [
-      {
-        start_date: "12/03/2014",
-        end_date: "12/03/2014",
-        reason: "sick",
-        duration: "3",
-        leave_type: "sick leave",
-        status: "Pending",
-        request_date: "12/03/2014",
-      },
-      {
-        start_date: "12/03/2014",
-        end_date: "12/03/2014",
-        reason: "sick",
-        duration: "3",
-        leave_type: "sick leave",
-        status: "Pending",
-        request_date: "12/03/2014",
-      },
-      {
-        start_date: "12/03/2014",
-        end_date: "12/03/2014",
-        reason: "sick",
-        duration: "3",
-        leave_type: "sick leave",
-        status: "Pending",
-        request_date: "12/03/2014",
-      },
-      {
-        start_date: "12/03/2014",
-        end_date: "12/03/2014",
-        reason: "sick",
-        duration: "3",
-        leave_type: "gick leave",
-        status: "Pending",
-        request_date: "12/03/2014",
-      },
-      {
-        start_date: "12/03/2014",
-        end_date: "12/03/2014",
-        reason: "sick",
-        duration: "3",
-        leave_type: "hick leave",
-        status: "Pending",
-        request_date: "12/03/2014",
-      },
-      {
-        start_date: "12/03/2014",
-        end_date: "12/03/2014",
-        reason: "sick",
-        duration: "3",
-        leave_type: "pick leave",
-        status: "Pending",
-        request_date: "12/03/2014",
-      },
-    ],
+    studentLists:[],
   }),
+  methods:{
+    getData(){
+      axios.get("/leaves").then((res)=>{
+        this.studentLists = res.data
+      })
+    }
+  },
   computed: {
     countPending() {
       let count = null;
@@ -119,7 +71,6 @@ export default {
       return count | 0;
     },
   },
-  
 };
 </script>
 <style scoped>
@@ -151,5 +102,8 @@ img {
 }
 .v-list-item-title {
   font-weight: bold;
+}
+.item-link{
+  text-decoration: none;
 }
 </style>
