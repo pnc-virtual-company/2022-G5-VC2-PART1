@@ -6,7 +6,7 @@ use App\Models\Admin;
 Use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
+// use Illuminate\Support\Facades\Cookie;
 
 class AdminController extends Controller
 {
@@ -38,7 +38,7 @@ class AdminController extends Controller
         $admin -> age = $request->age;
         $admin -> profile_image = $request->profile_image;
         $admin->save();
-        $token=$admin->createToken('my-token')->plainTextToken;
+        $token=$admin->createToken('admin-token')->plainTextToken;
         return response()->json(['token'=>$token]);
 
     }
@@ -80,7 +80,7 @@ class AdminController extends Controller
         if (!$user || !Hash::check ($request->password,$user->password)) {
             return response()->json(['sms'=>'invalid']);
         } 
-        $token = $user->createToken('token_name')->plainTextToken;
+        $token = $user->createToken('token_admin')->plainTextToken;
         return response()->json(['sms'=>'Success fully','token'=>$token]);
     }
 }

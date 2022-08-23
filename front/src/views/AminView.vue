@@ -15,7 +15,6 @@
       </template>
     </Navigation-Bar>
   </div>
-
 </template>
 
 <script>
