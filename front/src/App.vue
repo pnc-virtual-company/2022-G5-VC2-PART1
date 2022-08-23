@@ -3,10 +3,10 @@
   <div class="text-center">
       <FormLogin v-if="!isStudent && !isAmin"/>
     <h3 v-if="!isStudent && !isAmin" @click="isNavigation()">
-      <router-link to="/">STUDENT</router-link>
+      <router-link to="/student">STUDENT</router-link>
     </h3>
     <h3 v-if="!isAmin && !isStudent" @click="isNavAdmin()">
-      <router-link to="studentlist">ADMIN</router-link>
+      <router-link to="/admin">ADMIN</router-link>
     </h3>
     <div v-if="isStudent">
       <StudentVIew />

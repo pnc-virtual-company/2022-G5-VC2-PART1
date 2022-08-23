@@ -1,7 +1,4 @@
 <template>
-  <LIstViewVue>
-    <template #header> </template>
-  </LIstViewVue>
   <v-container class="grey lighten-5">
     <v-row class="d-flex justify-content-evenly">
       <v-col v-for="value in studentStatus" :key="value" xs="12" sm="12" md="4">
@@ -15,16 +12,14 @@
                 {{ value.status }}
               </div>
               <div class="card-number-status">
-                <p v-if="value.status== 'Approved'">{{ getApproved }}</p>
-                <p v-if="value.status== 'Padding'">{{ getPadding }}</p>
-                <p v-if="value.status== 'Rejected'">{{ getRejected }}</p>
+                <p v-if="value.status == 'Approved'">{{ getApproved }}</p>
+                <p v-if="value.status == 'Rejected'">{{ getRejected }}</p>
               </div>
             </div>
           </div>
           <Button-View
             class="bg-grey font-weight-bold"
-            @click="checkStatus(value.status)"
-            ><strong class="text-white">see more </strong></Button-View
+            ><strong>see more </strong></Button-View
           >
         </v-card>
       </v-col>
@@ -46,12 +41,6 @@ export default {
         img: "https://cdn-icons-png.flaticon.com/512/4157/4157035.png",
       },
       {
-        status: "Padding",
-
-        background: "yellow",
-        img: "https://cdn3.iconfinder.com/data/icons/arrows-set-12/512/reset-256.png",
-      },
-      {
         status: "Rejected",
 
         background: "red",
@@ -61,9 +50,6 @@ export default {
     studentLists: [],
   }),
   methods: {
-    checkStatus(status) {
-      this.$emit("sendStatus", status);
-    },
     fetchDataStudent() {
       axios.get("/leaves").then((res) => {
         this.studentLists = res.data;
@@ -87,15 +73,6 @@ export default {
       let count=null
       this.listLeaves.forEach(leave => {
         if(leave.status==="approved"){
-          count++;
-        }
-      });
-      return count | 0;
-    },
-    getPadding(){
-      let count = null
-      this.listLeaves.forEach(leave => {
-        if(leave.status==="padding"){
           count++;
         }
       });

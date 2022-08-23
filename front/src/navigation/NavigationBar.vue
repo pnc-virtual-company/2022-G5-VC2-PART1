@@ -2,38 +2,34 @@
   <v-app id="inspire">
     <div id="bg-color">
       <v-navigation-drawer v-model="drawer" style="background: #037c5f" app>
-        <div class="account p-3 mt-15 d-flex">
-          <div>
-            <img
-              class=""
-              src="https://cdn.vuetifyjs.com/images/john.jpg"
-              alt="John"
-              width="70"
-            />
-          </div>
-          <div class="mt-3 text-white ">
-            <span class="m-2 fw-bold">Somnak Kalan</span>
-            <p class="">PNC</p>
-          </div>
+        <div >
+        
+            <slot name="account"></slot>
+         
         </div>
-        <v-list  style="background: #037c5f">
+        <v-list style="background: #037c5f">
           <slot name="v-list-item"></slot>
         </v-list>
 
         <div class="button">
-          <Button-View class="text-white"><i class="fa-solid fa-right-from-bracket "></i></Button-View>
+          <Button-View class="text-white"
+            ><i class="fa-solid fa-right-from-bracket"></i
+          ></Button-View>
         </div>
       </v-navigation-drawer>
     </div>
     <v-app-bar app>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-        <v-app-bar-title class="fw-bold fs ">Student Management System</v-app-bar-title>
-        <v-spacer></v-spacer>
-        <v-spacer></v-spacer>
-        <v-btn img>
-        <img :src="require('../assets/logo.jpg')" alt="" width="45" >
-        </v-btn>
-      </v-app-bar>
+      <v-app-bar-title class="fw-bold fs"
+        >Student Management System</v-app-bar-title
+      >
+      <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
+      <div><slot name="padding-alert"></slot></div>
+      <v-btn img>
+        <img :src="require('../assets/logo.jpg')" alt="" width="45" />
+      </v-btn>
+    </v-app-bar>
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -51,10 +47,7 @@ export default {
 </script>
 <style scoped>
 
-.account {
-  border-bottom: solid 2px rgb(255, 255, 255);
-}
-img{
+img {
   border-radius: 40px;
 }
 .button {
@@ -66,11 +59,11 @@ img{
   font-size: 20px;
   font-weight: bold;
 }
-i{
+i {
   font-size: 30px;
   margin: 10px;
 }
-.fs{
+.fs {
   font-size: 25px;
 }
 </style>

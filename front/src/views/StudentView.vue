@@ -1,6 +1,24 @@
 <template>
   <div>
     <Navigation-Bar transition="scroll-x-reverse-transition">
+     <template #account> 
+       <router-link to="/accountStudent">
+        <div class="account p-3 mt-15 d-flex">
+          <img
+            class=""
+            src="https://cdn.vuetifyjs.com/images/john.jpg"
+            alt="John"
+            width="70"
+          />
+          <div>
+            <div class="mt-3 text-white">
+              <span class="m-2 fw-bold">Somnak Kalan</span>
+              <p class="">PNC</p>
+            </div>
+          </div>
+        </div>
+    </router-link>
+              </template>
       <template #v-list-item >
         <v-list-item v-for="item in items" :key="item.title" :to="item.to" link >
           <div style="display: flex">
@@ -23,7 +41,7 @@ export default {
   data: () => ({
   drawer: null,
     items: [
-      { title: "Dashboard", icon: "mdi-home", to: "/" },
+      { title: "Dashboard", icon: "mdi-home", to: "/admin" },
       { title: "New Request", icon: "mdi-view-dashboard", to: "/request" },
     ],
     right: null,
@@ -63,5 +81,8 @@ img {
 }
 .v-list-item-title{
   font-weight: bold;
+}
+.account {
+  border-bottom: solid 2px rgb(255, 255, 255);
 }
 </style>

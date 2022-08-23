@@ -2,12 +2,24 @@ import { createRouter, createWebHistory } from 'vue-router'
 import DashBoard from "../components/DashBoard.vue"
 import NewRequest from "../components/NewRequest.vue"
 import CheckListStudent from "../components/CheckList.vue"
-import StudentList from "../components/StudentList.vue"
+import admin from "../components/StudentList.vue"
+import formLogin from "../views/FormLogin.vue"
+import accountStudent from "../components/StudentProfile.vue"
 
 const routes = [
   {
     path: '/',
-    name: 'dashboard',
+    name: 'form',
+    component: formLogin
+  },
+  {
+    path: '/accountStudent',
+    name: 'accountStudent',
+    component: accountStudent
+  },
+  {
+    path: '/student',
+    name: 'student',
     component: DashBoard
   },
   {
@@ -20,10 +32,11 @@ const routes = [
     name: 'checkList',
     component: CheckListStudent
   },
+ 
   {
-    path: '/studentlist',
-    name: 'studentlist',
-    component: StudentList
+    path: '/admin',
+    name: 'admin',
+    component: admin
   },
 ]
 

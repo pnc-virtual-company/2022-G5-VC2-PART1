@@ -88,4 +88,13 @@ class StudentController extends Controller
     {
         return student::destroy($id);
     }
+
+    // public function login(Request $request) {
+    //     $user = student::where('email',$request->email)->first();
+    //     if (!$user || !Hash::check ($request->password,$user->password)) {
+    //         return response()->json(['sms'=>'invalid']);
+    //     } 
+    //     $token = $user->createToken('token_name')->plainTextToken;
+    //     return response()->json(['sms'=>'Success fully','token'=>$token]);
+    // }
 }
