@@ -1,6 +1,7 @@
 <template>
+
   <div class="text-center">
-    <FormLogin/>
+      <FormLogin v-if="!isStudent && !isAmin"/>
     <h3 v-if="!isStudent && !isAmin" @click="isNavigation()">
       <router-link to="/">STUDENT</router-link>
     </h3>
@@ -25,6 +26,7 @@ export default {
     return {
       isStudent: false,
       isAmin: false,
+       
     };
   },
   components: {
@@ -40,5 +42,6 @@ export default {
       this.isAmin = true;
     },
   },
+  
 };
 </script>

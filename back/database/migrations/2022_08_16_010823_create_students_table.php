@@ -17,10 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string("first_name");
             $table->string("last_name");
-            $table->integer("age");
+            $table->string("gender");
+            $table->string("batch");
             $table->string('email')->unique();
             $table->string("password");
-            $table->string("class");
+            $table->string("phone");
             $table->string("profile_image");
             $table->foreignId('admin_id')->constrained()->onDelete('cascade');
             $table->timestamps();

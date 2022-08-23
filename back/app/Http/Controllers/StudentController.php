@@ -32,10 +32,11 @@ class StudentController extends Controller
         $student = new student();
         $student -> first_name = $request->first_name;
         $student -> last_name = $request->last_name;
-        $student -> age = $request->age;
+        $student -> gender = $request->gender;
+        $student -> batch = $request->batch;
         $student -> email = $request->email;
         $student -> password = Hash::make($request->password);
-        $student -> class = $request->class;
+        $student -> phone = $request->phone;
         $student -> profile_image = $request->profile_image;
         $student -> admin_id = $request->admin_id;
         $student->save();
@@ -61,9 +62,20 @@ class StudentController extends Controller
      * @param  \App\Models\student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, $id)
     {
-        //
+         //
+         $student = student::findOrFail($id);
+         $student -> first_name = $request->first_name;
+         $student -> last_name = $request->last_name;
+         $student -> gender = $request->gender;
+         $student -> batch = $request->batch;
+         $student -> email = $request->email;
+         $student -> password = Hash::make($request->password);
+         $student -> phone = $request->phone;
+         $student -> profile_image = $request->profile_image;
+         $student -> admin_id = $request->admin_id;
+         $student->save();
     }
 
     /**
@@ -72,8 +84,8 @@ class StudentController extends Controller
      * @param  \App\Models\student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Student $student)
+    public function destroy($id)
     {
-        //
+        return student::destroy($id);
     }
 }
