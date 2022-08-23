@@ -24,7 +24,7 @@
           <Button-View
             class="bg-grey font-weight-bold"
             @click="checkStatus(value.status)"
-            ><strong>see more {{countPadding}}</strong></Button-View
+            ><strong>see more </strong></Button-View
           >
         </v-card>
       </v-col>

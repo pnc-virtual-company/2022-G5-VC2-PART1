@@ -1,47 +1,82 @@
 <template>
-    <div class="login">
-        <div class="pnclogo">
+    <div class="container d-flex justify-content-center ">
+        <div class="pnclogo mt-6">
             <v-img :src="require('@/assets/logo.jpg')" class="pnclo"></v-img>
-            <p>SLMS</p>
+            <h2>SMLS</h2>
         </div>
-        <form>
-            <div class="textm">
-
-                <h4>Student Leave Management System</h4> 
+        <form @submit.prevent = "loginUser">
+            <div>
+                <h2>Student Leave Management System</h2> 
             </div>
             <div class="inp">
-                <input type="text" id="email" name="Email" placeholder="email">
-                <input type="password" id="myInput" name="Password" placeholder="Password">  
-                <input type="checkbox" @click="myFunction()" class="showpassword">Show Password
-                <button>login </button>
-                
+                <input 
+                type="text" 
+                id="email" 
+                name="Email" 
+                placeholder="Email" 
+                v-model="email">
+                <input 
+                type="password" 
+                id="myInput" 
+                name="Password" 
+                placeholder="Password" 
+                v-model="password">  
+                <input 
+                type="checkbox" 
+                @click="myFunction()" 
+                class="showpassword">Show Password
+                <button class="mt-3">login </button>
             </div>
-
         </form>
       </div>
 </template>
 
 <script>
-
-    export default {
+import axios from "axios"
+import router from "@/router";
+export default {
+    data(){
+        return{
+            email: "", 
+            password: "",
+            apiUrl: "http://127.0.0.1:8000/api/",
+            adminInfo:[]
+        }
+    },
     methods:{
+        loginUser(){
+            if(this.email !== "" && this.password !==""){
+                axios.post(this.apiUrl+'login' ,{email: this.email, password: this.password})
+                .then((response) =>{
+                    console.log(response.data);
+                })
+            }
+            if(this.adminInfo[0].email==this.email && this.adminInfo[0].password==this.password){
+                router.push("/studentlist");
+            }
+            console.log(this.adminInfo[0].password);
+        },
         myFunction(){
             let x = document.getElementById("myInput");
-        if (x.type === "password") {
-            x.type = "text";
-        } else {
-            x.type = "password";
-        }
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
             }
         }
+    },
+    mounted(){
+        axios.get(this.apiUrl+"admin").then(response=>{
+            this.adminInfo = response.data
+        })
     }
+}
 
 </script>
 
 <style scoped>
 .pnclo{
     width: 150px;
-    margin-top: 60px;
 }
 .pnclogo{
     padding: 20px;
@@ -54,7 +89,7 @@ p{
     text-align: center;
     
 }
-h4{
+h2{
     text-align: center;
     color: blue;
     padding-bottom: 20px;
@@ -64,9 +99,13 @@ input[type=text],input[type=password], select {
     padding: 10px 20px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid rgb(235, 228, 228);
     border-radius: 5px;
     box-sizing: border-box;
+    outline: none
+}
+input:hover{
+    background: rgb(224, 229, 255);
 }
 .showpassword{
     margin-right: 5px;
@@ -83,19 +122,15 @@ button {
     margin-left: 30%;
 }
 button:hover {
-    background-color: #6adc6f;
+    background-color: #000000;
+    color: white;
 }
-form{
-    width: 45%;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    border-top: 10px solid blue;
+.container{
+    width:60%;
     padding:30px;
-    border-radius: 9px;
-}
-.login{
-    margin-left:20%;   
-    margin-top: 10%; 
-    display:flex;
-    
+    border-radius: 12px;
+    border-top: 10px solid blue;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    margin-top: 180px;
 }
 </style>
