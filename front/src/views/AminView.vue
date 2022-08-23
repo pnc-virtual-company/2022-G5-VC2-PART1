@@ -24,6 +24,7 @@ export default {
     drawer: null,
     items: [
       { title: "List Student", icon: "mdi-home", to: "/studentlist" },
+      // { title: "List Student", icon: "mdi-home", to: "/cardstudent" },
       { title: "Check List", icon: "mdi-view-dashboard", to: "/checkList" },
     ],
     right: null,
