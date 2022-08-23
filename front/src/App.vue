@@ -7,6 +7,7 @@
     </h3>
     <h3 v-if="!isAmin && !isStudent" @click="isNavAdmin()">
       <router-link to="/admin">ADMIN</router-link>
+
     </h3>
     <div v-if="isStudent">
       <StudentVIew />

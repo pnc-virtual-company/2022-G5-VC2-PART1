@@ -6,8 +6,14 @@
           <div class="card">
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
-                <div class="account p-3 mt-15 ">
-                  <img class="ml-5 border-radius" :src="url" alt="" width="100" />
+                <div class="account p-3 mt-15">
+                  <img
+                    class="ml-5 border-radius rounded-pill"
+                    :src="studentData.profile_image"
+                    alt=""
+                    width="100"
+                    height="100"
+                  />
                   <div class="d-flex position-absolute">
                     <input
                       type="file"
@@ -24,7 +30,9 @@
                   </div>
                 </div>
                 <div class="mt-3">
-                  <h4>John Doe</h4>
+                  <h4>
+                    {{ studentData.first_name }} {{ studentData.last_name }}
+                  </h4>
                   <p class="text-secondary mb-1">Major: IT</p>
                   <p class="text-muted font-size-sm">
                     <strong>University: Passerell numeriques Cambodia </strong>
@@ -41,29 +49,56 @@
                 <div class="col-sm-3">
                   <h6 class="mb-0">Full Name</h6>
                 </div>
-                <div class="col-sm-9 text-secondary">Kenneth Valdez</div>
+                <div class="col-sm-9 text-secondary">
+                  {{ studentData.first_name }} {{ studentData.last_name }}
+                </div>
               </div>
               <hr />
               <div class="row">
                 <div class="col-sm-3">
                   <h6 class="mb-0">Email</h6>
                 </div>
-                <div class="col-sm-9 text-secondary">fip@jukmuh.al</div>
+                <div class="col-sm-9 text-secondary">
+                  {{ studentData.email }}
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Sex</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{ studentData.gender }}
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Batch</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{ studentData.batch }}
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Password</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  {{ studentData.password }}
+                </div>
               </div>
               <hr />
               <div class="row">
                 <div class="col-sm-3">
                   <h6 class="mb-0">Phone</h6>
                 </div>
-                <div class="col-sm-9 text-secondary">(239) 816-9029</div>
-              </div>
-              <hr />
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Mobile</h6>
+                <div class="col-sm-9 text-secondary">
+                  {{ studentData.phone }}
                 </div>
-                <div class="col-sm-9 text-secondary">(320) 380-4539</div>
               </div>
+
               <hr />
               <div class="row">
                 <div class="col-sm-3">
@@ -80,7 +115,7 @@
                     class="btn btn-info"
                     target="__blank"
                     href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills"
-                    >Edit</a
+                    >Reset Password</a
                   >
                 </div>
               </div>
@@ -92,21 +127,36 @@
   </div>
 </template>
 <script>
+import axios from "../axios-http";
 export default {
   data() {
     return {
       url: null,
+      studentData: {},
     };
   },
   methods: {
+    getStudentIntoProfile() {
+      axios.get("/students/" + 3).then((res) => {
+        this.studentData = res.data[0];
+      });
+    },
+    uploadImage() {
+      axios.put("/students/" + 3,this.studentData.profile_image).then(() => {
+        this.getStudentIntoProfile()
+      });
+    },
     onFileChange(e) {
       const file = e.target.files[0];
-      this.url = URL.createObjectURL(file);
-      this.updateImage();
+      this.studentData.profile_image = URL.createObjectURL(file);
     },
     onChnage() {
       this.$refs.file.click();
+      this.uploadImage()
     },
+  },
+  mounted() {
+    this.getStudentIntoProfile();
   },
 };
 </script>

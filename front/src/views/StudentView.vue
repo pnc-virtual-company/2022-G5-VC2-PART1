@@ -5,7 +5,7 @@
        <router-link class="item-link" to="/accountStudent">
         <div class="account p-3 mt-15 d-flex">
           <img
-            class=""
+            class="rounded-pill"
             src="https://cdn.vuetifyjs.com/images/john.jpg"
             alt="John"
             width="70"

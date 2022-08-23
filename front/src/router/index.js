@@ -6,6 +6,8 @@ import admin from "../components/StudentList.vue"
 import formLogin from "../views/FormLogin.vue"
 import accountStudent from "../components/StudentProfile.vue"
 import adminProfile from "../components/AdminProfile.vue"
+import CardStudent from "../components/CardStudent.vue"
+
 
 const routes = [
   {
@@ -43,6 +45,11 @@ const routes = [
     path: '/adminProfile',
     name: 'adminProfile',
     component: adminProfile
+  },
+  {
+    path: '/cardstudent',
+    name: 'cardstudent',
+    component: CardStudent
   },
 ]
 
