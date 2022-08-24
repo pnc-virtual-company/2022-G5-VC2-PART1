@@ -1,4 +1,5 @@
 <template>
+
   <div>
     <Navigation-Bar transition="scroll-x-reverse-transition">
      <template #account> 

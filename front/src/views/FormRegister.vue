@@ -1,5 +1,4 @@
 <template>
-
   <div
     class="modal fade"
     id="exampleModalToggle"
@@ -7,7 +6,6 @@
     aria-labelledby="exampleModalToggleLabel"
     tabindex="-1"
     data-bs-keyboard="false" data-bs-backdrop="static"
-
   >
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

@@ -1,6 +1,5 @@
 <template>
-  <AdminStatusVue :listLeaves="studentLists"></AdminStatusVue>
-  <div>
+<div>
   <div
     v-for="value in studentnames"
     :key="value"
@@ -76,96 +75,96 @@
 </template>
 
 <script>
-import axios from "../axios-http.js";
-import AdminStatusVue from "./AdminStatus.vue";
-
 export default {
   data() {
-    return{
+    return {
+      studentnames: [
+        {
+          id: 1,
+          name: "Chansok",
+          sex: "male",
+          Class: "2022 SNA",
+          img: "https://cdn-icons-png.flaticon.com/512/1320/1320559.png",
+          studentDetails: [
+            {
+              start_date: "12/03/2014",
+              end_date: "12/03/2014",
+              reason: "sick",
+              duration: "3",
+              leave_type: "sick leave",
+              status: "approved",
+              request_date: "12/03/2014",
+            },
+          ],
+        },
+        {
+          id: 2,
+          name: "somnak",
+          sex: "male",
+          Class: "2022 SNA",
+          img: "https://cdn-icons-png.flaticon.com/512/1320/1320559.png",
+          studentDetails: [
+            {
+              start_date: "12/03/2014",
+              end_date: "12/03/2014",
+              reason: "sick",
+              duration: "2",
+              leave_type: "sick leave",
+              status: "approved",
+              request_date: "12/03/2014",
+            },
+          ],
+        },
+        {
+          id: 2,
+          name: "chansok",
+          sex: "male",
+          Class: "2022 Web B",
+          img: "https://media.istockphoto.com/photos/asian-college-student-sitting-with-a-laptop-picture-id478949096?b=1&k=20&m=478949096&s=170667a&w=0&h=nMzn9T-bPPPm4jsrrDvIPiC-q9c67uyuY14fZj_vjD8=",
+          studentDetails: [
+            {
+              start_date: "12/03/2014",
+              end_date: "12/03/2014",
+              reason: "sick",
+              duration: "3",
+              leave_type: "sick leave",
+              status: "approved",
+              request_date: "12/03/2014",
+            },
+
+          ],
+        },
+
+        {
+          id: 5,
+          name: "sreykea",
+          sex: "male",
+          Class: "2022 SNA",
+          img: "https://st3.depositphotos.com/1037987/15097/i/600/depositphotos_150975580-stock-photo-portrait-of-businesswoman-in-office.jpg",
+          studentDetails: [
+            {
+              start_date: "12/03/2014",
+              end_date: "12/03/2014",
+              reason: "sick",
+              duration: "3",
+              leave_type: "sick leave",
+              status: "approved",
+              request_date: "12/03/2014",
+            },
+
+          ],
+        },
+      ],
       dialog: false,
       index: null,
-      studentLists: [],
-      students: [
-      {
-        start_date: "12/03/2014",
-        end_date: "12/03/2014",
-        reason: "sick",
-        duration: "3",
-        leave_type: "sick leave",
-        status: "Pending",
-        request_date: "12/03/2014",
-      },
-      {
-        start_date: "12/03/2014",
-        end_date: "12/03/2014",
-        reason: "sick",
-        duration: "3",
-        leave_type: "sick leave",
-        status: "Pending",
-        request_date: "12/03/2014",
-      },
-      {
-        start_date: "12/03/2014",
-        end_date: "12/03/2014",
-        reason: "sick",
-        duration: "3",
-        leave_type: "sick leave",
-        status: "Pending",
-        request_date: "12/03/2014",
-      },
-      {
-        start_date: "12/03/2014",
-        end_date: "12/03/2014",
-        reason: "sick",
-        duration: "3",
-        leave_type: "gick leave",
-        status: "Pending",
-        request_date: "12/03/2014",
-      },
-      {
-        start_date: "12/03/2014",
-        end_date: "12/03/2014",
-        reason: "sick",
-        duration: "3",
-        leave_type: "hick leave",
-        status: "Pending",
-        request_date: "12/03/2014",
-      },
-      {
-        start_date: "12/03/2014",
-        end_date: "12/03/2014",
-        reason: "sick",
-        duration: "3",
-        leave_type: "pick leave",
-        status: "Pending",
-        request_date: "12/03/2014",
-      },
-    ],
-    }
+    };
   },
-  components: {
-    AdminStatusVue,
-
-  },
-  methods: {
-    fetchDataStudent() {
-      axios.get("/leaves").then((res) => {
-        this.studentLists = res.data;
-      });
-    },
-   
-  },
-  mounted() {
-    this.fetchDataStudent();
-  },
-}
-
-
-
+};
 </script>
 
 <style scoped>
 h2{
+  /* background-color:#e7f1ff; */
   height: 10vh;
 }
 ul{
@@ -206,4 +205,3 @@ span{
   font-size: 18px;
 }
 </style>
-

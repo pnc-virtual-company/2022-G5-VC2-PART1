@@ -90,15 +90,10 @@ class StudentController extends Controller
 
     public function login(Request $request) {
         $user = student::where('email',$request->email)->first();
-<<<<<<< HEAD
         if (!$user || !Hash::check ($request->password,$user->password)) {
-=======
-        if (!Hash::check ($request->password,$user->password)) {
->>>>>>> 7c37f961dedc9182ef6d89b468bfb464e87a93ef
-            return response()->json(['sms'=>'invalid']);
-        } 
         $token = $user->createToken('token_name')->plainTextToken;
         return response()->json(['sms'=>'Success fully','token'=>$token]);
+        }
     }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  
     <div id="bg-color">
       <v-navigation-drawer v-model="drawer" style="background: #037c5f" app>
         <div >
@@ -28,6 +28,7 @@
         <img :src="require('../assets/logo.jpg')" alt="" width="45" />
       </v-btn>
     </v-app-bar>
+  <v-app id="inspire">
     <v-main>
       <router-view></router-view>
     </v-main>

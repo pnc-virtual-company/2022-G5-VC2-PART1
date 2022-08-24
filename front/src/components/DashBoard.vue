@@ -1,4 +1,5 @@
 <template>
+
   <StudentStatusVue @sendStatus="checkStatus" :listLeaves="studentLists">
   <template #number>
   asdfasfasd
@@ -76,6 +77,7 @@
 import StudentStatusVue from "./StudentStatus.vue";
 import axios from "../axios-http.js"
 export default {
+ 
   components: {
     StudentStatusVue,
   },
