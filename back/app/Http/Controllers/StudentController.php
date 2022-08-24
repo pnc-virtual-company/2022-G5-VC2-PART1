@@ -71,15 +71,7 @@ class StudentController extends Controller
     {
          //
          $student = student::findOrFail($id);
-         $student -> first_name = $request->first_name;
-         $student -> last_name = $request->last_name;
-         $student -> gender = $request->gender;
-         $student -> batch = $request->batch;
-         $student -> email = $request->email;
          $student -> password = Hash::make($request->password);
-         $student -> phone = $request->phone;
-         $student -> profile_image = $request->profile_image;
-         $student -> admin_id = $request->admin_id;
          $student->save();
 
     }
@@ -98,7 +90,11 @@ class StudentController extends Controller
 
     public function login(Request $request) {
         $user = student::where('email',$request->email)->first();
+<<<<<<< HEAD
         if (!$user || !Hash::check ($request->password,$user->password)) {
+=======
+        if (!Hash::check ($request->password,$user->password)) {
+>>>>>>> 7c37f961dedc9182ef6d89b468bfb464e87a93ef
             return response()->json(['sms'=>'invalid']);
         } 
         $token = $user->createToken('token_name')->plainTextToken;

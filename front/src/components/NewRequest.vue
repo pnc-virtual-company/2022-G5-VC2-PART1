@@ -1,29 +1,9 @@
+Nga Hoeun, [8/24/2022 2:13 PM]
 <template>
-<div class="text-center">
-    <v-dialog
-      v-model="dialog"
-      hide-overlay
-      persistent
-      width="300"
-    >
-      <v-card
-        color="primary"
-        dark
-      >
-        <v-card-text>
-          Create successfully
-          <v-progress-linear
-            indeterminate
-            color="white"
-            class="mb-0"
-          ></v-progress-linear>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-  </div>
-  <div class="mt-4">
+  <div>
     <form @submit.prevent="addRequest">
-      <h3 class="text-center bg-header ">Request Leave Form</h3>
+      <h3 class="text-center">Request Leave Form</h3>
+      <hr />
       <div class="form">
         <div class="form-input">
           <p>Type leave :</p>
@@ -78,7 +58,7 @@
         </div>
       </div>
       <div class="bt text-center">
-        <button class="btn btn-primary text-white " type="submit">Submit</button>
+        <button class="btn btn-primary" type="submit">Submit</button>
       </div>
     </form>
   </div>
@@ -89,7 +69,6 @@ import axios from "../axios-http.js";
 export default {
   data() {
     return {
-      request: [],
       typeLeave: "",
       Start_Day: null,
       End_Day: null,
@@ -99,11 +78,9 @@ export default {
       duration: null,
       cause: null,
       isValidTime: true,
-      dialog: false,
     };
   },
   methods: {
-   
     addRequest() {
       if (
         this.typeLeave != null &&
@@ -124,13 +101,10 @@ export default {
             admin_id: 1,
           })
           .then(() => {
-            this.dialog= true
             console.log("Add successfully");
-         
           });
         router.push("/student");
       }
-
       this.sendEmail();
     },
     sendEmail() {
@@ -138,7 +112,6 @@ export default {
         console.log(response.data);
       });
     },
-
     changeDuration() {
       const baseTime =
         (new Date(this.End_Day).getTime() -
@@ -190,19 +163,13 @@ export default {
       return this.changeDuration();
     },
   },
-   watch: {
-      dialog (val) {
-        if (!val) return
-        setTimeout(() => (this.dialog = false), 5000)
-      },
-  }
 };
 </script>
 
 <style scoped>
 form {
   margin-top: 30px;
-  box-shadow: rgba(0, 0, 0, 0.354) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   width: 60%;
   margin: auto;
   padding-bottom: 40px;
@@ -216,11 +183,6 @@ form {
   display: flex;
   margin-top: 20px;
   padding: 40px;
-}
-.bg-header{
-  background:linear-gradient(20deg, rgba(0, 181, 70, 0.932) 0 50%, rgb(112, 241, 130) 50% 100%);
-  padding: 5px;
-  
 }
 .form-input {
   border-radius: 9px;
@@ -245,18 +207,15 @@ span {
 }
 input[type="date"] {
   width: 50%;
-  
 }
 h3 {
   justify-content: center;
   text-align: center;
-  color: rgb(255, 255, 255);
+  color: blue;
   /* line-height:0.1; */
   display: block;
   margin-top: 30px;
   padding-top: 20px;
-  border-bottom: solid 2px rgb(0, 38, 255);
-   
 }
 .text-reason {
   width: 100%;

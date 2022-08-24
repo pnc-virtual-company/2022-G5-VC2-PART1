@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string("gender");
             $table->string("batch");
             $table->string('email')->unique();
-            $table->string("password");
-            $table->string("phone");
+            $table->string("password")->default("12345678");
+            $table->string("phone")->unique();
             $table->string("profile_image");
             $table->foreignId('admin_id')->constrained()->onDelete('cascade');
             $table->timestamps();

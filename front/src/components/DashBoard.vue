@@ -19,7 +19,7 @@
           :class="`elevation-${hover ? 24 : 6}`"
         >
           <tr>
-            <th>Star Date</th>
+            <th>Start Date</th>
             <th>End Date</th>
             <th>Reason</th>
             <th>Duration</th>
@@ -38,7 +38,7 @@
             <span :style="changeColorStatus(student.status)">{{ student.status }}</span>
               
             </td>
-            <td>{{ student.request_date }}</td>
+            <td>{{ student.created_at }}</td>
           </tr>
         </table>
       </div>
@@ -48,7 +48,7 @@
           :class="`elevation-${hover ? 24 : 6}`"
         >
           <tr>
-            <th>Star Date</th>
+            <th>Start Date</th>
             <th>End Date</th>
             <th>Reason</th>
             <th>Duration</th>
@@ -65,7 +65,7 @@
             <td >
              <span :style="changeColorStatus(value.status)">{{ value.status }}</span>
             </td>
-            <td>{{ value.request_date }}</td>
+            <td>{{ value.created_at }}</td>
           </tr>
         </table>
       </div>
@@ -157,8 +157,8 @@ export default {
       }
     },
   },
-   mounted(){
-      this.fetchDataStudent()
+  mounted(){
+    this.fetchDataStudent()
   },
  
 };
