@@ -15,7 +15,6 @@ class student extends Model
         'email',
         'batch',
         'email',
-        'password',
         'phone',
         'profile_image',
         'admin_id',

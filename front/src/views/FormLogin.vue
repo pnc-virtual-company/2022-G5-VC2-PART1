@@ -5,8 +5,7 @@
             <p>SLMS</p>
         </div>
         <form>
-            <div class="textm">
-
+            <div class="text">
                 <h4>Student Leave Management System</h4> 
             </div>
             <div class="inp">

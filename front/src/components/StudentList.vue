@@ -67,261 +67,21 @@
       </v-card>
     </v-dialog>
   </div>
+  <form-register :studentNames="studentnames"/>
 </template>
 
 <script>
+import FormRegister from '@/views/FormRegister.vue'
+import axios from "@/axios-http.js"
 export default {
+  components:{
+    FormRegister
+  },
   data() {
     return {
-      studentnames: [
-        {
-          id: 1,
-          name: "sonak",
-          sex: "male",
-          class: "B",
-          img: "https://cdn-icons-png.flaticon.com/512/1320/1320559.png",
-          studentDetails: [
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-          ],
-        },
-        {
-          id: 2,
-          name: "chansok",
-          sex: "male",
-          class: "B",
-          img: "https://media.istockphoto.com/photos/asian-college-student-sitting-with-a-laptop-picture-id478949096?b=1&k=20&m=478949096&s=170667a&w=0&h=nMzn9T-bPPPm4jsrrDvIPiC-q9c67uyuY14fZj_vjD8=",
-          studentDetails: [
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-          ],
-        },
-        {
-          id: 3,
-          name: "ronan",
-          sex: "male",
-          class: "B",
-          img: "https://img.freepik.com/premium-photo/young-handsome-man-with-beard-isolated-keeping-arms-crossed-frontal-position_1368-132662.jpg",
-          studentDetails: [
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-          ],
-        },
-        {
-          id: 4,
-          name: "lida",
-          sex: "male",
-          class: "B",
-          img: "https://media.istockphoto.com/photos/nothing-says-success-like-self-confidence-picture-id981749060?b=1&k=20&m=981749060&s=170667a&w=0&h=z1eAACQIuuERVqWJwxhxnTUvu3dGai6cr4ZkcSo_pE0=",
-          studentDetails: [
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-          ],
-        },
-        {
-          id: 5,
-          name: "sreykea",
-          sex: "male",
-          class: "B",
-          img: "https://st3.depositphotos.com/1037987/15097/i/600/depositphotos_150975580-stock-photo-portrait-of-businesswoman-in-office.jpg",
-          studentDetails: [
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-          ],
-        },
-        {
-          id: 5,
-          name: "Nga",
-          sex: "male",
-          class: "B",
-          img: "https://images.pexels.com/photos/39866/entrepreneur-startup-start-up-man-39866.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-          studentDetails: [
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-          ],
-        },
-        {
-          id: 5,
-          name: "sreyne",
-          sex: "male",
-          class: "B",
-          img: "https://qodebrisbane.com/wp-content/uploads/2019/07/This-is-not-a-person-2-1.jpeg",
-          studentDetails: [
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-            {
-              start_date: "12/03/2014",
-              end_date: "12/03/2014",
-              reason: "sick",
-              duration: "3",
-              leave_type: "sick leave",
-              status: "approved",
-              request_date: "12/03/2014",
-            },
-          ],
-        },
-      ],
+      studentnames: [],
       dialog: false,
       index: null,
-      // isClick: '',
     };
   },
   methods: {
@@ -330,7 +90,16 @@ export default {
 
       this.index = index;
     },
+    getAllStudents(){
+      axios.get("students").then((response) => {
+        this.studentnames = response.data;
+      })
+    },  
   },
+  mounted() {
+    this.getAllStudents();
+  }
+
 };
 </script>
 
