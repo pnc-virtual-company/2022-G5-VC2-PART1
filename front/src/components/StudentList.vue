@@ -1,10 +1,22 @@
 <template>
+  <div class="search">
+    <input
+      type="text"
+      id="myInput"
+      @keyup="searchByStudent()"
+      placeholder="Search"
+      v-model="searchStudent" 
+    />
+
+  </div>
   <div class="card">
     <div class="card-body">
       <ul
         class="card-user"
-        v-for="(student, index) of studentnames"
+        v-for="(student, index) of filterSearchListStudent"
         :key="student"
+        @click="showPopup(index)"
+        
       >
         <li>
           <v-img
@@ -14,7 +26,7 @@
           ></v-img>
         </li>
         <li>{{ student.name }}</li>
-        <li>{{ student.class }}</li>
+        <li>{{ student.Class }}</li>
         <v-dialog v-model="popup" persistent max-width="290">
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -128,7 +140,7 @@ export default {
           id: 1,
           img: "https://cdn-icons-png.flaticon.com/512/1320/1320559.png",
           name: "sonak",
-          class: "WEB A2022",
+          Class: "SNA 2022",
           number: "8845 658 839",
           email: "somnak.doe@doe.com",
           studentDetails: [
@@ -157,7 +169,7 @@ export default {
           id: 2,
           img: "https://www.esafety.gov.au/sites/default/files/2019-08/Remove%20images%20and%20video.jpg",
           name: "chansok",
-          class: "WEB A2022",
+          Class: "WEB A2022",
           number: "8845 658 839",
           email: "chansok.dorg@doe.com",
           studentDetails: [
@@ -186,7 +198,7 @@ export default {
           id: 3,
           img: "https://d33v4339jhl8k0.cloudfront.net/docs/assets/57b4bd36c697917de37ce375/images/609bdd0dc3a61017bc3084a7/file-dS5bAGKSte.png",
           name: "ronan",
-          class: "WEB A2022",
+          Class: "WEB A2022",
           number: "8845 658 839",
           email: "ronan.doe@doe.com",
           studentDetails: [
@@ -215,7 +227,7 @@ export default {
           id: 4,
           img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVvcGxlJTIwaW4lMjBncm91cHxlbnwwfHwwfHw%3D&w=1000&q=80",
           name: "lida",
-          class: "WEB A2022",
+          Class: "WEB A2022",
           number: "8845 658 839",
           email: "lida.thy@doe.com",
           studentDetails: [
@@ -244,7 +256,7 @@ export default {
           id: 5,
           img: "https://image.shutterstock.com/image-photo/cheerful-young-woman-checking-new-260nw-1099878596.jpg",
           name: "sreykea",
-          class: "WEB A2022",
+          Class: "WEB A2022",
           number: "8845 658 839",
           email: "sreykea.reun@doe.com",
           studentDetails: [
@@ -273,7 +285,7 @@ export default {
           id: 7,
           img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyIm25k6KPO6e0Qbt6d2RNpGF53wcXTtYilg&usqp=CAU",
           name: "Nga",
-          class: "WEB A2022",
+          Class: "WEB A2022",
           number: "8845 658 839",
           email: "nag.doe@doe.com",
           studentDetails: [
@@ -332,7 +344,7 @@ export default {
           id: 6,
           img: "https://qodebrisbane.com/wp-content/uploads/2019/07/This-is-not-a-person-2-1.jpeg",
           name: "sreyne",
-          class: "WEB A2022",
+          Class: "WEB A2022",
           number: "8845 658 839",
           email: "sreyne.doe@doe.com",
           studentDetails: [
@@ -379,6 +391,9 @@ export default {
       dialog: false,
       index: null,
       popup: false,
+      searchStudent: null,
+      search:null,
+      listNamestudent: [],
     };
   },
   methods: {
@@ -395,7 +410,25 @@ export default {
       this.studentnames.splice(this.index, 1);
       this.popup = false;
     },
+    searchByStudent(){
+      this.search =this.searchStudent
+    }
   },
+    computed: {
+    filterSearchListStudent() {
+      if (!this.search) {
+        return this.studentnames ;
+
+      } else {
+        return this.studentnames.filter(({name,Class}) =>
+          name.toLowerCase().includes(this.search.toLowerCase()) || 
+          Class.toLowerCase().includes(this.search.toLowerCase()) 
+        );
+      }
+
+    },
+  },
+
 };
 </script>
 
@@ -519,7 +552,22 @@ h5{
   color: blue;
   margin-left: 860px;
 }
-p{
-  /* margin-right: 100px; */
+.btn {
+  margin-bottom: 10px;
+  width: 8%;
+  height: 6vh;
+  margin-left: 650px;
+}
+.search {
+  padding: 20px;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+input {
+  border: 1px solid;
+  border: radius 3px;
+  padding: 10px;
+  border-radius: 3px;
+  width: 50%;
 }
 </style>
