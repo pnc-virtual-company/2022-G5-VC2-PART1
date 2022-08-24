@@ -14,7 +14,7 @@
                     width="100"
                     height="100"
                   />
-                  <div class="d-flex position-absolute">
+                  <div >
                     <input
                       type="file"
                       accept="image/*"
@@ -30,9 +30,7 @@
                   </div>
                 </div>
                 <div class="mt-3">
-                  <h4>
-                    {{ dataAdmin.first_name }} {{ dataAdmin.last_name }}
-                  </h4>
+                  <h4>{{ dataAdmin.first_name }} {{ dataAdmin.last_name }}</h4>
                   <p class="text-secondary mb-1">Major: IT</p>
                   <p class="text-muted font-size-sm">
                     <strong>University: Passerell numeriques Cambodia </strong>
@@ -65,10 +63,10 @@
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Sex</h6>
+                  <h6 class="mb-0">age</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ dataAdmin.gender }}
+                  {{ dataAdmin.age }}
                 </div>
               </div>
               <hr />
@@ -80,16 +78,6 @@
                   {{ dataAdmin.password }}
                 </div>
               </div>
-              <hr />
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Phone</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  {{ dataAdmin.phone }}
-                </div>
-              </div>
-
               <hr />
               <div class="row">
                 <div class="col-sm-3">
@@ -127,27 +115,28 @@ export default {
     };
   },
   methods: {
-    getStudentIntoProfile() {
+    getAdminIntoProfile() {
       axios.get("/admin/" + 1).then((res) => {
-        this.dataAdmin = res.data[0];
+        this.dataAdmin = res.data;
+        console.log(res.data);
       });
     },
-    // uploadImage() {
-    //   axios.put("/students/" + 1,this.dataAdmin.profile_image).then(() => {
-    //     this.getStudentIntoProfile()
-    //   });
-    // },
-    // onFileChange(e) {
-    //   const file = e.target.files[0];
-    //   this.dataAdmin.profile_image = URL.createObjectURL(file);
-    // },
-    // onChnage() {
-    //   this.$refs.file.click();
-    //   this.uploadImage()
-    // },
+    uploadImage() {
+      axios.put("/students/" + 1,this.dataAdmin.profile_image).then(() => {
+        this.getStudentIntoProfile()
+      });
+    },
+    onFileChange(e) {
+      const file = e.target.files[0];
+      this.dataAdmin.profile_image = URL.createObjectURL(file);
+    },
+    onChnage() {
+      this.$refs.file.click();
+      this.uploadImage()
+    },
   },
   mounted() {
-    this.getStudentIntoProfile();
+    this.getAdminIntoProfile();
   },
 };
 </script>

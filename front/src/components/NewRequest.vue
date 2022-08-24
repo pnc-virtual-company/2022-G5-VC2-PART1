@@ -21,10 +21,9 @@
       </v-card>
     </v-dialog>
   </div>
-  <div>
+  <div class="mt-4">
     <form @submit.prevent="addRequest">
-      <h3 class="text-center">Request Leave Form</h3>
-      <hr />
+      <h3 class="text-center bg-header ">Request Leave Form</h3>
       <div class="form">
         <div class="form-input">
           <p>Type leave :</p>
@@ -79,7 +78,7 @@
         </div>
       </div>
       <div class="bt text-center">
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <button class="btn btn-primary text-white " type="submit">Submit</button>
       </div>
     </form>
   </div>
@@ -203,7 +202,7 @@ export default {
 <style scoped>
 form {
   margin-top: 30px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.354) 0px 3px 8px;
   width: 60%;
   margin: auto;
   padding-bottom: 40px;
@@ -217,6 +216,11 @@ form {
   display: flex;
   margin-top: 20px;
   padding: 40px;
+}
+.bg-header{
+  background:linear-gradient(20deg, rgba(0, 181, 70, 0.932) 0 50%, rgb(112, 241, 130) 50% 100%);
+  padding: 5px;
+  
 }
 .form-input {
   border-radius: 9px;
@@ -241,15 +245,18 @@ span {
 }
 input[type="date"] {
   width: 50%;
+  
 }
 h3 {
   justify-content: center;
   text-align: center;
-  color: blue;
+  color: rgb(255, 255, 255);
   /* line-height:0.1; */
   display: block;
   margin-top: 30px;
   padding-top: 20px;
+  border-bottom: solid 2px rgb(0, 38, 255);
+   
 }
 .text-reason {
   width: 100%;

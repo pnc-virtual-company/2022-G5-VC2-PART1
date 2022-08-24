@@ -3,9 +3,9 @@
     <div class="main-body">
       <div class="row gutters-sm">
         <div class="col-md-4 mb-3">
-          <div class="card">
-            <div class="card-body">
-              <div class="d-flex flex-column align-items-center text-center">
+          <div class="card card-profile">
+            <div class="card-body ">
+              <div class="d-flex flex-column align-items-center text-center ">
                 <div class="account p-3 mt-15">
                   <img
                     class="ml-5 border-radius rounded-pill"
@@ -42,8 +42,8 @@
             </div>
           </div>
         </div>
-        <div class="col-md-8">
-          <div class="card mb-3">
+        <div class="col-md-8 ">
+          <div class="card mb-3 card-list-info">
             <div class="card-body">
               <div class="row">
                 <div class="col-sm-3">
@@ -56,7 +56,7 @@
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Email</h6>
+                  <h6 class="mb-0 mr-5">Email</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
                   {{ studentData.email }}
@@ -100,7 +100,7 @@
               </div>
 
               <hr />
-              <div class="row">
+              <div class="row ">
                 <div class="col-sm-3">
                   <h6 class="mb-0">Address</h6>
                 </div>
@@ -112,9 +112,6 @@
               <div class="row">
                 <div class="col-sm-12">
                   <a
-                    class="btn btn-info"
-                    target="__blank"
-                    href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills"
                     >Reset Password</a
                   >
                 </div>
@@ -137,12 +134,12 @@ export default {
   },
   methods: {
     getStudentIntoProfile() {
-      axios.get("/students/" + 3).then((res) => {
+      axios.get("/students/" + 1).then((res) => {
         this.studentData = res.data[0];
       });
     },
     uploadImage() {
-      axios.put("/students/" + 3,this.studentData.profile_image).then(() => {
+      axios.put("/students/" + 1,this.studentData.profile_image).then(() => {
         this.getStudentIntoProfile()
       });
     },
@@ -167,4 +164,13 @@ export default {
 .border-radius {
   border-radius: 40px;
 }
+.card-profile{
+  border-top: 5px solid purple;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.card-list-info{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-left: 5px solid purple;
+}
+
 </style>

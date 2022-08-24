@@ -1,71 +1,117 @@
 <template>
-  <div class="card">
-    <div class="card-body ">
-      <ul
-        class="card-user"
-        v-for="(student, index) of studentnames"
+  <div class="bg-shodow rounded p-3 mt-5 text-white font-weight-bold">
+    LIST STUDENTS
+  </div>
+  <div class="overflow-auto mt-5 w-overflow" style="height: 50vh">
+    <div class="m-3" v-if="studentnames != null">
+      <div
+        class="m-2 card-top card h-card"
+        v-for="(student,index) of studentnames"
         :key="student"
       >
-        <li>
-          <v-img
-            class="profile_img"
-            :src="student.profile_image"
-            @click="showPopup(index)"
-          ></v-img>
-        </li>
-      
-        <li>{{ student.first_name }} {{student.last_name}}</li>
-        <li>{{ student.batch }}</li>
-        <v-dialog v-model="popup" persistent max-width="290">
-          <template v-slot:activator="{ on, attrs }">
+        <div class="d-flex-align h-card">
+          <div class="">
+            <v-img
+              class="profile_img rounded-circle"
+              width="80"
+              :src="student.profile_image"
+            ></v-img>
+          </div>
+          <div class="card-body d-flex row">
+            <div class="col-sm-4 ml-0">
+              <p>{{ student.first_name }} {{ student.last_name }}</p>
+            </div>
+            <div class="col-sm-4">
+              <p class="ml-40">{{ student.batch }}</p>
+            </div>
+          </div>
+          <div class="">
             <v-btn
-              color="danger"
-              dark
-              v-bind="attrs"
-              v-on="on"
+              color="white"
+              @click.stop="dialogDelete = true"
               @click="alertDialog(index)"
-              >Delete</v-btn
             >
-          </template>
-          <v-card class="cencel-delete">
-            <v-card-title class="text-h5">Are you sure to delete?</v-card-title>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                class="cencel"
-                color=" darken-1"
-                text
-                @click="popup = false"
-                >Cencel</v-btn
-              >
-              <v-btn
-                class="studentDelete"
-                color=" darken-1"
-                text
-                @click="deleteStudent()"
-                >Delete</v-btn
-              >
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </ul>
+              <i class="fa-solid fa-trash-can fa-2xl text-red"></i>
+            </v-btn>
+            <v-btn @click="showPopup(index)" class="bg-blue p-1 m-1"
+              ><strong class="text-white"> VIEW DETAIL</strong></v-btn
+            >
+          </div>
+        </div>
+      <div class="ma-auto">
+        <v-row class="d-flex justify-content-center">
+          <v-dialog
+            v-model="dialogDelete"
+            class="w-dialog-confirmed mlp4 m-auto"
+          >
+            <v-card>
+              <v-card-title class="text-h5 color-confirmed">
+                Confirmed
+              </v-card-title>
+
+              <v-card-text class="text-red">
+                Are you sure want to delete student?
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+
+                <v-btn
+                  color="green darken-1"
+                  text
+                  @click="dialogDelete = false"
+                >
+                  Cancel
+                </v-btn>
+
+                <v-btn  color="red darken-1" text @click="onDeleteStudent(student.id)">
+                  <p >DELETE </p> 
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
+      </div>
+      </div>
     </div>
   </div>
-  <div justify="center">
+ <div class="text-center w-25">
+    <v-container>
+      <v-row justify="center">
+        <v-col cols="8">
+          <v-container class="max-width">
+            <v-pagination
+              v-model="page"
+              class="my-4"
+              :length="lengthDataStudent"
+            ></v-pagination>
+          </v-container>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
+  <div class="ml-5">
     <v-dialog v-model="dialog" width="100%">
-      <v-card class="modal justify-center">
+      <v-card class="modal justify-center w-80 border-style-top" sm="6">
         <div class="img-class relative">
-          <button @click="dialog = false" class="btn btn-danger ml-60">
-            X
-          </button>
-          <div class="profile">
           <div>
-          <div class="card-img">
-            <v-img  class="image pa-7 secondary rounded-circle d-inline-block"  :src="studentnames[index].img"></v-img>
+            <div class="d-flex">
+              <button @click="dialog = false" class="btn btn-danger ml-60 p-1">
+                X
+              </button>
+            </div>
           </div>
-            <p>{{ studentnames[index].number }}</p>
-            <p class="text-caption mt-1">{{ studentnames[index].email }}</p>
-          </div>
+          <div class="profile">
+            <div>
+              <div class="card-img">
+                <v-img
+                  class="image pa-7 secondary d-inline-block"
+                  :src="studentnames[index].profile_image"
+                ></v-img>
+              </div>
+              <p>{{ studentnames[index].phone }}</p>
+              <p class="text-caption mt-1">{{ studentnames[index].email }}</p>
+            </div>
           </div>
         </div>
         <v-card-text>
@@ -103,312 +149,111 @@
       </v-card>
     </v-dialog>
   </div>
-  <!------------------------------------------------- cardstudent -------------------------------------->
-
-  <v-card class="mx-auto card-student mb-6 ">
-    <div class="studentcard d-flex pa-4">
-      <v-list-item-avatar tile size="80" color="grey">
-        <v-img
-          class="image"
-          src="https://qodebrisbane.com/wp-content/uploads/2019/07/This-is-not-a-person-2-1.jpeg"
-        ></v-img>
-      </v-list-item-avatar>
-      <v-list-item-title class="text-h5 ml-4 mt-3"> Somnak </v-list-item-title>
-    </div>
-    <v-list-item three-line>
-      <v-list-item-content >
-        <p>Dear teacher at my home have partty. I promission to go home join partty with my family.Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eius sapiente, deserunt reprehenderit labore quae! A quos autem odio.</p>
-        <v-list-item-subtitle ><h5>approved</h5></v-list-item-subtitle>
-      </v-list-item-content>
-    </v-list-item>
-  </v-card>
 </template>
 
 <script>
 import axios from "../axios-http";
+
 export default {
   data() {
     return {
+      page: 1,
       studentnames: [
-        // {
-        //   id: 1,
-        //   img: "https://cdn-icons-png.flaticon.com/512/1320/1320559.png",
-        //   name: "sonak",
-        //   class: "WEB A2022",
-        //   number: "8845 658 839",
-        //   email: "somnak.doe@doe.com",
-        //   studentDetails: [
-        //     {
-        //       start_date: "12/03/2014",
-        //       end_date: "12/03/2014",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2014",
-        //     },
-
-        //     {
-        //       start_date: "12/03/2014",
-        //       end_date: "12/03/2014",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2014",
-        //     },
-        //   ],
-        // },
-        // {
-        //   id: 2,
-        //   img: "https://www.esafety.gov.au/sites/default/files/2019-08/Remove%20images%20and%20video.jpg",
-        //   name: "chansok",
-        //   class: "WEB A2022",
-        //   number: "8845 658 839",
-        //   email: "chansok.dorg@doe.com",
-        //   studentDetails: [
-        //     {
-        //       start_date: "12/03/2014",
-        //       end_date: "12/03/2014",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2014",
-        //     },
-
-        //     {
-        //       start_date: "12/03/2014",
-        //       end_date: "12/03/2014",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2014",
-        //     },
-        //   ],
-        // },
-        // {
-        //   id: 3,
-        //   img: "https://d33v4339jhl8k0.cloudfront.net/docs/assets/57b4bd36c697917de37ce375/images/609bdd0dc3a61017bc3084a7/file-dS5bAGKSte.png",
-        //   name: "ronan",
-        //   class: "WEB A2022",
-        //   number: "8845 658 839",
-        //   email: "ronan.doe@doe.com",
-        //   studentDetails: [
-        //     {
-        //       start_date: "12/03/2014",
-        //       end_date: "12/03/2014",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2014",
-        //     },
-
-        //     {
-        //       start_date: "12/03/2014",
-        //       end_date: "12/03/2014",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2014",
-        //     },
-        //   ],
-        // },
-        // {
-        //   id: 4,
-        //   img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVvcGxlJTIwaW4lMjBncm91cHxlbnwwfHwwfHw%3D&w=1000&q=80",
-        //   name: "lida",
-        //   class: "WEB A2022",
-        //   number: "8845 658 839",
-        //   email: "lida.thy@doe.com",
-        //   studentDetails: [
-        //     {
-        //       start_date: "12/03/2014",
-        //       end_date: "12/03/2014",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2014",
-        //     },
-
-        //     {
-        //       start_date: "12/03/2014",
-        //       end_date: "12/03/2014",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2014",
-        //     },
-        //   ],
-        // },
-        // {
-        //   id: 5,
-        //   img: "https://image.shutterstock.com/image-photo/cheerful-young-woman-checking-new-260nw-1099878596.jpg",
-        //   name: "sreykea",
-        //   class: "WEB A2022",
-        //   number: "8845 658 839",
-        //   email: "sreykea.reun@doe.com",
-        //   studentDetails: [
-        //     {
-        //       start_date: "12/03/2014",
-        //       end_date: "12/03/2014",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2014",
-        //     },
-
-        //     {
-        //       start_date: "12/03/2014",
-        //       end_date: "12/03/2014",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2014",
-        //     },
-        //   ],
-        // },
-        // {
-        //   id: 7,
-        //   img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyIm25k6KPO6e0Qbt6d2RNpGF53wcXTtYilg&usqp=CAU",
-        //   name: "Nga",
-        //   class: "WEB A2022",
-        //   number: "8845 658 839",
-        //   email: "nag.doe@doe.com",
-        //   studentDetails: [
-        //     {
-        //       start_date: "12/03/2014",
-        //       end_date: "12/03/2014",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2014",
-        //     },
-
-        //     {
-        //       start_date: "12/03/2020",
-        //       end_date: "12/03/2020",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2020",
-        //     },
-
-        //     {
-        //       start_date: "12/03/2020",
-        //       end_date: "12/03/2020",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2020",
-        //     },
-
-        //     {
-        //       start_date: "12/03/2021",
-        //       end_date: "12/03/2021",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2021",
-        //     },
-
-        //     {
-        //       start_date: "12/03/2022",
-        //       end_date: "12/03/2022",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2022",
-        //     },
-        //   ],
-        // },
-        // {
-        //   id: 6,
-        //   img: "https://qodebrisbane.com/wp-content/uploads/2019/07/This-is-not-a-person-2-1.jpeg",
-        //   name: "sreyne",
-        //   class: "WEB A2022",
-        //   number: "8845 658 839",
-        //   email: "sreyne.doe@doe.com",
-        //   studentDetails: [
-        //     {
-        //       start_date: "12/03/2019",
-        //       end_date: "12/03/2019",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2019",
-        //     },
-
-        //     {
-        //       start_date: "12/03/2020",
-        //       end_date: "12/03/2020",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2020",
-        //     },
-        //     {
-        //       start_date: "12/03/2021",
-        //       end_date: "12/03/2021",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2021",
-        //     },
-        //     {
-        //       start_date: "12/03/2022",
-        //       end_date: "12/03/2022",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2022",
-        //     },
-        //   ],
-        // },
+        {
+          id: 1,
+          profile_image:
+            "https://cdn-icons-png.flaticon.com/512/1320/1320559.png",
+          first_name: "sonak",
+          last_name: "sonak",
+          batch: "WEB A2022",
+          phone: "8845 658 839",
+          email: "somnak.doe@doe.com",
+          studentDetails: [
+            {
+              start_date: "12/03/2014",
+              end_date: "12/03/2014",
+              reason: "sick",
+              duration: "3",
+              leave_type: "sick leave",
+              status: "approved",
+              request_date: "12/03/2014",
+            },
+            {
+              start_date: "12/03/2014",
+              end_date: "12/03/2014",
+              reason: "sick",
+              duration: "3",
+              leave_type: "sick leave",
+              status: "approved",
+              request_date: "12/03/2014",
+            },
+          ],
+        },
+        {
+          id: 2,
+          profile_image:
+            "https://www.esafety.gov.au/sites/default/files/2019-08/Remove%20images%20and%20video.jpg",
+          first_name: "sonak",
+          last_name: "sonak",
+          batch: "WEB A2022",
+          phone: "8845 658 839",
+          email: "somnak.doe@doe.com",
+          studentDetails: [
+            {
+              start_date: "12/03/2014",
+              end_date: "12/03/2014",
+              reason: "sick",
+              duration: "3",
+              leave_type: "sick leave",
+              status: "approved",
+              request_date: "12/03/2014",
+            },
+            {
+              start_date: "12/03/2014",
+              end_date: "12/03/2014",
+              reason: "sick",
+              duration: "3",
+              leave_type: "sick leave",
+              status: "approved",
+              request_date: "12/03/2014",
+            },
+          ],
+        },
       ],
       dialog: false,
       index: null,
       popup: false,
+      dialogDelete: false,
     };
   },
   methods: {
-    getStudent(){
-      axios.get("/students").then((res)=>{
-        this.studentnames= res.data
-      })
+    getStudent() {
+      axios.get("/students").then((res) => {
+        this.studentnames = res.data;
+      });
+    },
+    onDeleteStudent(id) {
+      this.dialogDelete=false
+      axios.delete("/students/" + id).then(() => {
+        this.getStudent();
+      });
     },
     showPopup(index) {
       this.dialog = true;
-
       this.index = index;
     },
     alertDialog(index) {
       this.popup = true;
       this.index = index;
     },
-    deleteStudent() {
-      this.studentnames.splice(this.index, 1);
-      this.popup = false;
-    },
   },
-  mounted(){
-    this.getStudent()
+  mounted() {
+    this.getStudent();
+  },
+  computed:{
+    lengthDataStudent(){
+      return this.studentnames.length
+    }
   }
 };
 </script>
@@ -419,36 +264,67 @@ export default {
   margin: 0;
   box-sizing: border-box;
 }
-.card {
-  width: 90%;
-  margin: 20px auto;
-  box-shadow: 2px 2px 6px 1px #cccc;
+.color-confirmed {
+  background: rgb(210, 209, 209);
+  padding: 10px;
+  color: #666666;
 }
-
+.w-dialog-confirmed {
+  width: 30%;
+}
+.h-card {
+  height: 10vh;
+}
+.w-overflow {
+  width: 95%;
+  background: rgb(241, 238, 238);
+  margin: auto;
+}
 li {
   list-style: none;
+}
+.color-icon {
+  color: red;
+}
+.border-style-top {
+  border-top: solid 10px blue;
+}
+.card-top {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-left: solid 5px blue;
+}
+.bg-shodow {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background: rgb(46, 4, 229);
+  width: 95%;
+  margin: auto;
+  border-top: solid purple 5px;
+}
+.v-btn {
+  box-shadow: rgb(255, 255, 255) 0px 0px 0px 0px;
+}
+
+.w-80 {
+  width: 80%;
+  margin-left: 10%;
+}
+.d-flex-align {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 80%;
+  margin: auto;
 }
 .card-body {
   padding: 10px;
 }
 .card-user {
   background: rgb(189, 212, 252);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  padding: 10px;
-  margin: 10px 10px 10px 0px;
 }
-.profile_img:hover {
-  background: #8bb3f8;
-  transition: all 1s ease-in-out;
-  transform: translateY(-10px);
-  cursor: pointer;
-}
-.profile_img{
-  width: 60px;
-  height: 60px;
+
+.profile_img {
+  width: 100px;
+  height: 15vh;
   border-radius: 40px;
 }
 .image {
@@ -502,9 +378,9 @@ tr:nth-child(even) {
   height: 26vh;
 }
 .profile {
- text-align: center;
+  text-align: center;
 }
-.card-img{
+.card-img {
   width: 80%;
   margin: auto;
 }
@@ -522,20 +398,19 @@ tr:nth-child(even) {
 }
 
 /*--------------------------------------------- cardstundent--------------------------- */
-.card-student{
+.card-student {
   border-top: 24px solid rgb(75, 75, 249);
   box-shadow: 2px 2px 6px 1px #cccc;
   width: 90%;
 }
-.approv-btn{
+.approv-btn {
   border: 10px solid blue;
   background: rgb(47, 47, 209);
   border-radius: 10px;
 }
-h5{
+h5 {
   margin-top: 12px;
   color: blue;
   margin-left: 860px;
 }
-
 </style>

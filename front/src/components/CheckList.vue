@@ -78,9 +78,11 @@ export default {
         this.studentLists = res.data;
       });
     },
+   
   },
   mounted() {
     this.fetchDataStudent();
+
   },
 };
 </script>

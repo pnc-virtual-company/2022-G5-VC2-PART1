@@ -95,23 +95,14 @@ class StudentController extends Controller
         return student::destroy($id);
     }
 
-<<<<<<< HEAD
-    // public function login(Request $request) {
-    //     $user = student::where('email',$request->email)->first();
-    //     if (!$user || !Hash::check ($request->password,$user->password)) {
-    //         return response()->json(['sms'=>'invalid']);
-    //     } 
-    //     $token = $user->createToken('token_name')->plainTextToken;
-    //     return response()->json(['sms'=>'Success fully','token'=>$token]);
-    // }
-=======
+
     public function login(Request $request) {
-        $user = student::only('email','password')->first();
-        if (!Hash::check ($request->password,$user->password)) {
+        $user = student::where('email',$request->email)->first();
+        if (!$user || !Hash::check ($request->password,$user->password)) {
             return response()->json(['sms'=>'invalid']);
         } 
-        $token = $user->createToken('token_student')->plainTextToken;
+        $token = $user->createToken('token_name')->plainTextToken;
         return response()->json(['sms'=>'Success fully','token'=>$token]);
     }
->>>>>>> 22f0228576bc1cf020f3e73d86c6c873af7a7f10
 }
+

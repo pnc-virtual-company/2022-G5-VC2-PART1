@@ -3,9 +3,7 @@
     <div id="bg-color">
       <v-navigation-drawer v-model="drawer" style="background: #037c5f" app>
         <div >
-        
             <slot name="account"></slot>
-         
         </div>
         <v-list style="background: #037c5f">
           <slot name="v-list-item"></slot>
@@ -66,4 +64,5 @@ i {
 .fs {
   font-size: 25px;
 }
+
 </style>

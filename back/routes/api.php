@@ -26,7 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // For Student
 Route::apiResource("students",StudentController::class);
 
-// For Admin
+// // For Admin
 Route::apiResource("admin",AdminController::class);
 
 // For Student Leave
@@ -34,13 +34,19 @@ Route::apiResource("leaves",LeaveController::class);
 
 Route::get('/send-mail', [MailController::class, 'sendEmail']);
 
-// For login Admin
-Route::post('/login',[AdminController::class,'login']);
+// // For login Admin
+// Route::post('/login',[AdminController::class,'login']);
 
 // For login Student 
-<<<<<<< HEAD
-// Route::post('/login',[StudentController::class,'login']);
-=======
-Route::post('/loginStudent',[StudentController::class,'login']);
->>>>>>> 22f0228576bc1cf020f3e73d86c6c873af7a7f10
 
+Route::post('/login',[StudentController::class,'login']);
+
+
+// -----------------------
+Route::post('/create',[AdminController::class,'store']);
+Route::post('/login',[AdminController::class,'login']);
+// Route::group(['middleware'=>'auth:sanctum'],function(){
+//     Route::post('/student',[StudentController::class,'store']);
+//     Route::get('/students',[StudentController::class,'index']);
+//     Route::post('/logout',[AdminController::class,'logout']);
+// });

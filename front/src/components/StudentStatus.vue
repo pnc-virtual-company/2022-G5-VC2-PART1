@@ -2,19 +2,19 @@
   <LIstViewVue>
     <template #header> </template>
   </LIstViewVue>
-  <v-container class="grey lighten-5">
+  <v-container class="grey lighten-5 ">
     <v-row class="d-flex justify-content-evenly">
       <v-col v-for="value in studentStatus" :key="value" xs="12" sm="12" md="4">
         <v-card class="w-card w-75 m-auto">
-          <div class="d-flex">
+          <div class="d-flex  bg-top">
             <div :class="value.background">
               <img :src="value.img" width="70" alt="" />
             </div>
-            <div class="card-body-status ml-4">
+            <div class="card-body-status ml-4 ">
               <div class="card-text-status font-weight-bold fs-5">
                 {{ value.status }}
               </div>
-              <div class="card-number-status">
+              <div class="card-number-status ">
                 <p v-if="value.status== 'Approved'">{{ getApproved }}</p>
                 <p v-if="value.status== 'Pending'">{{ getPadding }}</p>
                 <p v-if="value.status== 'Rejected'">{{ getRejected }}</p>
@@ -22,7 +22,7 @@
             </div>
           </div>
           <Button-View
-            class="bg-grey font-weight-bold"
+            class="bg font-weight-bold"
             @click="checkStatus(value.status)"
             ><strong class="text-white">see more </strong></Button-View
           >
@@ -111,6 +111,7 @@ export default {
 }
 .green {
   background: green;
+  
 }
 .yellow {
   background: rgba(255, 162, 0, 0.61);
@@ -124,5 +125,11 @@ export default {
 strong:hover {
   color: rgb(43, 90, 92);
   transition: 0.5s;
+}
+.bg-top{
+  border-left:  5px solid purple;
+}
+.bg{
+  background: rgb(0, 198, 0);
 }
 </style>

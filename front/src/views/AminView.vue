@@ -26,7 +26,7 @@
       </template>
       <template #v-list-item>
         
-        <v-list-item v-for="item in items" :key="item.title"  :to="item.to" link>
+        <v-list-item v-for="item in items" :key="item.title"  :to="item.to" link class="mt-5">
           <div style="display: flex">
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
@@ -88,6 +88,7 @@ img {
 .v-list-item--active {
   background-color: rgb(255, 255, 255);
   color: rgb(0, 0, 0);
+  
 }
 .v-list-item {
   text-decoration: none;
