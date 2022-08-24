@@ -1,5 +1,4 @@
 <template>
-
   <AdminStatusVue :listLeaves="studentLists"></AdminStatusVue>
   <div>
   <div
@@ -79,6 +78,7 @@
 <script>
 import axios from "../axios-http.js";
 import AdminStatusVue from "./AdminStatus.vue";
+
 export default {
   data() {
     return{
