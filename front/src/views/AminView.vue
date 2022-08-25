@@ -20,9 +20,11 @@
         </router-link>
       </template>
       <template #padding-alert>
+      <button>
         <v-badge color="green" :content="countPending">
           <i class="fa-solid fa-bell icon-bell"></i>
         </v-badge>
+      </button>
       </template>
       <template #v-list-item>
         
@@ -36,19 +38,19 @@
             </v-list-item-content>
           </div>
         </v-list-item>
-
       </template>
     </Navigation-Bar>
   </div>
 </template>
 
 <script>
+
 import axios from "../axios-http";
 export default {
   data: () => ({
     drawer: null,
     items: [
-      { title: "List Student", icon: "mdi-home", to: "/admin"},
+      { title: "List Student", icon: "mdi-home", to: "/listStudent"},
       { title: "Check List", icon: "mdi-view-dashboard", to: "/checkList" },
     ],
     right: null,

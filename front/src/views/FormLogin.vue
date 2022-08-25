@@ -1,9 +1,13 @@
 <template>
+<!-- <div v-if="isTrue">
+<AdminView></AdminView>
+-->
+<!-- <router-view></router-view> -->
   <div class="container d-flex justify-content-center">
     <div class="pnclogo mt-6">
       <v-img :src="require('@/assets/logo.jpg')" class="pnclo"></v-img>
       <h2>SMLS</h2>
-      <router-link to="/admin">admin</router-link>
+     
     </div>
     <form @submit.prevent="loginUser">
       <div>
@@ -33,11 +37,16 @@
 </template>
 
 <script>
+// import AdminView from "./AminView.vue"
 import axios from "../axios-http.js";
 export default {
+  components:{
+  },
   data() {
     return {
-      email: "",
+      email:null,
+      emailEnter:null,
+      isTrue:false,
       password: "",
       admin: [],
       students: [],
@@ -57,13 +66,11 @@ export default {
           })
           .then((response) => {
             this.dataCheck = response.data;
-        if (this.admin[0].email == this.email) {
-            console.log(this.admin[0].email);
-            console.log(this.email);
-            this.$router.push('/StudenetView');
+          });
+        if (this.admin[0].email== this.email) {
+            this.$router.push('/listStudent');
           
         }
-          });
       }
     },
     myFunction() {

@@ -104,7 +104,7 @@ export default {
           .then(() => {
             console.log("Add successfully");
           });
-        router.push("/student");
+        router.push("/dashboard");
       }
       this.sendEmail();
     },

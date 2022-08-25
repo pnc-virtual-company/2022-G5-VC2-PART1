@@ -20,7 +20,7 @@
           </div>
           <Button-View
             class=" font-weight-bold bg-green "
-            ><stron class="text-white">see more </stron></Button-View
+            ><stron class="text-white" @click="sendAdminStatus(value.status)">see more </stron></Button-View
           >
         </v-card>
       </v-col>
@@ -29,9 +29,8 @@
 </template>
 
 <script>
-import axios from "../axios-http.js";
 export default {
-  props:['listLeaves'],
+  props:['listLeaves','studentName'],
   components: {},
   data: () => ({
     students:[],
@@ -54,24 +53,14 @@ export default {
         img: "https://cdn4.iconfinder.com/data/icons/multimedia-75/512/multimedia-26-256.png",
       },
     ],
-    studentLists: [],
   }),
   methods: {
-    fetchDataStudent() {
-      axios.get("/leaves").then((res) => {
-        this.studentLists = res.data;
-      });
-    },
-     fetchStudent() {
-      axios.get("/student").then((res) => {
-        this.students = res.data;
-      });
-    },
+
+    sendAdminStatus(status){
+      this.$emit("sendAdminStatus",status)
+    }
   },
-  mounted() {
-    this.fetchDataStudent();
-    this.fetchStudent();
-  },
+ 
   computed: {
     getRejected(){
       let count =null
@@ -93,8 +82,7 @@ export default {
     },
     countStudent(){
       let count=null
-      this.students.forEach(student => {
-        console.log(student);
+      this.studentName.forEach(student => {
         if(student){
           count++
         }

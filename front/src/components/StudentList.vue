@@ -2,7 +2,12 @@
   <div class="bg-shodow rounded p-3 mt-5 text-white font-weight-bold">
     LIST STUDENTS
   </div>
+  <!-- -------/register/-------- -->
+  <div class=" ml-8 mt-4">
+   <FormRegisterVue :studentNames="studentnames"/>
+  </div>
   <div class="overflow-auto mt-5 w-overflow" style="height: 50vh">
+ 
     <div class="m-3" v-if="studentnames != null">
       <div
         class="m-2 card-top card h-card"
@@ -75,6 +80,7 @@
       </div>
     </div>
   </div>
+  
  <div class="text-center w-25">
     <v-container>
       <v-row justify="center">
@@ -132,7 +138,7 @@
                 <th>Request Date</th>
               </tr>
               <tr
-                v-for="studentDetail of studentnames[index].studentDetails"
+                v-for="studentDetail of studentnames[index].leave"
                 :key="studentDetail"
               >
                 <td>{{ studentDetail.start_date }}</td>
@@ -153,11 +159,16 @@
 
 <script>
 import axios from "../axios-http";
+import FormRegisterVue from "../views/FormRegister.vue";
+
 
 export default {
+  components:{
+    FormRegisterVue,
+  },
   data() {
     return {
-      page: 1,
+     
       studentnames: [
         {
           id: 1,
@@ -224,6 +235,8 @@ export default {
       index: null,
       popup: false,
       dialogDelete: false,
+      aroundPage:null,
+       page: 1,
     };
   },
   methods: {
@@ -246,6 +259,9 @@ export default {
       this.popup = true;
       this.index = index;
     },
+    nextPage(){
+
+    }
   },
   mounted() {
     this.getStudent();

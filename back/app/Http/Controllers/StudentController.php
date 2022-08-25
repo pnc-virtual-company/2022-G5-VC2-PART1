@@ -20,7 +20,7 @@ class StudentController extends Controller
     public function index()
     {
         //
-        return student::all();
+        return student::with('leave')->get();
     }
 
     /**
