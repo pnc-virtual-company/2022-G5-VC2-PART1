@@ -44,7 +44,6 @@
     </div>
 </template>
 <script>
-import router from "@/router";
 import axios from "../axios-http.js"
 export default {
     data(){
@@ -79,7 +78,7 @@ export default {
                 .then(()=> {
                     console.log("Add successfully");
                 });
-                router.push("/")   
+                this.$router.push("/dashboard")   
             }
             this.sendEmail();
             },

@@ -33,7 +33,6 @@
 
 <script>
 import axios from "../axios-http.js"
-// import router from "@/router";
 export default {
     data(){
         return{
@@ -41,15 +40,44 @@ export default {
             password: "",
             admin:[],
             students:[],
-            role: '',
+            dataCheck:[],
             isStudent:false,
             isTeacher:false,
+            studentIndex:null,
+            token:null
         }
     },
     methods:{
         loginUser(){
             if(this.email !== "" && this.password !==""){
-                axios.post()
+                let loginInfo = {'email' : this.email, 'password' : this.password}
+                console.log(this.email==this.admin[0].email)
+                this.checkStudent()
+                if(this.admin[0].email == this.email){
+                    axios.post("login",loginInfo).then((response) =>{
+                        if(response.data.sms!="invalid"){
+                            this.$router.push("/listStudent")
+                            localStorage.setItem('user_id',this.admin[0].id)
+                            localStorage.setItem('admin_token',response.data.token)
+                        }else{
+                            alert("Password is invalid")
+                        }
+                    })
+                }else if(this.isStudent){
+                    axios.post("loginStudent",loginInfo).then((response) =>{
+                        if(response.data.sms!="invalid"){
+                            this.$router.push("/dashboard")
+                        }else{
+                            alert("Password is invalid")
+                        }
+                        console.log(response.data)
+
+                    })
+                }else{
+                    alert("Invalid Email")
+                }    
+            }else{
+                alert("Fill in everything")
             }
         },
         myFunction(){
@@ -59,8 +87,39 @@ export default {
             } else {
                 x.type = "password";
             }
+        },
+        getStudents(){
+            axios.get("students").then((response) =>{
+                this.students = response.data;
+            });
+        },
+        getAdmin(){
+            axios.get("admin").then((response) =>{
+                this.admin = response.data;
+            });
+        },
+        checkStudent(){
+            this.students.forEach((student) =>{
+                if(student.email == this.email){
+                    this.isStudent = true;
+                }
+            })
         }
+
     },
+    computed:{
+        getAllStudents(){
+            return this.getStudents()
+        },
+        getAllAdmin(){
+            return this.getAdmin()
+        },
+    },
+    mounted(){
+        this.getAdmin();
+        this.getStudents();
+
+    }
 
 }
 

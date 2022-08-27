@@ -37,6 +37,8 @@ Route::get('/send-mail', [MailController::class, 'sendEmail']);
 // For login Admin
 Route::post('/login',[AdminController::class,'login']);
 
+Route::post('/logout',[AdminController::class,'logout']);
+
 // For login Student 
 Route::post('/loginStudent',[StudentController::class,'login']);
 

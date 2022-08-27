@@ -23,7 +23,7 @@ export default {
   data: () => ({
   drawer: null,
     items: [
-      { title: "Dashboard", icon: "mdi-home", to: "/" },
+      { title: "Dashboard", icon: "mdi-home", to: "/dashboard" },
       { title: "New Request", icon: "mdi-view-dashboard", to: "/request" },
     ],
     right: null,
