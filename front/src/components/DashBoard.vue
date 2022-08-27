@@ -32,20 +32,20 @@
           <tr v-for="student in filterSearchListStudent" :key="student">
             <td>{{ student.start_date }}</td>
             <td>{{ student.end_date }}</td>
-            <td>{{ student.cause }}</td>
+            <td>{{ student.reason }}</td>
             <td>{{ student.duration }}</td>
-            <td>{{ student.type }}</td>
+            <td>{{ student.leave_type }}</td>
             <td  >
-            <span :style="changeColorStatus(student.status)">{{ student.status }}</span>
-              
+            <span :style="changeColorStatus(student.status)">{{ student.status }}</span> 
             </td>
+            <td>{{ student.request_date }}</td>
             <td>{{ student.created_at }}</td>
           </tr>
         </table>
       </div>
       <div v-if="isClick" class="">
         <table
-          class="secondary text-no-wrap rounded-t-lg"
+          class="secondary text-no-wrap between-t-lg"
           :class="`elevation-${hover ? 24 : 6}`"
         >
           <tr>
@@ -60,9 +60,9 @@
           <tr v-for="value in filterCheckStatus" :key="value">
             <td>{{ value.start_date }}</td>
             <td>{{ value.end_date }}</td>
-            <td>{{ value.cause }}</td>
+            <td>{{ value.reason }}</td>
             <td>{{ value.duration }}</td>
-            <td>{{ value.type }}</td>
+            <td>{{ value.leave_type }}</td>
             <td >
              <span :style="changeColorStatus(value.status)">{{ value.status }}</span>
             </td>
