@@ -1,5 +1,4 @@
 <template>
-
   <div
     class="modal fade"
     id="exampleModalToggle"
@@ -7,7 +6,6 @@
     aria-labelledby="exampleModalToggleLabel"
     tabindex="-1"
     data-bs-keyboard="false" data-bs-backdrop="static"
-
   >
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -20,7 +18,7 @@
                     @click="clearInfo()"
                 ></button>
             </div>
-            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 mt-4">Registration Form</h3>
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 mt-4 text-center">Registration Form</h3>
             <form class="p-4" @submit.prevent="addStudent">
                 <div class="row">
                     <div class="col-md-6 mb-4">
@@ -62,7 +60,7 @@
                 <div class="row">
                     <div class="col-md-6 mb-4 pb-2">
                         <div class="form-outline">
-                            <input type="email" id="emailAddress" class="form-control form-control-lg" placeholder="Email" required v-model="email"/>
+                            <input type="email" id="emailAddress" class="form-control  form-control-lg" placeholder="Email" required v-model="email"/>
                         </div>
                         <p class="text-danger" v-if="checkExist[0]">This email already exist.</p>
                     </div>
@@ -78,8 +76,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-4 pt-2">
-                    <input class="btn btn-primary btn-lg" type="submit" value="Register" data-bs-dismiss="modal" :disabled="!checkAll"/>
+                <div class="mt-4 pt-2 text-center">
+                    <input class="btn btn-primary btn-lg " type="submit" value="Register" data-bs-dismiss="modal" :disabled="!checkAll"/>
                 </div>
             </form>
         </div>
@@ -219,7 +217,7 @@ import swal from 'sweetalert'
     }
 </script>
 
-<style>
+<style scoped>
     .number{
         padding: 13px;
     }

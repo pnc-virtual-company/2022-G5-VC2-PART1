@@ -1,8 +1,34 @@
 <template>
   <div>
     <Navigation-Bar>
+      <template #account>
+        <router-link class="item-link" to="/adminProfile">
+          <div class="account p-3 mt-15 d-flex">
+            <img
+              class=" rounded-pill"
+              src="https://cdn.vuetifyjs.com/images/john.jpg"
+              alt="John"
+              width="70"
+            />
+            <div>
+              <div class="mt-3 text-white">
+                <span class="m-2 fw-bold">Nga</span>
+                <p class="">PNC</p>
+              </div>
+            </div>
+          </div>
+        </router-link>
+      </template>
+      <template #padding-alert>
+      <button>
+        <v-badge color="green" :content="countPending">
+          <i class="fa-solid fa-bell icon-bell"></i>
+        </v-badge>
+      </button>
+      </template>
       <template #v-list-item>
-        <v-list-item v-for="item in items" :key="item.title" :to="item.to" link>
+        
+        <v-list-item v-for="item in items" :key="item.title"  :to="item.to" link class="mt-5">
           <div style="display: flex">
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
@@ -19,17 +45,39 @@
 
 <script>
 
+import axios from "../axios-http";
 export default {
   data: () => ({
     drawer: null,
     items: [
-      { title: "List Student", icon: "mdi-home", to: "/studentlist" },
-      // { title: "List Student", icon: "mdi-home", to: "/cardstudent" },
+      { title: "List Student", icon: "mdi-home", to: "/listStudent"},
       { title: "Check List", icon: "mdi-view-dashboard", to: "/checkList" },
     ],
     right: null,
+    studentLists: [],
   }),
-  
+  methods: {
+    getData() {
+      axios.get("/leaves").then((res) => {
+        this.studentLists = res.data;
+      });
+    },
+  },
+  computed: {
+    countPending() {
+      let count = null;
+      this.studentLists.forEach((leave) => {
+        console.log(leave.status);
+        if (leave.status === "pending") {
+          count++;
+        }
+      });
+      return count | 0;
+    },
+  },
+  mounted(){
+    this.getData()
+  }
 };
 </script>
 <style scoped>
@@ -42,6 +90,7 @@ img {
 .v-list-item--active {
   background-color: rgb(255, 255, 255);
   color: rgb(0, 0, 0);
+  
 }
 .v-list-item {
   text-decoration: none;
@@ -53,4 +102,19 @@ img {
 .button {
   border-top: 2px solid white;
 }
+.icon-bell {
+  font-size: 25px;
+}
+.v-badge:hover {
+  background: none;
+}
+.v-list-item-title {
+  font-weight: bold;
+}
+.item-link {
+  text-decoration: none;
+}
+
+
+
 </style>

@@ -1,9 +1,28 @@
 <template>
+
   <div>
-    <Navigation-Bar transition="scroll-x-reverse-transition">
+    <Navigation-Bar >
+     <template #account> 
+       <router-link class="item-link" to="/profile">
+        <div class="account p-3 mt-5 d-flex">
+          <img
+            class="rounded-pill"
+            src="https://cdn.vuetifyjs.com/images/john.jpg"
+            alt="John"
+            width="70"
+          />
+          <div>
+            <div class="mt-3 text-white">
+              <span class="m-2 fw-bold">Somnak Kalan</span>
+              <p class="">PNC</p>
+            </div>
+          </div>
+        </div>
+    </router-link>
+              </template>
       <template #v-list-item >
-        <v-list-item v-for="item in items" :key="item.title" :to="item.to" link >
-          <div style="display: flex">
+        <v-list-item v-for="item in items" :key="item.title" :to="item.to" link  class="mt-5">
+          <div style="display: flex" >
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
@@ -60,8 +79,16 @@ img {
 }
 .v-list-item--active {
   color: rgb(0, 0, 0);
+  
 }
 .v-list-item-title{
   font-weight: bold;
 }
+.account {
+  border-bottom: solid 2px rgb(255, 255, 255);
+}
+.item-link{
+  text-decoration: none;
+}
+
 </style>

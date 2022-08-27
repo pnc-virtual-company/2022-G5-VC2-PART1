@@ -7,6 +7,9 @@ import formLogin from "../views/FormLogin.vue"
 // import studentProfile from "../components/StudentProfile.vue"
 // import adminProfile from "../components/AdminProfile.vue"
 import StudentView from "../views/StudentView.vue"
+// import studentProfile from "../components/StudentProfile.vue"
+// import adminProfile from "../components/AdminProfile.vue"
+// import CardStudent from "../components/CardStudent.vue"
 import AdminView from "../views/AminView.vue"
 const routes = [
   {

@@ -1,78 +1,123 @@
 <template>
-  <div class="search">
-    <input
-      type="text"
-      id="myInput"
-      @keyup="searchByStudent()"
-      placeholder="Search"
-      v-model="searchStudent" 
-    />
-
+  <div class="bg-shodow rounded p-3 mt-5 text-white font-weight-bold">
+    LIST STUDENTS
   </div>
-  <div class="card">
-    <div class="card-body">
-      <ul
-        class="card-user"
-        v-for="(student, index) of filterSearchListStudent"
+  <!-- -------/register/-------- -->
+  <div class=" ml-8 mt-4">
+   <FormRegisterVue :studentNames="studentnames"/>
+  </div>
+  <div class="overflow-auto mt-5 w-overflow" style="height: 50vh">
+ 
+    <div class="m-3" v-if="studentnames != null">
+      <div
+        class="m-2 card-top card h-card"
+        v-for="(student,index) of studentnames"
         :key="student"
-        @click="showPopup(index)"
-        
       >
-        <li>
-          <v-img
-            class="profile_img"
-            :src="student.img"
-            @click="showPopup(index)"
-          ></v-img>
-        </li>
-        <li>{{ student.name }}</li>
-        <li>{{ student.Class }}</li>
-        <v-dialog v-model="popup" persistent max-width="290">
-          <template v-slot:activator="{ on, attrs }">
+        <div class="d-flex-align h-card">
+          <div class="">
+            <v-img
+              class="profile_img rounded-circle"
+              width="80"
+              :src="student.profile_image"
+            ></v-img>
+          </div>
+          <div class="card-body d-flex row">
+            <div class="col-sm-4 ml-0">
+              <p>{{ student.first_name }} {{ student.last_name }}</p>
+            </div>
+            <div class="col-sm-4">
+              <p class="ml-40">{{ student.batch }}</p>
+            </div>
+          </div>
+          <div class="">
             <v-btn
-              color="danger"
-              dark
-              v-bind="attrs"
-              v-on="on"
+              color="white"
+              @click.stop="dialogDelete = true"
               @click="alertDialog(index)"
-              >Delete</v-btn
             >
-          </template>
-          <v-card class="cencel-delete">
-            <v-card-title class="text-h5">Are you sure to delete?</v-card-title>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                class="cencel"
-                color=" darken-1"
-                text
-                @click="popup = false"
-                >Cencel</v-btn
-              >
-              <v-btn
-                class="studentDelete"
-                color=" darken-1"
-                text
-                @click="deleteStudent()"
-                >Delete</v-btn
-              >
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </ul>
+              <i class="fa-solid fa-trash-can fa-2xl text-red"></i>
+            </v-btn>
+            <v-btn @click="showPopup(index)" class="bg-blue p-1 m-1"
+              ><strong class="text-white"> VIEW DETAIL</strong></v-btn
+            >
+          </div>
+        </div>
+      <div class="ma-auto">
+        <v-row class="d-flex justify-content-center">
+          <v-dialog
+            v-model="dialogDelete"
+            class="w-dialog-confirmed mlp4 m-auto"
+          >
+            <v-card>
+              <v-card-title class="text-h5 color-confirmed">
+                Confirmed
+              </v-card-title>
+
+              <v-card-text class="text-red">
+                Are you sure want to delete student?
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+
+                <v-btn
+                  color="green darken-1"
+                  text
+                  @click="dialogDelete = false"
+                >
+                  Cancel
+                </v-btn>
+
+                <v-btn  color="red darken-1" text @click="onDeleteStudent(student.id)">
+                  <p >DELETE </p> 
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
+      </div>
+      </div>
     </div>
   </div>
-  <div justify="center">
+  
+ <div class="text-center w-25">
+    <v-container>
+      <v-row justify="center">
+        <v-col cols="8">
+          <v-container class="max-width">
+            <v-pagination
+              v-model="page"
+              class="my-4"
+              :length="lengthDataStudent"
+            ></v-pagination>
+          </v-container>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
+  <div class="ml-5">
     <v-dialog v-model="dialog" width="100%">
-      <v-card class="modal justify-center">
+      <v-card class="modal justify-center w-80 border-style-top" sm="6">
         <div class="img-class relative">
-          <button @click="dialog = false" class="btn btn-danger ml-60">
-            X
-          </button>
+          <div>
+            <div class="d-flex">
+              <button @click="dialog = false" class="btn btn-danger ml-60 p-1">
+                X
+              </button>
+            </div>
+          </div>
           <div class="profile">
-            <v-img class="image" :src="studentnames[index].img"></v-img>
-            <p>{{ studentnames[index].number }}</p>
-            <p class="text-caption mt-1">{{ studentnames[index].email }}</p>
+            <div>
+              <div class="card-img">
+                <v-img
+                  class="image pa-7 secondary d-inline-block"
+                  :src="studentnames[index].profile_image"
+                ></v-img>
+              </div>
+              <p>{{ studentnames[index].phone }}</p>
+              <p class="text-caption mt-1">{{ studentnames[index].email }}</p>
+            </div>
           </div>
         </div>
         <v-card-text>
@@ -93,7 +138,7 @@
                 <th>Request Date</th>
               </tr>
               <tr
-                v-for="studentDetail of studentnames[index].studentDetails"
+                v-for="studentDetail of studentnames[index].leave"
                 :key="studentDetail"
               >
                 <td>{{ studentDetail.start_date }}</td>
@@ -115,46 +160,113 @@
 </template>
 
 <script>
-import FormRegister from '@/views/FormRegister.vue'
-import axios from "@/axios-http.js"
+import axios from "../axios-http";
+import FormRegisterVue from "../views/FormRegister.vue";
+
+
 export default {
   components:{
-    FormRegister
+    FormRegisterVue,
   },
   data() {
     return {
-      studentnames: [],
+     
+      studentnames: [
+        {
+          id: 1,
+          profile_image:
+            "https://cdn-icons-png.flaticon.com/512/1320/1320559.png",
+          first_name: "sonak",
+          last_name: "sonak",
+          batch: "WEB A2022",
+          phone: "8845 658 839",
+          email: "somnak.doe@doe.com",
+          studentDetails: [
+            {
+              start_date: "12/03/2014",
+              end_date: "12/03/2014",
+              reason: "sick",
+              duration: "3",
+              leave_type: "sick leave",
+              status: "approved",
+              request_date: "12/03/2014",
+            },
+            {
+              start_date: "12/03/2014",
+              end_date: "12/03/2014",
+              reason: "sick",
+              duration: "3",
+              leave_type: "sick leave",
+              status: "approved",
+              request_date: "12/03/2014",
+            },
+          ],
+        },
+        {
+          id: 2,
+          profile_image:
+            "https://www.esafety.gov.au/sites/default/files/2019-08/Remove%20images%20and%20video.jpg",
+          first_name: "sonak",
+          last_name: "sonak",
+          batch: "WEB A2022",
+          phone: "8845 658 839",
+          email: "somnak.doe@doe.com",
+          studentDetails: [
+            {
+              start_date: "12/03/2014",
+              end_date: "12/03/2014",
+              reason: "sick",
+              duration: "3",
+              leave_type: "sick leave",
+              status: "approved",
+              request_date: "12/03/2014",
+            },
+            {
+              start_date: "12/03/2014",
+              end_date: "12/03/2014",
+              reason: "sick",
+              duration: "3",
+              leave_type: "sick leave",
+              status: "approved",
+              request_date: "12/03/2014",
+            },
+          ],
+        },
+      ],
+      dialog: false,
+      index: null,
       popup: false,
-      searchStudent: null,
-      search:null,
-      listNamestudent: [],
+      dialogDelete: false,
+      aroundPage:null,
+       page: 1,
     };
   },
   methods: {
+    getStudent() {
+      axios.get("/students").then((res) => {
+        this.studentnames = res.data;
+      });
+    },
+    onDeleteStudent(id) {
+      this.dialogDelete=false
+      axios.delete("/students/" + id).then(() => {
+        this.getStudent();
+      });
+    },
     showPopup(index) {
       this.dialog = true;
-
       this.index = index;
     },
-    getAllStudents(){
-      axios.get("students").then((response) => {
-        this.studentnames = response.data;
-      })
-    },  
     alertDialog(index) {
       this.popup = true;
       this.index = index;
     },
-    deleteStudent() {
-      this.studentnames.splice(this.index, 1);
-      this.popup = false;
-    },
-    searchByStudent(){
-      this.search =this.searchStudent
+    nextPage(){
+
     }
   },
   mounted() {
-    this.getAllStudents();
+    this.getStudent();
   },
 
     computed: {
@@ -180,37 +292,72 @@ export default {
   margin: 0;
   box-sizing: border-box;
 }
-.card {
-  width: 90%;
-  margin: 20px auto;
-  box-shadow: 2px 2px 6px 1px #cccc;
+.color-confirmed {
+  background: rgb(210, 209, 209);
+  padding: 10px;
+  color: #666666;
 }
-
+.w-dialog-confirmed {
+  width: 30%;
+}
+.h-card {
+  height: 10vh;
+}
+.w-overflow {
+  width: 95%;
+  background: rgb(241, 238, 238);
+  margin: auto;
+}
 li {
   list-style: none;
+}
+.color-icon {
+  color: red;
+}
+.border-style-top {
+  border-top: solid 10px blue;
+}
+.card-top {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-left: solid 5px blue;
+}
+.bg-shodow {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background: rgb(46, 4, 229);
+  width: 95%;
+  margin: auto;
+  border-top: solid purple 5px;
+}
+.v-btn {
+  box-shadow: rgb(255, 255, 255) 0px 0px 0px 0px;
+}
+
+.w-80 {
+  width: 80%;
+  margin-left: 10%;
+}
+.d-flex-align {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 80%;
+  margin: auto;
 }
 .card-body {
   padding: 10px;
 }
 .card-user {
   background: rgb(189, 212, 252);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  margin-top: 10px;
 }
-.profile_img:hover {
-  background: #8bb3f8;
-  transition: all 1s ease-in-out;
-  transform: translateY(-10px);
-  cursor: pointer;
+
+.profile_img {
+  width: 100px;
+  height: 15vh;
+  border-radius: 40px;
 }
-.profile_img,
 .image {
-  width: 50px;
-  height: 50px;
-  border-radius: 100%;
+  width: 20%;
+  border-radius: 40px;
 }
 .card-form {
   justify-content: center;
@@ -259,11 +406,11 @@ tr:nth-child(even) {
   height: 26vh;
 }
 .profile {
-  margin-bottom: 200px;
-  width: 50%;
-  margin-left: 340px;
-  display: block;
-  align-items: center;
+  text-align: center;
+}
+.card-img {
+  width: 80%;
+  margin: auto;
 }
 .cencel-delete {
   margin-left: 850px;
@@ -279,37 +426,19 @@ tr:nth-child(even) {
 }
 
 /*--------------------------------------------- cardstundent--------------------------- */
-.card-student{
+.card-student {
   border-top: 24px solid rgb(75, 75, 249);
   box-shadow: 2px 2px 6px 1px #cccc;
   width: 90%;
 }
-.approv-btn{
+.approv-btn {
   border: 10px solid blue;
   background: rgb(47, 47, 209);
   border-radius: 10px;
 }
-h5{
+h5 {
   margin-top: 12px;
   color: blue;
   margin-left: 860px;
-}
-.btn {
-  margin-bottom: 10px;
-  width: 8%;
-  height: 6vh;
-  margin-left: 650px;
-}
-.search {
-  padding: 20px;
-  margin-top: 20px;
-  justify-content: space-between;
-}
-input {
-  border: 1px solid;
-  border: radius 3px;
-  padding: 10px;
-  border-radius: 3px;
-  width: 50%;
 }
 </style>

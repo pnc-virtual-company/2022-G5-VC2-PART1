@@ -1,30 +1,26 @@
 <template>
-  <LIstViewVue>
-    <template #header> </template>
-  </LIstViewVue>
-  <v-container class="grey lighten-5 ">
+  <v-container class="grey lighten-5">
     <v-row class="d-flex justify-content-evenly">
       <v-col v-for="value in studentStatus" :key="value" xs="12" sm="12" md="4">
-        <v-card class="w-card w-75 m-auto">
-          <div class="d-flex  bg-top">
+        <v-card class="w-card w-75 m-auto ">
+          <div class="d-flex bg-left">
             <div :class="value.background">
               <img :src="value.img" width="70" alt="" />
             </div>
-            <div class="card-body-status ml-4 ">
+            <div class="card-body-status ml-4">
               <div class="card-text-status font-weight-bold fs-5">
                 {{ value.status }}
               </div>
-              <div class="card-number-status ">
-                <p v-if="value.status== 'Approved'">{{ getApproved }}</p>
-                <p v-if="value.status== 'Pending'">{{ getPadding }}</p>
-                <p v-if="value.status== 'Rejected'">{{ getRejected }}</p>
+              <div class="card-number-status">
+                <p v-if="value.status == 'Approved'">{{ getApproved }}</p>
+                <p v-if="value.status == 'Rejected'">{{ getRejected }}</p>
+                <p v-if="value.status == 'Student'">{{ countStudent }}</p>
               </div>
             </div>
           </div>
           <Button-View
-            class="bg font-weight-bold"
-            @click="checkStatus(value.status)"
-            ><strong class="text-white">see more </strong></Button-View
+            class=" font-weight-bold bg-green "
+            ><stron class="text-white" @click="sendAdminStatus(value.status)">see more </stron></Button-View
           >
         </v-card>
       </v-col>
@@ -33,23 +29,22 @@
 </template>
 
 <script>
-import axios from "../axios-http.js";
 export default {
-  props:['listLeaves'],
+  props:['listLeaves','studentName'],
   components: {},
   data: () => ({
+    students:[],
     studentStatus: [
+      {
+        status: "Student",
+        background: "blue",
+        img: "https://media.istockphoto.com/vectors/student-avatar-flat-icon-flat-vector-illustration-symbol-design-vector-id1212812078?k=20&m=1212812078&s=170667a&w=0&h=Pl6TaYY87D2nWwRSWmdtJJ0DKeD5vPowomY9fyeqNOs=",
+      },
       {
         status: "Approved",
 
         background: "green",
         img: "https://cdn-icons-png.flaticon.com/512/4157/4157035.png",
-      },
-      {
-        status: "Pending",
-
-        background: "yellow",
-        img: "https://cdn3.iconfinder.com/data/icons/arrows-set-12/512/reset-256.png",
       },
       {
         status: "Rejected",
@@ -58,21 +53,14 @@ export default {
         img: "https://cdn4.iconfinder.com/data/icons/multimedia-75/512/multimedia-26-256.png",
       },
     ],
-    studentLists: [],
   }),
   methods: {
-    checkStatus(status) {
-      this.$emit("sendStatus", status);
-    },
-    fetchDataStudent() {
-      axios.get("/leaves").then((res) => {
-        this.studentLists = res.data;
-      });
-    },
+
+    sendAdminStatus(status){
+      this.$emit("sendAdminStatus",status)
+    }
   },
-  mounted() {
-    this.fetchDataStudent();
-  },
+ 
   computed: {
     getRejected(){
       let count =null
@@ -92,11 +80,11 @@ export default {
       });
       return count | 0;
     },
-    getPadding(){
-      let count = null
-      this.listLeaves.forEach(leave => {
-        if(leave.status==="pending"){
-          count++;
+    countStudent(){
+      let count=null
+      this.studentName.forEach(student => {
+        if(student){
+          count++
         }
       });
       return count | 0;
@@ -111,7 +99,6 @@ export default {
 }
 .green {
   background: green;
-  
 }
 .yellow {
   background: rgba(255, 162, 0, 0.61);
@@ -126,10 +113,11 @@ strong:hover {
   color: rgb(43, 90, 92);
   transition: 0.5s;
 }
-.bg-top{
-  border-left:  5px solid purple;
+.bg-left{
+  border-left: solid 5px purple;
 }
-.bg{
-  background: rgb(0, 198, 0);
+.bg-green{
+  background: green;
+
 }
 </style>

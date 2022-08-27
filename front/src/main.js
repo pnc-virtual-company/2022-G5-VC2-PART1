@@ -1,10 +1,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './router/index'
 import vuetify from './plugins/vuetify'
 import Navigation from "./navigation/NavigationBar.vue"
 import Button from "./components/ButtonComponent.vue"
-
 import { loadFonts } from './plugins/webfontloader'
 loadFonts()
 

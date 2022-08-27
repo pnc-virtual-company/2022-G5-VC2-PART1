@@ -49,9 +49,9 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function show(Admin $admin)
+    public function show($id)
     {
-        //
+        return Admin::findOrFail($id);
     }
     /**
      * Update the specified resource in storage.
@@ -73,7 +73,7 @@ class AdminController extends Controller
      */
     public function destroy(Admin $admin)
     {
-        //
+        
     }
     public function login(Request $request) {
         $user = Admin::where('email',$request->email)->first();
@@ -89,4 +89,5 @@ class AdminController extends Controller
         auth()->user()->tokens()->delete();
         return response()->json(['sms'=>'Logout is Successful']);
     }
+    
 }

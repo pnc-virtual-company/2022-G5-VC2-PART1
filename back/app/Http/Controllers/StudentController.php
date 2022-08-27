@@ -20,7 +20,7 @@ class StudentController extends Controller
     public function index()
     {
         //
-        return student::all();
+        return student::with('leave')->get();
     }
 
     /**
@@ -84,12 +84,22 @@ class StudentController extends Controller
         return student::destroy($id);
     }
 
+
     public function login(Request $request) {
+<<<<<<< HEAD
         $student = student::where('email',$request->email)->first();
         if (!Hash::check ($request->password,$student->password)) {
             return response()->json(['sms'=>'invalid']);
         }
         $token = $student->createToken('token_student')->plainTextToken;
         return response()->json(['sms'=>'Successfully','token'=>$token]);
+=======
+        $user = student::where('email',$request->email)->first();
+        if (!$user || !Hash::check ($request->password,$user->password)) {
+        $token = $user->createToken('token_name')->plainTextToken;
+        return response()->json(['sms'=>'Success fully','token'=>$token]);
+        }
+>>>>>>> a8b4da75bd7756b75adc8f51f3da2cbf62c27243
     }
 }
+
