@@ -7,20 +7,15 @@
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
                 <div class="account p-3 mt-15">
-                  <img v-if="studentData.profile_image!=null"
-                    class="ml-5 border-radius rounded-pill"
-                    :src="studentData.profile_image"
-                    alt=""
-                    width="100"
-                    height="100"
-                  />
+                <img v-if="studentData.profile_image!=null"
+                    class="ml-5 border-radius rounded-pill" src="" alt="">
                   <img v-else
                     class="ml-5 border-radius rounded-pill"
                     src="https://www.homeagainsaintjohns.org/wp-content/uploads/2021/05/No-Picture-Yet-Home-Again-St-Johns-Board-Members.png"
                     alt=""
                     width="100"
                     height="100"
-                  />
+                  >
 
                   <div>somnak : {{ studentData.profile_image }}</div>
                   <div class="d-flex position-absolute">
@@ -28,6 +23,7 @@
                     />
                     <button @click="onChangeFile">
                       <i class="fa-solid fa-camera"></i>
+
                     </button>
                   </div>
                 </div>
@@ -35,7 +31,7 @@
                   <h4>
                     {{ studentData.first_name }} {{ studentData.last_name }}
                   </h4>
-                  <p class="text-secondary mb-1">Major: IT</p>
+                  <p class="text-secondary mb-4">Major: IT</p>
                   <p class="text-muted font-size-sm">
                     <strong>University: Passerell numeriques Cambodia </strong>
                   </p>
@@ -49,7 +45,7 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Full Name</h6>
+                  <h6 class="mb-0">Full Name:</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
                   {{ studentData.first_name }} {{ studentData.last_name }}
@@ -58,7 +54,7 @@
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0 mr-5">Email</h6>
+                  <h6 class="mb-0 mr-5">Email:</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
                   {{ studentData.email }}
@@ -67,7 +63,7 @@
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Sex</h6>
+                  <h6 class="mb-0">Sex:</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
                   {{ studentData.gender }}
@@ -76,7 +72,7 @@
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Batch</h6>
+                  <h6 class="mb-0">Batch:</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
                   {{ studentData.batch }}
@@ -85,7 +81,7 @@
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Password</h6>
+                  <h6 class="mb-0">Password:</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
                   {{ studentData.password }}
@@ -94,7 +90,7 @@
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Phone</h6>
+                  <h6 class="mb-0">Phone:</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
                   {{ studentData.phone }}
@@ -104,7 +100,7 @@
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Address</h6>
+                  <h6 class="mb-0">Address:</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
                   Bay Area, San Francisco, CA
@@ -113,6 +109,7 @@
               <hr />
               <div class="row">
                 <div class="col-sm-12">
+
                   <a>Reset Password</a>
                 </div>
               </div>
@@ -174,12 +171,14 @@ export default {
 .border-radius {
   border-radius: 40px;
 }
-.card-profile {
-  border-top: 5px solid purple;
+.card-profile{
+  height: 77vh;
+  border-top: 5px solid rgb(65, 34, 176);
+
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 .card-list-info {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  border-left: 5px solid purple;
+  border-left: 5px solid  rgb(65, 34, 176);
 }
 </style>

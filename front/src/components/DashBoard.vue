@@ -24,7 +24,6 @@
         <th>Status</th>
         <th>Request Date</th>
       </tr>
-
       <tr v-for="student in filterSearchListStudent" :key="student">
         <td>{{ student.start_date }}</td>
         <td>{{ student.end_date }}</td>
@@ -69,7 +68,7 @@
         <td>{{ value.created_at }}</td>
       </tr>
     </table>
-  </div>
+  </div> 
 </template>
 
 <script>
