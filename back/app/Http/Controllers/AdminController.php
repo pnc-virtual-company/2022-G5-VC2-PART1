@@ -81,7 +81,13 @@ class AdminController extends Controller
             return response()->json(['sms'=>'invalid']);
         } 
         $token = $user->createToken('token_admin')->plainTextToken;
-        return response()->json(['sms'=>'Success fully','token'=>$token]);
+        return response()->json(['sms'=>'Successfully','token'=>$token]);
+    }
+
+    
+    public function logout() {
+        auth()->user()->tokens()->delete();
+        return response()->json(['sms'=>'Logout is Successful']);
     }
     
 }

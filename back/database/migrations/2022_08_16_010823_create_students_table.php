@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string("phone")->unique();
             $table->string("profile_image");
             $table->foreignId('admin_id')->constrained()->onDelete('cascade');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

@@ -144,19 +144,65 @@ export default {
       }
       return this.duration;
     },
-    getCurrentDate() {
-      var date = new Date();
-      var tdate = date.getDate();
-      var month = date.getMonth() + 1;
-      if (tdate < 10) {
-        tdate = "0" + tdate;
-      }
-      if (month < 10) {
-        month = "0" + month;
-      }
-      var year = date.getFullYear();
-      var minDate = year + "-" + month + "-" + tdate;
-      return minDate;
+    methods:{
+        addRequest(){
+            if(this.typeLeave!=null && this.Start_Day!=null && 
+            this.End_Day!=null && this.end_time!=null && this.end_time!=null){
+                axios
+                .post("/leaves",
+                {
+                    type:this.typeLeave,
+                    start_date:this.Start_Day,
+                    end_date:this.End_Day,
+                    status:this.status,
+                    duration:this.changeDuration(),
+                    cause:this.cause,
+                    student_id:1,
+                    admin_id:1
+                })
+                .then(()=> {
+                    console.log("Add successfully");
+                });
+                this.$router.push("/dashboard")   
+            }
+            this.sendEmail();
+            },
+        sendEmail(){
+            axios.get("/send-mail")
+            .then((response)=> {
+                console.log(response.data);
+            })
+        },
+        changeDuration(){
+            const baseTime = ((new Date(this.End_Day).getTime() - new Date(this.Start_Day).getTime())/(1000*3600*24));
+            if(this.Start_Day!==null && this.End_Day!==null && this.start_time!==null && this.end_time!==null){
+                if(this.start_time===this.end_time){
+                    this.duration=baseTime+0.5
+                }else if(this.Start_Day===this.End_Day && (this.start_time==="Morning" && this.end_time==="Afternoon")){
+                    this.duration=baseTime+1
+                }else if(this.start_time==="Morning" && this.end_time==="Afternoon"){
+                    this.duration=baseTime+1
+                }
+            }
+            if(this.Start_Day===this.End_Day && this.start_time==="Afternoon"){
+                this.isValidTime = false
+            }
+            return this.duration;
+        },
+        getCurrentDate(){
+            var date = new Date();
+            var tdate = date.getDate();
+            var month = date.getMonth()+1;
+            if(tdate < 10){
+                tdate = "0"+tdate;
+            }
+            if(month < 10){
+                month = "0"+month;
+            }
+            var year = date.getFullYear();
+            var minDate = year+"-"+month+"-"+tdate;
+            return minDate;
+        }
     },
   },
   computed: {

@@ -142,6 +142,8 @@
       </v-card>
     </v-dialog>
   </div>
+  <form-register :studentNames="studentnames"/>
+  <!------------------------------------------------- cardstudent -------------------------------------->
 </template>
 
 <script>
@@ -251,9 +253,20 @@ export default {
   mounted() {
     this.getStudent();
   },
-  computed:{
-    
-  }
+    computed: {
+    filterSearchListStudent() {
+      if (!this.search) {
+        return this.studentnames ;
+
+      } else {
+        return this.studentnames.filter(({name,Class}) =>
+          name.toLowerCase().includes(this.search.toLowerCase()) || 
+          Class.toLowerCase().includes(this.search.toLowerCase()) 
+        );
+      }
+
+    },
+  },
 };
 </script>
 

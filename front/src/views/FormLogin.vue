@@ -1,13 +1,8 @@
 <template>
-<!-- <div v-if="isTrue">
-<AdminView></AdminView>
--->
-<!-- <router-view></router-view> -->
   <div class="container d-flex justify-content-center">
     <div class="pnclogo mt-6">
       <v-img :src="require('@/assets/logo.jpg')" class="pnclo"></v-img>
       <h2>SMLS</h2>
-     
     </div>
     <form @submit.prevent="loginUser">
       <div>
@@ -37,7 +32,6 @@
 </template>
 
 <script>
-// import AdminView from "./AminView.vue"
 import axios from "../axios-http.js";
 export default {
   components:{
@@ -54,6 +48,11 @@ export default {
       role: "",
       isStudent: false,
       isTeacher: false,
+
+
+
+            studentIndex:null,
+            token:null,
     };
   },
   methods: {
@@ -69,47 +68,125 @@ export default {
           });
         if (this.admin[0].email== this.email) {
             this.$router.push('/listStudent');
+
         }else{
           this.$router.push('/dashboard')
+
         }
       }
     },
-    myFunction() {
-      let x = document.getElementById("myInput");
-      if (x.type === "password") {
-        x.type = "text";
-      } else {
-        x.type = "password";
-      }
+        loginUser(){
+            if(this.email !== "" && this.password !==""){
+                let loginInfo = {'email' : this.email, 'password' : this.password}
+                console.log(this.email==this.admin[0].email)
+                this.checkStudent()
+                if(this.admin[0].email == this.email){
+                    axios.post("login",loginInfo).then((response) =>{
+                        if(response.data.sms!="invalid"){
+                            this.$router.push("/listStudent")
+                            localStorage.setItem('user_id',this.admin[0].id)
+                            localStorage.setItem('admin_token',response.data.token)
+                        }else{
+                            alert("Password is invalid")
+                        }
+                    })
+                }else if(this.isStudent){
+                    axios.post("loginStudent",loginInfo).then((response) =>{
+                        if(response.data.sms!="invalid"){
+                            this.$router.push("/dashboard")
+                        }else{
+                            alert("Password is invalid")
+                        }
+                        console.log(response.data)
+
+                    })
+                }else{
+                    alert("Invalid Email")
+                }
+            }else{
+                alert("Fill in everything")
+            }
+        },
+        myFunction(){
+            let x = document.getElementById("myInput");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        },
+        getStudents(){
+            axios.get("students").then((response) =>{
+                this.students = response.data;
+            });
+        },
+        getAdmin(){
+            axios.get("admin").then((response) =>{
+                this.admin = response.data;
+            });
+        },
+        checkStudent(){
+            this.students.forEach((student) =>{
+                if(student.email == this.email){
+                    this.isStudent = true;
+                }
+            })
+        }
+
     },
-    getStudents() {
-      axios.get("students").then((response) => {
-        this.students = response.data;
-        console.log(response);
-      });
+    computed:{
+        getAllStudents(){
+            return this.getStudents()
+        },
+        getAllAdmin(){
+            return this.getAdmin()
+        },
     },
-    getAdmin() {
-      axios.get("admin").then((response) => {
-        this.admin = response.data;
-      });
-    },
-  },
-  computed: {
-    getAllStudents() {
-      return this.getStudents();
-    },
-    getAllAdmin() {
-      return this.getAdmin();
-    },
-    // getLoginData(){
-    //     return this.getLoginInfo();
-    // }
-  },
-  mounted() {
-    this.getAdmin();
-    this.getStudents();
-  },
-};
+    mounted(){
+        this.getAdmin();
+        this.getStudents();
+
+    }
+
+}
+
+// =======
+//     myFunction() {
+//       let x = document.getElementById("myInput");
+//       if (x.type === "password") {
+//         x.type = "text";
+//       } else {
+//         x.type = "password";
+//       }
+//     },
+//     getStudents() {
+//       axios.get("students").then((response) => {
+//         this.students = response.data;
+//         console.log(response);
+//       });
+//     },
+//     getAdmin() {
+//       axios.get("admin").then((response) => {
+//         this.admin = response.data;
+//       });
+//     },
+//   },
+//   computed: {
+//     getAllStudents() {
+//       return this.getStudents();
+//     },
+//     getAllAdmin() {
+//       return this.getAdmin();
+//     },
+//     // getLoginData(){
+//     //     return this.getLoginInfo();
+//     // }
+//   },
+//   mounted() {
+//     this.getAdmin();
+//     this.getStudents();
+//   },
+// };
 </script>
 
 <style scoped>

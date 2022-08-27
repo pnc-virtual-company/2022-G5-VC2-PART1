@@ -8,9 +8,12 @@
         <v-list style="background: #037c5f">
           <slot name="v-list-item"></slot>
         </v-list>
+        <div class="button">
+          <Button-View class="text-white"><i class="fa-solid fa-right-from-bracket " @click="logout"></i></Button-View>
+          <Button-View class="text-white"
+            ><i class="fa-solid fa-right-from-bracket"></i
+          ></Button-View>
 
-        <div class="button text-center">
-          <slot name="logOut"></slot>
         </div>
       </v-navigation-drawer>
     </div>
@@ -42,6 +45,13 @@ export default {
 
     right: null,
   }),
+  methods:{
+    logout(){
+      localStorage.removeItem("user_id")
+      localStorage.removeItem("admin_token")
+      this.$router.push("/")
+    }
+  }
 };
 </script>
 <style scoped>
@@ -52,7 +62,7 @@ img {
 .button {
   position: relative;
   bottom: 1em;
-  top: 21em;
+  top: 14em;
   border-top: 2px solid;
   color: white;
   font-size: 20px;

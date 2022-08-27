@@ -69,6 +69,65 @@
       </tr>
     </table>
   </div> 
+<!-- =======
+      <div v-if="!isClick" class="">
+        <table
+          style="overflow: auto"
+          class="secondary text-no-wrap rounded-t-lg h"
+          :class="`elevation-${hover ? 24 : 6}`"
+        >
+          <tr>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Reason</th>
+            <th>Duration</th>
+            <th>Leave Type</th>
+            <th>Status</th>
+            <th>Request Date</th>
+          </tr>
+
+          <tr v-for="student in filterSearchListStudent" :key="student">
+            <td>{{ student.start_date }}</td>
+            <td>{{ student.end_date }}</td>
+            <td>{{ student.reason }}</td>
+            <td>{{ student.duration }}</td>
+            <td>{{ student.leave_type }}</td>
+            <td  >
+            <span :style="changeColorStatus(student.status)">{{ student.status }}</span> 
+            </td>
+            <td>{{ student.request_date }}</td>
+            <td>{{ student.created_at }}</td>
+          </tr>
+        </table>
+      </div>
+      <div v-if="isClick" class="">
+        <table
+          class="secondary text-no-wrap between-t-lg"
+          :class="`elevation-${hover ? 24 : 6}`"
+        >
+          <tr>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Reason</th>
+            <th>Duration</th>
+            <th>Leave Type</th>
+            <th>Status</th>
+            <th>Request Date</th>
+          </tr>
+          <tr v-for="value in filterCheckStatus" :key="value">
+            <td>{{ value.start_date }}</td>
+            <td>{{ value.end_date }}</td>
+            <td>{{ value.reason }}</td>
+            <td>{{ value.duration }}</td>
+            <td>{{ value.leave_type }}</td>
+            <td >
+             <span :style="changeColorStatus(value.status)">{{ value.status }}</span>
+            </td>
+            <td>{{ value.created_at }}</td>
+          </tr>
+        </table>
+      </div>
+>>>>>>> 0430ea6a9c991eb8004d5ff564eb7bc67c864be0 -->
 </template>
 
 <script>
