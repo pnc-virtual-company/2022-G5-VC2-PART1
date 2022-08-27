@@ -1,8 +1,6 @@
 <template>
   <StudentStatusVue @sendStatus="checkStatus" :listLeaves="studentLists">
-  <template #number>
-  asdfasfasd
-  </template>
+
   </StudentStatusVue>
   <div class="ml-5 d-flex ">
     <v-col class="d-flex pa-1 ma-1" cols="12" sm="12" md="4" xs="12">
@@ -39,33 +37,6 @@
               
             </td>
             <td>{{ student.created_at }}</td>
-          </tr>
-        </table>
-      </div>
-      <div v-if="isClick" class="">
-        <table
-          class="secondary text-no-wrap rounded-t-lg"
-          :class="`elevation-${hover ? 24 : 6}`"
-        >
-          <tr>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Reason</th>
-            <th>Duration</th>
-            <th>Leave Type</th>
-            <th>Status</th>
-            <th>Request Date</th>
-          </tr>
-          <tr v-for="value in filterCheckStatus" :key="value">
-            <td>{{ value.start_date }}</td>
-            <td>{{ value.end_date }}</td>
-            <td>{{ value.cause }}</td>
-            <td>{{ value.duration }}</td>
-            <td>{{ value.type }}</td>
-            <td >
-             <span :style="changeColorStatus(value.status)">{{ value.status }}</span>
-            </td>
-            <td>{{ value.created_at }}</td>
           </tr>
         </table>
       </div>

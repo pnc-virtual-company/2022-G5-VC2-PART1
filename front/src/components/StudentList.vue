@@ -112,24 +112,6 @@
   </div>
   <form-register :studentNames="studentnames"/>
   <!------------------------------------------------- cardstudent -------------------------------------->
-
-  <v-card class="mx-auto card-student mb-6 ">
-    <div class="studentcard d-flex pa-4">
-      <v-list-item-avatar tile size="80" color="grey">
-        <v-img
-          class="image"
-          src="https://qodebrisbane.com/wp-content/uploads/2019/07/This-is-not-a-person-2-1.jpeg"
-        ></v-img>
-      </v-list-item-avatar>
-      <v-list-item-title class="text-h5 ml-4 mt-3"> Somnak </v-list-item-title>
-    </div>
-    <v-list-item three-line>
-      <v-list-item-content >
-        <p>Dear teacher at my home have partty. I promission to go home join partty with my family.Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eius sapiente, deserunt reprehenderit labore quae! A quos autem odio.</p>
-        <v-list-item-subtitle ><h5>approved</h5></v-list-item-subtitle>
-      </v-list-item-content>
-    </v-list-item>
-  </v-card>
 </template>
 
 <script>
