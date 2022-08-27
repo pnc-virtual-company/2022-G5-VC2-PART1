@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LeaveController;
+
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\MailController;
 
@@ -25,10 +26,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // For Student
 Route::apiResource("students",StudentController::class);
-
 // // For Admin
 Route::apiResource("admin",AdminController::class);
-
 // For Student Leave
 Route::apiResource("leaves",LeaveController::class);
 
@@ -38,15 +37,9 @@ Route::get('/send-mail', [MailController::class, 'sendEmail']);
 // Route::post('/login',[AdminController::class,'login']);
 
 // For login Student 
-
-Route::post('/login',[StudentController::class,'login']);
-
-
+Route::post('/loginStudent',[StudentController::class,'login']);
+//update image
+Route::put('/updatePhoto/{id}',[StudentController::class,'updatePhoto']);
 // -----------------------
 Route::post('/create',[AdminController::class,'store']);
 Route::post('/login',[AdminController::class,'login']);
-// Route::group(['middleware'=>'auth:sanctum'],function(){
-//     Route::post('/student',[StudentController::class,'store']);
-//     Route::get('/students',[StudentController::class,'index']);
-//     Route::post('/logout',[AdminController::class,'logout']);
-// });

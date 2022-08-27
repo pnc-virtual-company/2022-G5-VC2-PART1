@@ -69,7 +69,8 @@ export default {
           });
         if (this.admin[0].email== this.email) {
             this.$router.push('/listStudent');
-          
+        }else{
+          this.$router.push('/dashboard')
         }
       }
     },
@@ -84,6 +85,7 @@ export default {
     getStudents() {
       axios.get("students").then((response) => {
         this.students = response.data;
+        console.log(response);
       });
     },
     getAdmin() {

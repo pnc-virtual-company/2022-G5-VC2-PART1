@@ -98,7 +98,7 @@ export default {
             status: this.status,
             duration: this.changeDuration(),
             cause: this.cause,
-            student_id: 1,
+            student_id: 5,
             admin_id: 1,
           })
           .then(() => {

@@ -59,9 +59,12 @@ class LeaveController extends Controller
      * @param  \App\Models\leave  $leave
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Leave $leave)
+    public function update(Request $request,$id)
     {
-        //
+        $leave= leave::findOrFail($id);
+        $leave->status = $request->status;
+        $leave->save();
+        return response()->json(["sms"=>"Update is successful"]);
     }
 
     /**

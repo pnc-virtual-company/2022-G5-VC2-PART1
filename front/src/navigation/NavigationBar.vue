@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <div id="bg-color">
-      <v-navigation-drawer v-model="drawer" style="background: #037c5f" app>
+      <v-navigation-drawer v-model="drawer"  style="background: #037c5f;" app>
         <div >
             <slot name="account"></slot>
         </div>
@@ -9,10 +9,8 @@
           <slot name="v-list-item"></slot>
         </v-list>
 
-        <div class="button">
-          <Button-View class="text-white"
-            ><i class="fa-solid fa-right-from-bracket"></i
-          ></Button-View>
+        <div class="button text-center">
+          <slot name="logOut"></slot>
         </div>
       </v-navigation-drawer>
     </div>
@@ -23,10 +21,10 @@
       >
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
-      <div><slot name="padding-alert"></slot></div>
-      <v-btn img>
-        <img :src="require('../assets/logo.jpg')" alt="" width="45" />
-      </v-btn>
+      <div> <slot name="padding-alert"></slot> </div>
+      
+        <img class="m-4" :src="require('../assets/logo.jpg')" alt="" width="45" />
+     
     </v-app-bar>
   
     <v-main>
@@ -36,7 +34,9 @@
 </template>
 
 <script>
+
 export default {
+ 
   data: () => ({
     drawer: null,
 
@@ -64,6 +64,9 @@ i {
 }
 .fs {
   font-size: 25px;
+}
+.bg-h{
+  height: 30vh;
 }
 
 </style>

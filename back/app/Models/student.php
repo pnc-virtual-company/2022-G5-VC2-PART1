@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class student extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+class student extends Authenticatable
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
     protected $fillable=[
         'first_name',
         'last_name',
@@ -15,6 +17,7 @@ class student extends Model
         'email',
         'batch',
         'email',
+        'password',
         'phone',
         'profile_image',
         'admin_id',
@@ -29,7 +32,6 @@ class student extends Model
     }
 
     protected $hidden = [
-        'password',
         'remember_token',
         'created_at',
         'updated_at'

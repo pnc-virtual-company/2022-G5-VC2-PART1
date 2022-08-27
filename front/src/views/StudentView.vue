@@ -1,28 +1,38 @@
 <template>
-
   <div>
-    <Navigation-Bar >
-     <template #account> 
-       <router-link class="item-link" to="/profile">
-        <div class="account p-3 mt-5 d-flex">
-          <img
-            class="rounded-pill"
-            src="https://cdn.vuetifyjs.com/images/john.jpg"
-            alt="John"
-            width="70"
-          />
-          <div>
-            <div class="mt-3 text-white">
-              <span class="m-2 fw-bold">Somnak Kalan</span>
-              <p class="">PNC</p>
+    <Navigation-Bar>
+      <template #account>
+        <router-link class="item-link" to="/profile">
+          <div class="account p-3 mt-5 d-flex">
+            <img
+              class="rounded-pill"
+              src="https://cdn.vuetifyjs.com/images/john.jpg"
+              alt="John"
+              width="70"
+            />
+            <div>
+              <div class="mt-3 text-white">
+                <span class="m-2 fw-bold">Somnak Kalan</span>
+                <p class="">PNC</p>
+              </div>
             </div>
           </div>
-        </div>
-    </router-link>
-              </template>
-      <template #v-list-item >
-        <v-list-item v-for="item in items" :key="item.title" :to="item.to" link  class="mt-5">
-          <div style="display: flex" >
+        </router-link>
+      </template>
+      <template #logOut>
+        <Button-View @click="onLogOut()" class="text-white"
+          ><i class="fa-solid fa-right-from-bracket"></i
+        ></Button-View>
+      </template>
+      <template #v-list-item>
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          :to="item.to"
+          link
+          class="mt-5"
+        >
+          <div style="display: flex">
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
@@ -34,13 +44,12 @@
       </template>
     </Navigation-Bar>
   </div>
-
 </template>
 
 <script>
 export default {
   data: () => ({
-  drawer: null,
+    drawer: null,
     items: [
       { title: "Dashboard", icon: "mdi-home", to: "/dashboard" },
       { title: "New Request", icon: "mdi-view-dashboard", to: "/request" },
@@ -49,6 +58,11 @@ export default {
   }),
   components: {
     // StudentList
+  },
+  methods: {
+    onLogOut() {
+      this.$router.push({ name: "login", path: "/" });
+    },
   },
 };
 </script>
@@ -79,16 +93,14 @@ img {
 }
 .v-list-item--active {
   color: rgb(0, 0, 0);
-  
 }
-.v-list-item-title{
+.v-list-item-title {
   font-weight: bold;
 }
 .account {
   border-bottom: solid 2px rgb(255, 255, 255);
 }
-.item-link{
+.item-link {
   text-decoration: none;
 }
-
 </style>

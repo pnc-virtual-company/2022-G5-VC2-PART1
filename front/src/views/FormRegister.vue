@@ -85,11 +85,11 @@
 </div>
 <div>
     <a
-    class="btn btn-primary"
+    class="btn btn-primary text-white"
     data-bs-toggle="modal"
     href="#exampleModalToggle"
     role="button"
-    >Register</a
+    >Create Student</a
     >
 </div>
 </template>

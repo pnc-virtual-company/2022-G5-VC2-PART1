@@ -43,8 +43,8 @@ class StudentController extends Controller
         $student -> profile_image = $request->profile_image;
         $student -> admin_id = $request->admin_id;
         $student->save();
-        $token=$student->createToken('student-token')->plainTextToken;
-        return response()->json(['token' => $token]);
+        // $token=$student->createToken('student-token')->plainTextToken;
+        return response()->json(['token' => "ss"]);
 
     }
 
@@ -67,12 +67,22 @@ class StudentController extends Controller
      * @param  \App\Models\student  $student
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, $id)
     {
-         //
+        
          $student = student::findOrFail($id);
          $student -> password = Hash::make($request->password);
          $student->save();
+
+    }
+    public function updatePhoto(Request $request, $id)
+    {
+
+         $student = student::findOrFail($id);
+         $student -> profile_image = $request->profile_image;
+         $student->save();
+         return response()->json(['sms'=>$student]);
 
     }
 
@@ -86,14 +96,20 @@ class StudentController extends Controller
     {
         return student::destroy($id);
     }
-
-
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\student  $student
+     * @return \Illuminate\Http\Response
+     */
     public function login(Request $request) {
-        $user = student::where('email',$request->email)->first();
-        if (!$user || !Hash::check ($request->password,$user->password)) {
-        $token = $user->createToken('token_name')->plainTextToken;
-        return response()->json(['sms'=>'Success fully','token'=>$token]);
+        $student = student::where('email', $request->email)->first();
+        if(!$student || !Hash::check($request->password, $student->password)){
+            return response()->json(['sms'=>false]);
         }
+        $token = $student->createToken('my-token')->plainTextToken;
+        return response()->json(['sms'=>$token]);
+       
     }
 }
 

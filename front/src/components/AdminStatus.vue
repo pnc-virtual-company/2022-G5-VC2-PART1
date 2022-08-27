@@ -19,21 +19,25 @@
             </div>
           </div>
           <Button-View
-            class=" font-weight-bold bg-green "
-            ><stron class="text-white" @click="sendAdminStatus(value.status)">see more </stron></Button-View
+            class=" font-weight-bold text-center bg-green "
+            ><stron class="text-white" @click="sendAdminStatus(value.status)">see more {{stutusList}}</stron></Button-View
           >
         </v-card>
       </v-col>
     </v-row>
   </v-container>
+ 
 </template>
 
 <script>
+
 export default {
-  props:['listLeaves','studentName'],
+
+  props:{listLeaves:Object,studentName:Array},
   components: {},
   data: () => ({
     students:[],
+    stutusList:null,
     studentStatus: [
       {
         status: "Student",
@@ -43,22 +47,22 @@ export default {
       {
         status: "Approved",
 
-        background: "green",
-        img: "https://cdn-icons-png.flaticon.com/512/4157/4157035.png",
+        background: "white",
+        img: "https://cdn4.iconfinder.com/data/icons/security-soft-3/512/ok_select_yes_apply_accept_approve_confirm-256.png",
       },
       {
         status: "Rejected",
 
-        background: "red",
-        img: "https://cdn4.iconfinder.com/data/icons/multimedia-75/512/multimedia-26-256.png",
+        background: "white",
+        img: "https://cdn2.iconfinder.com/data/icons/business-and-finance-glyph-22/64/business-and-finance-glyph-22-15-1024.png",
       },
     ],
   }),
   methods: {
-
     sendAdminStatus(status){
       this.$emit("sendAdminStatus",status)
-    }
+    },
+    
   },
  
   computed: {

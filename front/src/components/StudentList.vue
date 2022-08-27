@@ -80,22 +80,6 @@
       </div>
     </div>
   </div>
-  
- <div class="text-center w-25">
-    <v-container>
-      <v-row justify="center">
-        <v-col cols="8">
-          <v-container class="max-width">
-            <v-pagination
-              v-model="page"
-              class="my-4"
-              :length="lengthDataStudent"
-            ></v-pagination>
-          </v-container>
-        </v-col>
-      </v-row>
-    </v-container>
-  </div>
   <div class="ml-5">
     <v-dialog v-model="dialog" width="100%">
       <v-card class="modal justify-center w-80 border-style-top" sm="6">
@@ -111,7 +95,7 @@
             <div>
               <div class="card-img">
                 <v-img
-                  class="image pa-7 secondary d-inline-block"
+                  class="image  secondary d-inline-block"
                   :src="studentnames[index].profile_image"
                 ></v-img>
               </div>
@@ -120,6 +104,8 @@
             </div>
           </div>
         </div>
+
+      <v-card  height="200" class="overflow-auto w-100 mt-5">
         <v-card-text>
           <div v-if="!isClick"></div>
           <div class="mb-3 row">
@@ -152,6 +138,7 @@
             </table>
           </div>
         </v-card-text>
+      </v-card>
       </v-card>
     </v-dialog>
   </div>
@@ -259,17 +246,13 @@ export default {
       this.popup = true;
       this.index = index;
     },
-    nextPage(){
-
-    }
+   
   },
   mounted() {
     this.getStudent();
   },
   computed:{
-    lengthDataStudent(){
-      return this.studentnames.length
-    }
+    
   }
 };
 </script>
@@ -314,7 +297,7 @@ li {
   background: rgb(46, 4, 229);
   width: 95%;
   margin: auto;
-  border-top: solid purple 5px;
+  border-top: solid rgb(215, 213, 213) 5px;
 }
 .v-btn {
   box-shadow: rgb(255, 255, 255) 0px 0px 0px 0px;

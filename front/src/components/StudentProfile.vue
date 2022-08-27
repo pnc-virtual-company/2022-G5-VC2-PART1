@@ -4,27 +4,29 @@
       <div class="row gutters-sm">
         <div class="col-md-4 mb-3">
           <div class="card card-profile">
-            <div class="card-body ">
-              <div class="d-flex flex-column align-items-center text-center ">
+            <div class="card-body">
+              <div class="d-flex flex-column align-items-center text-center">
                 <div class="account p-3 mt-15">
-                  <img
+                  <img v-if="studentData.profile_image!=null"
                     class="ml-5 border-radius rounded-pill"
                     :src="studentData.profile_image"
                     alt=""
                     width="100"
                     height="100"
                   />
+                  <img v-else
+                    class="ml-5 border-radius rounded-pill"
+                    src="https://www.homeagainsaintjohns.org/wp-content/uploads/2021/05/No-Picture-Yet-Home-Again-St-Johns-Board-Members.png"
+                    alt=""
+                    width="100"
+                    height="100"
+                  />
+
+                  <div>somnak : {{ studentData.profile_image }}</div>
                   <div class="d-flex position-absolute">
-                    <input
-                      type="file"
-                      accept="image/*"
-                      class="hidden"
-                      ref="file"
-                      prepend-icon="mdi-camera"
-                      @change="onFileChange"
-                      multiple
+                    <input type="file" accept="image/*" @change="onChangeFile" />
                     />
-                    <button @click="onChnage">
+                    <button @click="onChangeFile">
                       <i class="fa-solid fa-camera"></i>
                     </button>
                   </div>
@@ -42,7 +44,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-8 ">
+        <div class="col-md-8">
           <div class="card mb-3 card-list-info">
             <div class="card-body">
               <div class="row">
@@ -100,7 +102,7 @@
               </div>
 
               <hr />
-              <div class="row ">
+              <div class="row">
                 <div class="col-sm-3">
                   <h6 class="mb-0">Address</h6>
                 </div>
@@ -111,9 +113,7 @@
               <hr />
               <div class="row">
                 <div class="col-sm-12">
-                  <a
-                    >Reset Password</a
-                  >
+                  <a>Reset Password</a>
                 </div>
               </div>
             </div>
@@ -122,6 +122,7 @@
       </div>
     </div>
   </div>
+ 
 </template>
 <script>
 import axios from "../axios-http";
@@ -130,26 +131,35 @@ export default {
     return {
       url: null,
       studentData: {},
+      name_img: "",
+      imageToDisplay:
+        "https://cahsi.utep.edu/wp-content/uploads/kisspng-computer-icons-user-clip-art-user-5abf13db5624e4.1771742215224718993529.png",
+
+      imageFile: null,
     };
   },
   methods: {
     getStudentIntoProfile() {
-      axios.get("/students/" + 1).then((res) => {
+      axios.get("/students/" + 4).then((res) => {
         this.studentData = res.data[0];
       });
     },
-    uploadImage() {
-      axios.put("/students/" + 1,this.studentData.profile_image).then(() => {
-        this.getStudentIntoProfile()
-      });
+    onChangeFile(e) {
+      this.imageFile = e.target.files[0];
+      this.imageToDisplay = URL.createObjectURL(this.imageFile);
+      this.updateProfile()
     },
-    onFileChange(e) {
-      const file = e.target.files[0];
-      this.studentData.profile_image = URL.createObjectURL(file);
-    },
-    onChnage() {
-      this.$refs.file.click();
-      this.uploadImage()
+     updateProfile() {
+      let profile = new FormData();
+      profile.append("picture", this.imageFile);
+      profile.append("_method", "PUT");
+      console.log(this.imageToDisplay.name);
+      axios
+        .put("/updatePhoto/" + 4, {profile_image:this.imageFile.name})
+        .then((res) => {
+          this.name_img = res.data.img.picture;
+          this.getAllData();
+        });
     },
   },
   mounted() {
@@ -164,13 +174,12 @@ export default {
 .border-radius {
   border-radius: 40px;
 }
-.card-profile{
+.card-profile {
   border-top: 5px solid purple;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
-.card-list-info{
+.card-list-info {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   border-left: 5px solid purple;
 }
-
 </style>

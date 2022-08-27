@@ -22,9 +22,9 @@
             </div>
           </div>
           <Button-View
-            class="bg font-weight-bold"
+            class="bg font-weight-bold text-center"
             @click="checkStatus(value.status)"
-            ><strong class="text-white">see more </strong></Button-View
+            ><strong class="text-white ">see more </strong></Button-View
           >
         </v-card>
       </v-col>
@@ -42,20 +42,19 @@ export default {
       {
         status: "Approved",
 
-        background: "green",
-        img: "https://cdn-icons-png.flaticon.com/512/4157/4157035.png",
+        background: "white",
+        img: "https://cdn4.iconfinder.com/data/icons/security-soft-3/512/ok_select_yes_apply_accept_approve_confirm-256.png",
       },
       {
         status: "Pending",
 
-        background: "yellow",
-        img: "https://cdn3.iconfinder.com/data/icons/arrows-set-12/512/reset-256.png",
+        background: "white",
+        img: "https://cdn1.iconfinder.com/data/icons/user-38/100/user-pending-256.png",
       },
       {
         status: "Rejected",
-
-        background: "red",
-        img: "https://cdn4.iconfinder.com/data/icons/multimedia-75/512/multimedia-26-256.png",
+        background: "white",
+        img: "https://cdn4.iconfinder.com/data/icons/user-management-soft/512/delete_close_stop_cancel_remove_erase_reject-256.png",
       },
     ],
     studentLists: [],

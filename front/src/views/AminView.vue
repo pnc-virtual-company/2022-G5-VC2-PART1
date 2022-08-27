@@ -1,9 +1,9 @@
 <template>
   <div>
-    <Navigation-Bar>
+    <Navigation-Bar >
       <template #account>
         <router-link class="item-link" to="/adminProfile">
-          <div class="account p-3 mt-15 d-flex">
+          <div class="account p-3 d-flex">
             <img
               class=" rounded-pill"
               src="https://cdn.vuetifyjs.com/images/john.jpg"
@@ -19,12 +19,24 @@
           </div>
         </router-link>
       </template>
+      <template #logOut> 
+        <Button-View  @click="onLogOut()" class="text-white"
+            ><i class="fa-solid fa-right-from-bracket"></i
+          ></Button-View>
+      </template>
       <template #padding-alert>
-      <button>
-        <v-badge color="green" :content="countPending">
-          <i class="fa-solid fa-bell icon-bell"></i>
+      
+        
+      <button @click="sendPending()">
+  
+        <v-badge  color="green" :content="countPending">
+          <i  class="fa-solid fa-bell icon-bell"></i>
         </v-badge>
+     
       </button>
+    
+      
+    
       </template>
       <template #v-list-item>
         
@@ -44,10 +56,13 @@
 </template>
 
 <script>
-
 import axios from "../axios-http";
 export default {
+   components:{
+    
+  },
   data: () => ({
+    pendingName:null,
     drawer: null,
     items: [
       { title: "List Student", icon: "mdi-home", to: "/listStudent"},
@@ -62,6 +77,12 @@ export default {
         this.studentLists = res.data;
       });
     },
+    sendPending(){
+      this.pendingName = 'pending'
+    },
+  onLogOut(){
+      this.$router.push({name:'login',path:"/"})
+  },
   },
   computed: {
     countPending() {
@@ -75,6 +96,7 @@ export default {
       return count | 0;
     },
   },
+
   mounted(){
     this.getData()
   }
@@ -93,6 +115,7 @@ img {
   
 }
 .v-list-item {
+
   text-decoration: none;
   color: white;
 }
@@ -113,6 +136,9 @@ img {
 }
 .item-link {
   text-decoration: none;
+}
+.test{
+  background: #000;
 }
 
 
