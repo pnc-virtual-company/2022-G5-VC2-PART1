@@ -7,7 +7,7 @@
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
                 <div class="account p-3 mt-15">
-                <img v-if="studentData.profile_image!=null"
+                <img v-if="studentData.profile_image!=''"
                     class="ml-5 border-radius rounded-pill" src="" alt="">
                   <img v-else
                     class="ml-5 border-radius rounded-pill"
@@ -16,8 +16,6 @@
                     width="100"
                     height="100"
                   >
-
-                  <div>somnak : {{ studentData.profile_image }}</div>
                   <div class="d-flex position-absolute">
                     <input type="file" accept="image/*" @change="onChangeFile" />
                     />
@@ -133,11 +131,17 @@ export default {
         "https://cahsi.utep.edu/wp-content/uploads/kisspng-computer-icons-user-clip-art-user-5abf13db5624e4.1771742215224718993529.png",
 
       imageFile: null,
+      studentId: localStorage.getItem("student_id"),
+      token: {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("student_token")}`,
+        },
+      },
     };
   },
   methods: {
     getStudentIntoProfile() {
-      axios.get("/students/" + 4).then((res) => {
+      axios.get("/students/" + this.studentId,this.token).then((res) => {
         this.studentData = res.data[0];
       });
     },
@@ -152,7 +156,7 @@ export default {
       profile.append("_method", "PUT");
       console.log(this.imageToDisplay.name);
       axios
-        .put("/updatePhoto/" + 4, {profile_image:this.imageFile.name})
+        .put("/updatePhoto/" + this.studentId, {profile_image:this.imageFile.name},this.token)
         .then((res) => {
           this.name_img = res.data.img.picture;
           this.getAllData();

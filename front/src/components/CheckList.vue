@@ -4,179 +4,221 @@
     :listLeaves="allLeave"
     @sendAdminStatus="getStatusFromAdmin"
   ></AdminStatusVue>
-
   <div class="m-5">
     <v-card height="450" class="overflow-auto w-100 box-shadow-color">
       <div id="accordion" class="card-group-collapse pa-10">
-      <div v-if="isRejected " >
-        <CardAdminAllow
-          v-for="(reject, index) in listRejected"
-          :key="index"
-          :index="index"
-          class="border-left-color"
-        >
-          <template #icon-confirm> <span class="m-4"><i class="fa-solid fa-circle-xmark fa-2xl text-red"></i></span> </template>
-          <template #displayName>
-            
-          <div class="d-flex" v-for="getStudentId in listStudent" :key="getStudentId">
-            <v-img  src="https://mpng.subpng.com/20180404/sqe/kisspng-computer-icons-user-profile-clip-art-big-5ac5283827d286.2570974715228703281631.jpg"></v-img>
-            <div class="d-flex justify-content-center  flex-column">
-              <li v-if="reject.student_id==getStudentId.id">
-                <span class="fw-bold">
-                  <strong >{{getStudentId.first_name}} {{getStudentId.last_name}}</strong>
-                </span>
-              </li>
-              <li v-if="reject.student_id==getStudentId.id" class="fw-bold text-green">
-                <strong>{{getStudentId.batch}}</strong>
-              </li>
-            </div>
-          </div>
-          </template>
-          <template #alert>
-               <span class="text-red">You had <strong>rejected</strong> your student</span>
-          </template>
-          <template #startDate>{{ reject.start_date }}</template>
-          <template #endDate>{{ reject.end_date }}</template>
-          <template #cause>{{ reject.cause }}</template>
-          <template #duration>{{ reject.duration }}</template>
-          <template #type>{{ reject.type }}</template>
-          <template #requestDate>{{ reject.request_date }}</template>
-        </CardAdminAllow>
-      
-      </div>
-      <div v-if="isApproved">
-      
-        <CardAdminAllow
-          v-for="(approve, index) in listApproved"
-          :key="index"
-          :index="index"
-          class="border-top-approved"
-        >
-        <template #icon-confirm> <span class="m-4"><i class="fa-solid fa-circle-check fa-2xl text-green"></i></span> </template>
-          <template #displayName>
-          <div class="d-flex" v-for="getStudentId in listStudent" :key="getStudentId">
-
-            <v-img v-if="approve.student_id==getStudentId.id">{{getStudentId.profile_img}}</v-img>
-
-            <div class="d-flex justify-content-center  flex-column">
-              <li v-if="approve.student_id==getStudentId.id">
-                <span class="fw-bold">
-                  <strong >{{getStudentId.first_name}} {{getStudentId.last_name}}</strong>
-                </span>
-              </li>
-              <li v-if="approve.student_id==getStudentId.id" class="fw-bold text-green">
-                <strong>{{getStudentId.batch}}</strong>
-              </li>
-            </div>
-          
-          </div>
-          </template>
-          <template #alert>
-               <span class="text-green">You had <strong>approved</strong> your student</span>
-          </template>
-          <template #startDate>{{ approve.start_date }}</template>
-          <template #endDate>{{ approve.end_date }}</template>
-          <template #cause>{{ approve.cause }}</template>
-          <template #duration>{{ approve.duration }}</template>
-          <template #type>{{ approve.type }}</template>
-          <template #requestDate>{{ approve.request_date }}</template>
-          <template #statusAllow> <button class="bg-success btn fw-bold text-white">{{ approve.status }}</button></template>
-        </CardAdminAllow>
-      </div>
-      <div v-if="isPending">
-      
-        <div
-          class="card"
-          v-for="(value, index) in listPendingLeave"
-          :key="value"
-        >
-          <div class="card-header color-style" id="headingOne">
-            <div class="d-flex justify-content-between">
-              <ul class="space-img">
-                <div class="textli" v-for="getId in listStudent" :key="getId">
-                  <div class="d-flex">
-                    <li v-if="value.student_id == getId.id">
-                      <v-img
-                        class="profile mt-3"
-                        :src="getId.profile_image"
-                      ></v-img>
-                    </li>
-                    <div class="d-flex justify-content-center mt-3 flex-column">
-                      <li>
-                        <span
-                          class="fw-bold"
-                          v-if="value.student_id == getId.id"
-                          >{{ getId.first_name }} {{ getId.last_name }}</span
-                        >
-                      </li>
-                      <li
-                        class="fw-bold text-green"
-                        v-if="value.student_id == getId.id"
+        <div v-if="isRejected">
+          <CardAdminAllow
+            v-for="(reject, index) in listRejected"
+            :key="index"
+            :index="index"
+            class="border-left-color"
+          >
+            <template #icon-confirm>
+              <span class="m-4"
+                ><i class="fa-solid fa-circle-xmark fa-2xl text-red"></i
+              ></span>
+            </template>
+            <template #displayName>
+              <div
+                class="d-flex"
+                v-for="getStudentId in listStudent"
+                :key="getStudentId"
+              >
+                <v-img
+                  src="https://mpng.subpng.com/20180404/sqe/kisspng-computer-icons-user-profile-clip-art-big-5ac5283827d286.2570974715228703281631.jpg"
+                ></v-img>
+                <div class="d-flex justify-content-center flex-column">
+                  <li v-if="reject.student_id == getStudentId.id">
+                    <span class="fw-bold">
+                      <strong
+                        >{{ getStudentId.first_name }}
+                        {{ getStudentId.last_name }}</strong
                       >
-                        {{ getId.batch }}
+                    </span>
+                  </li>
+                  <li
+                    v-if="reject.student_id == getStudentId.id"
+                    class="fw-bold text-green"
+                  >
+                    <strong>{{ getStudentId.batch }}</strong>
+                  </li>
+                </div>
+              </div>
+            </template>
+            <template #alert>
+              <span class="text-red"
+                >You had <strong>rejected</strong> your student</span
+              >
+            </template>
+            <template #startDate>{{ reject.start_date }}</template>
+            <template #endDate>{{ reject.end_date }}</template>
+            <template #cause>{{ reject.cause }}</template>
+            <template #duration>{{ reject.duration }}</template>
+            <template #type>{{ reject.type }}</template>
+            <template #requestDate>{{ reject.request_date }}</template>
+          </CardAdminAllow>
+        </div>
+        <div v-if="isApproved">
+          <CardAdminAllow
+            v-for="(approve, index) in listApproved"
+            :key="index"
+            :index="index"
+            class="border-top-approved"
+          >
+            <template #icon-confirm>
+              <span class="m-4"
+                ><i class="fa-solid fa-circle-check fa-2xl text-green"></i
+              ></span>
+            </template>
+            <template #displayName>
+              <div
+                class="d-flex"
+                v-for="getStudentId in listStudent"
+                :key="getStudentId"
+              >
+                <v-img v-if="approve.student_id == getStudentId.id">{{
+                  getStudentId.profile_img
+                }}</v-img>
+
+                <div class="d-flex justify-content-center flex-column">
+                  <li v-if="approve.student_id == getStudentId.id">
+                    <span class="fw-bold">
+                      <strong
+                        >{{ getStudentId.first_name }}
+                        {{ getStudentId.last_name }}</strong
+                      >
+                    </span>
+                  </li>
+                  <li
+                    v-if="approve.student_id == getStudentId.id"
+                    class="fw-bold text-green"
+                  >
+                    <strong>{{ getStudentId.batch }}</strong>
+                  </li>
+                </div>
+              </div>
+            </template>
+            <template #alert>
+              <span class="text-green"
+                >You had <strong>approved</strong> your student</span
+              >
+            </template>
+            <template #startDate>{{ approve.start_date }}</template>
+            <template #endDate>{{ approve.end_date }}</template>
+            <template #cause>{{ approve.cause }}</template>
+            <template #duration>{{ approve.duration }}</template>
+            <template #type>{{ approve.type }}</template>
+            <template #requestDate>{{ approve.request_date }}</template>
+            <template #statusAllow>
+              <button class="bg-success btn fw-bold text-white">
+                {{ approve.status }}
+              </button></template>
+        
+          </CardAdminAllow>
+        </div>
+
+        <div v-if="isPending">
+          <div
+            class="card"
+            v-for="(value, index) in listPendingLeave"
+            :key="value"
+          >
+            <v-progress-linear
+              color="green"
+              indeterminate
+              reverse
+            ></v-progress-linear>
+            <div class="card-header color-style" id="headingOne">
+              <div class="d-flex justify-content-between">
+                <ul class="space-img">
+                  <div class="textli" v-for="getId in listStudent" :key="getId">
+                    <div class="d-flex">
+                      <li v-if="value.student_id == getId.id">
+                        <v-img
+                          class="profile mt-3"
+                          :src="getId.profile_image"
+                        ></v-img>
                       </li>
+                      <div
+                        class="d-flex justify-content-center mt-3 flex-column"
+                      >
+                        <li>
+                          <span
+                            class="fw-bold"
+                            v-if="value.student_id == getId.id"
+                            >{{ getId.first_name }} {{ getId.last_name }}</span
+                          >
+                        </li>
+                        <li
+                          class="fw-bold text-green"
+                          v-if="value.student_id == getId.id"
+                        >
+                          {{ getId.batch }}
+                        </li>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </ul>
-              <div class="button justify-content">
-                <a
-                  class="btn btn-link nav-button"
-                  data-toggle="collapse"
-                  :data-target="'#' + index"
-                  aria-expanded="true"
-                  aria-controls="index"
-                >
-                  <i class="fa-solid fa-eye"></i>
-                </a>
-                <button
-                  class="bg-danger btn"
-                  @click="changeStatus('rejected', value.id)"
-                >
-                  Rejected
-                </button>
+                </ul>
+                <div class="button justify-content">
+                  <a
+                    class="btn btn-link nav-button"
+                    data-toggle="collapse"
+                    :data-target="'#' + index"
+                    aria-expanded="true"
+                    aria-controls="index"
+                  >
+                    <i class="fa-solid fa-eye"></i>
+                  </a>
+                  <button
+                    class="bg-danger btn"
+                    @click="changeStatus('rejected', value.id)"
+                  >
+                    Rejected
+                  </button>
 
-                <button
-                  class="bg-success btn"
-                  @click="changeStatus('approved', value.id)"
-                >
-                  Approved
-                </button>
+                  <button
+                    class="bg-success btn"
+                    @click="changeStatus('approved', value.id)"
+                  >
+                    Approved
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div
-            :id="index"
-            class="collapse hidden"
-            aria-labelledby="headingOne"
-            data-parent="#accordion"
-          >
-            <div class="card-body">
-              <div>
-                <div class="accordion-body">
-                  <div class="mb-1 row">
-                    <table
-                      class="secondary text-no-wrap rounded-t-lg"
-                      width="100%"
-                    >
-                      <tr class="bg-blue" type>
-                        <th>Star Date</th>
-                        <th>End Date</th>
-                        <th>Reason</th>
-                        <th>Duration</th>
-                        <th>Leave Type</th>
-                        <th>Request Date</th>
-                      </tr>
-                      <tr>
-                        <td>{{ value.start_date }}</td>
-                        <td>{{ value.end_date }}</td>
-                        <td>{{ value.cause }}</td>
-                        <td>{{ value.duration }}</td>
-                        <td>{{ value.type }}</td>
-                        <td>{{ value.request_date }}</td>
-                      </tr>
-                    </table>
+            <div
+              :id="index"
+              class="collapse hidden"
+              aria-labelledby="headingOne"
+              data-parent="#accordion"
+            >
+              <div class="card-body">
+                <div>
+                  <div class="accordion-body">
+                    <div class="mb-1 row">
+                      <table
+                        class="secondary text-no-wrap rounded-t-lg"
+                        width="100%"
+                      >
+                        <tr class="bg-blue" type>
+                          <th>Star Date</th>
+                          <th>End Date</th>
+                          <th>Reason</th>
+                          <th>Duration</th>
+                          <th>Leave Type</th>
+                          <th>Request Date</th>
+                        </tr>
+                        <tr>
+                          <td>{{ value.start_date }}</td>
+                          <td>{{ value.end_date }}</td>
+                          <td>{{ value.cause }}</td>
+                          <td>{{ value.duration }}</td>
+                          <td>{{ value.type }}</td>
+                          <td>{{ value.request_date }}</td>
+                        </tr>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -184,11 +226,10 @@
           </div>
         </div>
       </div>
-      </div>
     </v-card>
   </div>
-</template>
 
+</template>
 <script>
 import CardAdminAllow from "./status/CardAdminAllow.vue";
 import AdminStatusVue from "./AdminStatus.vue";
@@ -201,67 +242,74 @@ export default {
   data() {
     return {
       listPendingLeave: [],
-      allLeave:[],
+      allLeave: [],
       listApproved: [],
       listRejected: [],
       listStudent: [],
       dialog: false,
-      isApproved:false,
-      isRejected:false,
-      isPending:true
+      isApproved: false,
+      isRejected: false,
+      isPending: true,
       // statusName:null,
     };
   },
 
   methods: {
     onGetAllStudent() {
-      axios.get("/students").then((res) => {
+      axios.get("/students",{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}}).then((res) => {
         this.listStudent = res.data;
         this.getData(res.data);
         for (let studentData of res.data) {
           for (let leaveStudent of studentData.leave) {
-            this.allLeave.push(leaveStudent)
+            this.allLeave.push(leaveStudent);
             if (leaveStudent.status == "pending") {
               this.listPendingLeave.push(leaveStudent);
             } else if (leaveStudent.status == "approved") {
               this.listApproved.push(leaveStudent);
-            }else if(leaveStudent.status == "rejected"){
-              this.listRejected.push(leaveStudent)
+            } else if (leaveStudent.status == "rejected") {
+              this.listRejected.push(leaveStudent);
             }
           }
         }
       });
     },
-    getStatusFromAdmin(status){
-        if(status=='Rejected'){
-          this.isApproved=false
-          this.isRejected=true
-          this.isPending=false
-        }else
-        if(status=='Approved'){
-          this.isApproved=true
-          this.isRejected=false
-          this.isPending=false
-        }
+    getStatusFromAdmin(status) {
+      if (status == "Rejected") {
+        localStorage.setItem("sendPending", false);
+        this.isApproved = false;
+        this.isRejected = true;
+        this.isPending = false;
+      } else if (status == "Approved") {
+        this.isApproved = true;
+        this.isRejected = false;
+        this.isPending = false;
+        localStorage.setItem("sendPending", false);
+      }
     },
     getData(data) {
       this.listStudent = data;
     },
     changeStatus(statusLeave, index) {
       if (statusLeave == "rejected") {
-        axios.put("/leaves/" + index, { status: statusLeave });
+        axios.put("/leaves/" + index, { status: statusLeave },{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}});
       } else {
-        axios.put("/leaves/" + index, { status: statusLeave });
+        axios.put("/leaves/" + index, { status: statusLeave },{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}});
+      }
+    },
+    getPending() {
+      if (localStorage.getItem("sendPending")) {
+        this.isPending = true;
+        this.isApproved = false;
+        this.isRejected = false;
       }
     },
   },
   mounted() {
     this.onGetAllStudent();
     this.getData();
+    this.getPending();
   },
-  computed: {
-    
-  },
+  computed: {},
 };
 </script>
 
@@ -309,16 +357,16 @@ span {
 .color-style {
   border-left: 3px blue solid;
 }
-li{
+li {
   list-style-type: none;
 }
-.border-left-color{
+.border-left-color {
   border-top: 5px solid red;
 }
-.border-top-approved{
+.border-top-approved {
   border-top: solid green 5px;
 }
-.box-shadow-color{
+.box-shadow-color {
   background: rgb(245, 241, 241);
 }
 </style>

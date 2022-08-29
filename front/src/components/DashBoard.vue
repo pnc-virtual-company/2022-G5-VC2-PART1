@@ -11,8 +11,7 @@
   </div>
   <div v-if="!isClick" class="">
     <table
-      style="overflow: auto"
-      class="secondary text-no-wrap rounded-t-lg h"
+      class="secondary text-no-wrap rounded-t-lg"
       :class="`elevation-${hover ? 24 : 6}`"
     >
       <tr>
@@ -24,6 +23,7 @@
         <th>Status</th>
         <th>Request Date</th>
       </tr>
+
       <tr v-for="student in filterSearchListStudent" :key="student">
         <td>{{ student.start_date }}</td>
         <td>{{ student.end_date }}</td>
@@ -35,13 +35,13 @@
             student.status
           }}</span>
         </td>
-        <td>{{ student.created_at }}</td>
+        <td>{{ student.request_date }}</td>
       </tr>
     </table>
   </div>
   <div v-if="isClick" class="">
     <table
-      class="secondary text-no-wrap rounded-t-lg"
+      class="secondary text-no-wrap between-t-lg"
       :class="`elevation-${hover ? 24 : 6}`"
     >
       <tr>
@@ -63,74 +63,15 @@
           <span :style="changeColorStatus(value.status)">{{
             value.status
           }}</span>
-          
         </td>
         <td>{{ value.created_at }}</td>
       </tr>
     </table>
-  </div> 
-<!-- =======
-      <div v-if="!isClick" class="">
-        <table
-          style="overflow: auto"
-          class="secondary text-no-wrap rounded-t-lg h"
-          :class="`elevation-${hover ? 24 : 6}`"
-        >
-          <tr>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Reason</th>
-            <th>Duration</th>
-            <th>Leave Type</th>
-            <th>Status</th>
-            <th>Request Date</th>
-          </tr>
-
-          <tr v-for="student in filterSearchListStudent" :key="student">
-            <td>{{ student.start_date }}</td>
-            <td>{{ student.end_date }}</td>
-            <td>{{ student.reason }}</td>
-            <td>{{ student.duration }}</td>
-            <td>{{ student.leave_type }}</td>
-            <td  >
-            <span :style="changeColorStatus(student.status)">{{ student.status }}</span> 
-            </td>
-            <td>{{ student.request_date }}</td>
-            <td>{{ student.created_at }}</td>
-          </tr>
-        </table>
-      </div>
-      <div v-if="isClick" class="">
-        <table
-          class="secondary text-no-wrap between-t-lg"
-          :class="`elevation-${hover ? 24 : 6}`"
-        >
-          <tr>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Reason</th>
-            <th>Duration</th>
-            <th>Leave Type</th>
-            <th>Status</th>
-            <th>Request Date</th>
-          </tr>
-          <tr v-for="value in filterCheckStatus" :key="value">
-            <td>{{ value.start_date }}</td>
-            <td>{{ value.end_date }}</td>
-            <td>{{ value.reason }}</td>
-            <td>{{ value.duration }}</td>
-            <td>{{ value.leave_type }}</td>
-            <td >
-             <span :style="changeColorStatus(value.status)">{{ value.status }}</span>
-            </td>
-            <td>{{ value.created_at }}</td>
-          </tr>
-        </table>
-      </div>
->>>>>>> 0430ea6a9c991eb8004d5ff564eb7bc67c864be0 -->
+  </div>
 </template>
 
 <script>
+// import NewRequestVue from "./NewRequest.vue";
 import StudentStatusVue from "./StudentStatus.vue";
 import axios from "../axios-http.js";
 export default {
@@ -146,32 +87,18 @@ export default {
         "Brother or Sister Marriage",
         "Party",
       ],
-      studentLists: [
-        {
-          start_date: "12/03/2014",
-          end_date: "12/03/2014",
-          reason: "sick",
-          duration: "3",
-          leave_type: "sick leave",
-          status: "approved",
-          request_date: "12/03/2014",
-        },
-
-        {
-          start_date: "12/03/2014",
-          end_date: "12/03/2014",
-          reason: "sick",
-          duration: "3",
-          leave_type: "sick leave",
-          status: "approved",
-          request_date: "12/03/2014",
-        },
-      ],
+      studentLists: [],
       search: null,
       searchText: null,
       searchStatus: null,
       isClick: false,
       padding: null,
+      studentId: localStorage.getItem("student_id"),
+      token: {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("student_token")}`,
+        },
+      },
     };
   },
   methods: {
@@ -210,9 +137,12 @@ export default {
       this.isClick = false;
     },
     fetchDataStudent() {
-      axios.get("/leaves").then((res) => {
-        this.studentLists = res.data;
-        console.log(res.data);
+      axios.get("/leaves/", this.token).then((res) => {
+        for (let leave of res.data) {
+          if (leave.student_id == this.studentId) {
+            this.studentLists.push(leave);
+          }
+        }
       });
     },
   },

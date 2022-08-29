@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LeaveController;
@@ -22,26 +23,36 @@ use App\Http\Controllers\MailController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+    return $request->student();
 });
 
-// For Student
-Route::apiResource("students",StudentController::class);
-// // For Admin
-Route::apiResource("admin",AdminController::class);
-// For Student Leave
-Route::apiResource("leaves",LeaveController::class);
+
+// // For Student Leave
+Route::apiResource("leaves", LeaveController::class);
 
 Route::get('/send-mail', [MailController::class, 'sendEmail']);
 
-// // For login Admin
-// Route::post('/login',[AdminController::class,'login']);
+// // -----------------------
 
-Route::post('/logout',[AdminController::class,'logout']);
+// -------------------admin--------------------
+Route::post('/create', [AdminController::class, 'store']);
+Route::post('/login', [AdminController::class, 'login']);
+Route::apiResource("/admin", AdminController::class);
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::apiResource('/studentsInAdmin',StudentController::class);
+    Route::apiResource("leaves", LeaveController::class);
+    Route::post('/reset', [AdminController::class, 'reset']);
+    Route::post('/logout', [AdminController::class, 'logout']);
+});
 
-// For login Student 
-Route::post('/loginStudent',[StudentController::class,'login']);
-//update image
-Route::put('/updatePhoto/{id}',[StudentController::class,'updatePhoto']);
-// -----------------------
-Route::post('/create',[AdminController::class,'store']);
-Route::post('/login',[AdminController::class,'login']);
+// -------------------student--------------------
+Route::post('/loginStudent', [StudentController::class, 'login']);
+Route::get('/studentCompare',[StudentController::class,'index']);
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::put('/updatePhoto/{id}', [StudentController::class, 'updatePhoto']);
+    Route::apiResource('/students',StudentController::class);
+    Route::apiResource("leaves", LeaveController::class);
+    Route::get("/getAdminId",[AdminController::class,'index']);
+    Route::get("/getOneStudent/{id}",[StudentController::class,'getOneStudent']);
+    Route::post('/logOutStudent',[StudentController::class, 'signOut']);
+});

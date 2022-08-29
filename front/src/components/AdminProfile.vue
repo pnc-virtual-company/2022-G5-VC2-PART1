@@ -90,12 +90,7 @@
               <hr />
               <div class="row">
                 <div class="col-sm-12">
-                  <a
-                    class="btn btn-info"
-                    target="__blank"
-                    href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills"
-                    >Reset Password</a
-                  >
+                  <resetPasswordAdmin></resetPasswordAdmin>
                 </div>
               </div>
             </div>
@@ -106,23 +101,29 @@
   </div>
 </template>
 <script>
+  import resetPasswordAdmin from "./edit/ResetPasswordAdmin.vue"
 import axios from "../axios-http";
 export default {
   data() {
     return {
       url: null,
       dataAdmin: {},
+      token:{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}},
+      adminID:localStorage.getItem('user_id')
     };
+  },
+  components:{
+    resetPasswordAdmin
   },
   methods: {
     getAdminIntoProfile() {
-      axios.get("/admin/" + 1).then((res) => {
+      axios.get("/admin/" +this.adminID ,this.token).then((res) => {
         this.dataAdmin = res.data;
         console.log(res.data);
       });
     },
     uploadImage() {
-      axios.put("/students/" + 1,this.dataAdmin.profile_image).then(() => {
+      axios.put("/students/" + this.adminID,this.dataAdmin.profile_image,this.token).then(() => {
         this.getStudentIntoProfile()
       });
     },

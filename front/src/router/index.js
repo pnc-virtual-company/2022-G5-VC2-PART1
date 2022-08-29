@@ -1,21 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import dashboardStudent from "../components/DashBoard.vue"
-import newRequest from "../components/NewRequest.vue"
+import newRequestLeave from "../components/NewRequest.vue"
 import CheckListStudent from "../components/CheckList.vue"
 import listStudent from "../components/StudentList.vue"
 import formLogin from "../views/FormLogin.vue"
-<<<<<<< HEAD
 import studentProfile from "../components/StudentProfile.vue"
 import adminProfile from "../components/AdminProfile.vue"
-import StudenetView from "../views/StudentView.vue"
-=======
-// import studentProfile from "../components/StudentProfile.vue"
-// import adminProfile from "../components/AdminProfile.vue"
 import StudentView from "../views/StudentView.vue"
-// import studentProfile from "../components/StudentProfile.vue"
-// import adminProfile from "../components/AdminProfile.vue"
-// import CardStudent from "../components/CardStudent.vue"
->>>>>>> 0430ea6a9c991eb8004d5ff564eb7bc67c864be0
 import AdminView from "../views/AminView.vue"
 const routes = [
   {
@@ -32,19 +23,17 @@ const routes = [
         path: '/listStudent',
         name: 'listStudent',
         component: listStudent,
-<<<<<<< HEAD
-        
-=======
+
         meta:{
           needLogin:true,
         }
->>>>>>> 0430ea6a9c991eb8004d5ff564eb7bc67c864be0
+
       },
       {
         path: '/checkList',
         name: 'checkList',
         component: CheckListStudent,
-<<<<<<< HEAD
+
         
       },
       {
@@ -52,17 +41,11 @@ const routes = [
         name: 'adminProfile',
         component: adminProfile,
         
-=======
         meta:{
           needLogin:true
         }
->>>>>>> 0430ea6a9c991eb8004d5ff564eb7bc67c864be0
       },
-      // {
-      //   path: '/adminProfile',
-      //   name: 'adminProfile',
-      //   component: adminProfile
-      // },
+      
     ]
   },
   
@@ -83,16 +66,14 @@ const routes = [
       {
         path: '/request',
         name: 'request',
-        component: newRequest,
-        meta:{
-          needLogin:true
-        }
+        component: newRequestLeave,
+     
       },
-      // {
-      //   path: '/profile',
-      //   name: 'profile',
-      //   component: studentProfile
-      // },
+      {
+        path: '/profile',
+        name: 'profile',
+        component: studentProfile
+      },
     ]
   },
 ]
@@ -104,15 +85,15 @@ const router = createRouter({
   linkExactActiveClass:'active'
 })
 
-router.beforeEach((to, from, next)=>{
-  let needLogin = to.meta.needLogin;
-  if(needLogin){
-    if(!localStorage.admin_id || !localStorage.student_id){
-      next('/')
-    }
-  }
-  next()
-})
+// router.beforeEach((to, from, next)=>{
+//   let needLogin = to.meta.needLogin;
+//   if(needLogin){
+//     if(!localStorage.admin_id || !localStorage.student_id){
+//       next('/')
+//     }
+//   }
+//   next()
+// })
 // let authenticationGuard = (to, from, next) => {
 //   let needLogin = to.meta.needLogin;
 //   if (needLogin) {

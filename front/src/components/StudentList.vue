@@ -159,66 +159,6 @@ export default {
     return {
      
       studentnames: [
-        // {
-        //   id: 1,
-        //   profile_image:
-        //     "https://cdn-icons-png.flaticon.com/512/1320/1320559.png",
-        //   first_name: "sonak",
-        //   last_name: "sonak",
-        //   batch: "WEB A2022",
-        //   phone: "8845 658 839",
-        //   email: "somnak.doe@doe.com",
-        //   studentDetails: [
-        //     {
-        //       start_date: "12/03/2014",
-        //       end_date: "12/03/2014",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2014",
-        //     },
-        //     {
-        //       start_date: "12/03/2014",
-        //       end_date: "12/03/2014",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2014",
-        //     },
-        //   ],
-        // },
-        // {
-        //   id: 2,
-        //   profile_image:
-        //     "https://www.esafety.gov.au/sites/default/files/2019-08/Remove%20images%20and%20video.jpg",
-        //   first_name: "sonak",
-        //   last_name: "sonak",
-        //   batch: "WEB A2022",
-        //   phone: "8845 658 839",
-        //   email: "somnak.doe@doe.com",
-        //   studentDetails: [
-        //     {
-        //       start_date: "12/03/2014",
-        //       end_date: "12/03/2014",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2014",
-        //     },
-        //     {
-        //       start_date: "12/03/2014",
-        //       end_date: "12/03/2014",
-        //       reason: "sick",
-        //       duration: "3",
-        //       leave_type: "sick leave",
-        //       status: "approved",
-        //       request_date: "12/03/2014",
-        //     },
-        //   ],
-        // },
       ],
       dialog: false,
       index: null,
@@ -230,13 +170,13 @@ export default {
   },
   methods: {
     getStudent() {
-      axios.get("/students").then((res) => {
+      axios.get("/studentsInAdmin/",{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}}).then((res) => {
         this.studentnames = res.data;
       });
     },
     onDeleteStudent(id) {
       this.dialogDelete=false
-      axios.delete("/students/" + id).then(() => {
+      axios.delete("/studentsInAdmin/" + id,{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}}).then(() => {
         this.getStudent();
       });
     },

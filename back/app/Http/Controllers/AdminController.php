@@ -53,6 +53,14 @@ class AdminController extends Controller
     {
         return Admin::findOrFail($id);
     }
+    public function reset(Request $request,$id)
+    {
+        $resetPassword = Admin::findOrFail($id);
+        $resetPassword -> password = Hash::make($request->password);
+        $resetPassword->save();
+        return response()->json(['sms'=>'reset successful'],200);
+
+    }
     /**
      * Update the specified resource in storage.
      *

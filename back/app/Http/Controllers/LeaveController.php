@@ -39,6 +39,7 @@ class LeaveController extends Controller
             'student_id' => 'required|Integer',
         ]);
         leave::create($leave);
+        return response()->json(['sms'=>$leave]);
     }
 
     /**

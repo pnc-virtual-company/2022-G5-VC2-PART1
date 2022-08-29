@@ -34,121 +34,99 @@
 <script>
 import axios from "../axios-http.js";
 export default {
-  components:{
-  },
+  components: {},
   data() {
     return {
-      email:null,
-      emailEnter:null,
-      isTrue:false,
+      email: null,
+      emailEnter: null,
+      isTrue: false,
       password: "",
       admin: [],
       students: [],
+      studentId:{},
       dataCheck: [],
       role: "",
       isStudent: false,
       isTeacher: false,
-
-
-
-            studentIndex:null,
-            token:null,
+      studentIndex: null,
+      token: null,
     };
   },
   methods: {
     loginUser() {
       if (this.email !== "" && this.password !== "") {
-        axios
-          .post("login", {
-            email: this.email,
-            password: this.password,
-          })
-          .then((response) => {
-            this.dataCheck = response.data;
+        let loginInfo = { email: this.email, password: this.password };
+        this.checkStudent();
+        if (this.admin[0].email == this.email) {
+          axios.post("/login", loginInfo).then((response) => {
+            if (response.data.sms != "invalid") {
+              this.$router.push("/listStudent");
+              localStorage.setItem("user_id", this.admin[0].id);
+              localStorage.setItem("admin_token", response.data.token);
+            } else {
+              alert("Password is invalid");
+            }
           });
-        if (this.admin[0].email== this.email) {
-            this.$router.push('/listStudent');
-
-        }else{
-          this.$router.push('/dashboard')
-
+        } else if (this.isStudent) {
+          axios.post("/loginStudent", loginInfo).then((response) => {
+            if (response.data.sms != "invalid") {
+              console.log(response,"token student");
+              localStorage.setItem("student_id",this.studentId.id);
+              localStorage.setItem("student_token", response.data.token);
+              this.$router.push("/dashboard");
+            } else {
+              alert("Password is invalid");
+            }
+            
+          });
+        } else {
+          alert("Invalid Email");
         }
+      } else {
+        alert("Fill in everything");
       }
     },
-        loginUser(){
-            if(this.email !== "" && this.password !==""){
-                let loginInfo = {'email' : this.email, 'password' : this.password}
-                console.log(this.email==this.admin[0].email)
-                this.checkStudent()
-                if(this.admin[0].email == this.email){
-                    axios.post("login",loginInfo).then((response) =>{
-                        if(response.data.sms!="invalid"){
-                            this.$router.push("/listStudent")
-                            localStorage.setItem('user_id',this.admin[0].id)
-                            localStorage.setItem('admin_token',response.data.token)
-                        }else{
-                            alert("Password is invalid")
-                        }
-                    })
-                }else if(this.isStudent){
-                    axios.post("loginStudent",loginInfo).then((response) =>{
-                        if(response.data.sms!="invalid"){
-                            this.$router.push("/dashboard")
-                        }else{
-                            alert("Password is invalid")
-                        }
-                        console.log(response.data)
-
-                    })
-                }else{
-                    alert("Invalid Email")
-                }
-            }else{
-                alert("Fill in everything")
-            }
-        },
-        myFunction(){
-            let x = document.getElementById("myInput");
-            if (x.type === "password") {
-                x.type = "text";
-            } else {
-                x.type = "password";
-            }
-        },
-        getStudents(){
-            axios.get("students").then((response) =>{
-                this.students = response.data;
-            });
-        },
-        getAdmin(){
-            axios.get("admin").then((response) =>{
-                this.admin = response.data;
-            });
-        },
-        checkStudent(){
-            this.students.forEach((student) =>{
-                if(student.email == this.email){
-                    this.isStudent = true;
-                }
-            })
+    myFunction() {
+      let x = document.getElementById("myInput");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    },
+    getStudents() {
+      axios.get("/studentCompare").then((response) => {
+        this.students = response.data;
+      });
+    },
+    getAdmin() {
+      axios.get("/admin").then((response) => {
+        this.admin = response.data;
+      });
+    },
+    checkStudent() {
+      this.students.forEach((student) => {
+        if (student.email == this.email) {
+          this.studentId = student
+          this.isStudent = true;
+      
         }
-
+      });
     },
-    computed:{
-        getAllStudents(){
-            return this.getStudents()
-        },
-        getAllAdmin(){
-            return this.getAdmin()
-        },
+  },
+  computed: {
+    getAllStudents() {
+      return this.getStudents();
     },
-    mounted(){
-        this.getAdmin();
-        this.getStudents();
-
-    }
-
-}
+    getAllAdmin() {
+      return this.getAdmin();
+    },
+  },
+  mounted() {
+    this.getAdmin();
+    this.getStudents();
+  },
+};
 
 // =======
 //     myFunction() {

@@ -4,22 +4,31 @@
       <template #account>
         <router-link class="item-link" to="/profile">
           <div class="account p-3 mt-5 d-flex">
-            <img
-              class="rounded-pill"
-              src="https://cdn.vuetifyjs.com/images/john.jpg"
-              alt="John"
-              width="70"
-            />
+            <div>
+
+              <img v-if="studentAccount.profile_image!=''"
+                class="rounded-pill"
+                :src="studentAccount.profile_image"
+                alt="John"
+                width="70"
+              />
+              <img v-else
+                class="rounded-pill"
+                src="https://cdn.vuetifyjs.com/images/john.jpg"
+                alt="John"
+                width="70"
+              />
+            </div>
             <div>
               <div class="mt-3 text-white">
-                <span class="m-2 fw-bold">Somnak Kalan</span>
+                <span class="m-2 fw-bold">{{studentAccount.first_name}} {{studentAccount.last_name}}</span>
                 <p class="">PNC</p>
               </div>
             </div>
           </div>
         </router-link>
       </template>
-      <template #logOut>
+      <template #logout>
         <Button-View @click="onLogOut()" class="text-white"
           ><i class="fa-solid fa-right-from-bracket"></i
         ></Button-View>
@@ -47,6 +56,7 @@
 </template>
 
 <script>
+import axios from "../axios-http";
 export default {
   data: () => ({
     drawer: null,
@@ -55,14 +65,30 @@ export default {
       { title: "New Request", icon: "mdi-view-dashboard", to: "/request" },
     ],
     right: null,
+    studentId: localStorage.getItem("student_id"),
+    token: {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("student_token")}`,
+      },
+    },
+    studentAccount: {},
   }),
-  components: {
-    // StudentList
-  },
+  components: {},
+
   methods: {
     onLogOut() {
-      this.$router.push({ name: "login", path: "/" });
+      localStorage.removeItem("student_id");
+      localStorage.removeItem("student_token");
+      this.$router.push("/");
     },
+    getStudentAccount() {
+      axios.get("/getOneStudent/" + this.studentId, this.token).then((res) => {
+        this.studentAccount = res.data;
+      });
+    },
+  },
+  mounted() {
+    this.getStudentAccount();
   },
 };
 </script>

@@ -83,7 +83,7 @@
         </div>
     </div>
 </div>
-<div>
+<div class="">
     <a
     class="btn btn-primary text-white"
     data-bs-toggle="modal"
@@ -117,13 +117,14 @@ import swal from 'sweetalert'
                 gender:'',
                 password:'12345678',
                 profile:'',
-                admin_id:'1',
+                admin_id:localStorage.getItem('user_id'),
                 isRequired:false,
                 existEmail:false,
                 existPhone:false,
                 allRequired:false,
                 alreadyExistMail:false,
                 alreadyExistPhone:false,
+                token:{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}},
             }
         },
         props:['studentNames'],
@@ -146,7 +147,7 @@ import swal from 'sweetalert'
                         this.profile='../assets/homo.png'
                     }
                     if(!this.checkExist[0] && !this.checkExist[1]){
-                        axios.post("students",{
+                        axios.post("/studentsInAdmin/",{
                             first_name: this.firstName,
                             last_name: this.lastName,
                             email: this.email,
@@ -156,7 +157,7 @@ import swal from 'sweetalert'
                             gender: this.gender,
                             admin_id: this.admin_id,
                             profile_image:this.profile
-                        }).then(() =>{
+                        },this.token).then(() =>{
                             swal({
                                 position: 'center',
                                 icon: 'success',

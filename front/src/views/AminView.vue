@@ -1,46 +1,58 @@
 <template>
   <div>
-    <Navigation-Bar >
+    <Navigation-Bar>
       <template #account>
         <router-link class="item-link" to="/adminProfile">
           <div class="account p-3 d-flex">
-            <img
-              class=" rounded-pill"
-              src="https://cdn.vuetifyjs.com/images/john.jpg"
-              alt="John"
-              width="70"
-            />
+            <div>
+       
+                <img v-if="adiminAccount.profile_image != '' "
+                  class="rounded-pill"
+                  :src="adiminAccount.profile_image"
+                  alt="John"
+                  width="70"
+                />
+       
+                <img v-else
+                  class="rounded-pill"
+                  src="https://cdn.vuetifyjs.com/images/john.jpg"
+                  alt="John"
+                  width="70"
+                />
+      
+            </div>
             <div>
               <div class="mt-3 text-white">
-                <span class="m-2 fw-bold">Nga</span>
+                <span class="m-2 fw-bold"
+                  >{{ adiminAccount.first_name }}
+                  {{ adiminAccount.last_name }}</span
+                >
                 <p class="">PNC</p>
               </div>
             </div>
           </div>
         </router-link>
       </template>
-      <template #logOut> 
-        <Button-View  @click="onLogOut()" class="text-white"
-            ><i class="fa-solid fa-right-from-bracket"></i
-          ></Button-View>
+      <template #logout>
+        <Button-View @click="onLogOut()" class="text-white"
+          ><i class="fa-solid fa-right-from-bracket"></i
+        ></Button-View>
       </template>
       <template #padding-alert>
-      
-        
-      <button @click="sendPending()">
-  
-        <v-badge  color="green" :content="countPending">
-          <i  class="fa-solid fa-bell icon-bell"></i>
-        </v-badge>
-     
-      </button>
-    
-      
-    
+        <button @click="setPendingToLocalStorage()">
+          <v-badge color="green" :content="countPending">
+            <i class="fa-solid fa-bell icon-bell"></i>
+          </v-badge>
+        </button>
       </template>
       <template #v-list-item>
-        
-        <v-list-item v-for="item in items" :key="item.title"  :to="item.to" link class="mt-5">
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          :to="item.to"
+          link
+          class="mt-5"
+        >
           <div style="display: flex">
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
@@ -58,31 +70,53 @@
 <script>
 import axios from "../axios-http";
 export default {
-   components:{
-    
-  },
+  components: {},
   data: () => ({
-    pendingName:null,
+    pendingName: null,
     drawer: null,
     items: [
-      { title: "List Student", icon: "mdi-home", to: "/listStudent"},
+      { title: "List Student", icon: "mdi-home", to: "/listStudent" },
       { title: "Check List", icon: "mdi-view-dashboard", to: "/checkList" },
     ],
     right: null,
     studentLists: [],
+    pendingString: true,
+    adiminAccount: {},
+    adminID: localStorage.getItem("user_id"),
+    token: {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
+      },
+    },
   }),
   methods: {
     getData() {
-      axios.get("/leaves").then((res) => {
-        this.studentLists = res.data;
+      axios
+        .get("/leaves", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
+          },
+        })
+        .then((res) => {
+          this.studentLists = res.data;
+        });
+    },
+    getAdminAccount() {
+      axios.get("/admin/" + this.adminID, this.token).then((res) => {
+        this.adiminAccount = res.data;
       });
     },
-    sendPending(){
-      this.pendingName = 'pending'
+    sendPending() {
+      this.pendingName = "pending";
     },
-  onLogOut(){
-      this.$router.push({name:'login',path:"/"})
-  },
+    onLogOut() {
+      localStorage.removeItem("user_id");
+      localStorage.removeItem("admin_token");
+      this.$router.push("/");
+    },
+    setPendingToLocalStorage() {
+      localStorage.setItem("sendPending", this.pendingString);
+    },
   },
   computed: {
     countPending() {
@@ -97,9 +131,10 @@ export default {
     },
   },
 
-  mounted(){
-    this.getData()
-  }
+  mounted() {
+    this.getData();
+    this.getAdminAccount();
+  },
 };
 </script>
 <style scoped>
@@ -112,10 +147,8 @@ img {
 .v-list-item--active {
   background-color: rgb(255, 255, 255);
   color: rgb(0, 0, 0);
-  
 }
 .v-list-item {
-
   text-decoration: none;
   color: white;
 }
@@ -137,10 +170,7 @@ img {
 .item-link {
   text-decoration: none;
 }
-.test{
+.test {
   background: #000;
 }
-
-
-
 </style>

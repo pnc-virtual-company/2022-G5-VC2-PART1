@@ -9,11 +9,7 @@
           <slot name="v-list-item"></slot>
         </v-list>
         <div class="button">
-          <Button-View class="text-white"><i class="fa-solid fa-right-from-bracket " @click="logout"></i></Button-View>
-          <Button-View class="text-white"
-            ><i class="fa-solid fa-right-from-bracket"></i
-          ></Button-View>
-
+          <slot name="logout"></slot>
         </div>
       </v-navigation-drawer>
     </div>
@@ -46,11 +42,6 @@ export default {
     right: null,
   }),
   methods:{
-    logout(){
-      localStorage.removeItem("user_id")
-      localStorage.removeItem("admin_token")
-      this.$router.push("/")
-    }
   }
 };
 </script>
