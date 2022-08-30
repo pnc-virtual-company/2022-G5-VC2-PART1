@@ -35,7 +35,7 @@
             student.status
           }}</span>
         </td>
-        <td>{{ student.request_date }}</td>
+        <td>{{ student.created_at }}</td>
       </tr>
     </table>
   </div>

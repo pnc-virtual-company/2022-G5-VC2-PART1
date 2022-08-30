@@ -284,6 +284,8 @@ export default {
         this.isRejected = false;
         this.isPending = false;
         localStorage.setItem("sendPending", false);
+      }else if (status == "Student"){
+        this.$router.push('/listStudent')
       }
     },
     getData(data) {

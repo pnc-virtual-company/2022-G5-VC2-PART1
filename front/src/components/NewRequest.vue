@@ -1,8 +1,7 @@
 <template>
   <div>
     <form @submit.prevent="addRequest">
-      <h3 class="text-center">Request Leave Form</h3>
-      <hr />
+      <h3 class="text-center pb-2">Request Leave Form</h3>
       <div class="form">
         <div class="form-input">
           <p>Type leave :</p>
@@ -57,7 +56,7 @@
         </div>
       </div>
       <div class="bt text-center">
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <button class="btn btn-primary bg-style-color" type="submit">Submit</button>
       </div>
     </form>
   </div>
@@ -210,6 +209,7 @@ input[type="date"] {
   box-sizing: border-box;
   border: 1px solid rgb(111, 111, 140);
   width: 84%;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 .time-d {
   border: 1px solid;
@@ -238,6 +238,7 @@ h3 {
   box-sizing: border-box;
   border: 1px solid rgb(8, 8, 8);
   border-radius: 4px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 .reason {
   width: 60%;
@@ -262,5 +263,15 @@ p {
 }
 bt {
   display: inline-block;
+}
+.bg-style-color{
+  color: white;
+}
+select{
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+h3 {
+  background: rgba(19, 129, 255, 0.644);
+  color: azure;
 }
 </style>

@@ -40,7 +40,10 @@ Route::apiResource("/admin", AdminController::class);
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('/studentsInAdmin',StudentController::class);
     Route::apiResource("leaves", LeaveController::class);
-    Route::put('/reset', [AdminController::class, 'reset']);
+    Route::put('/resetPassword/{id}', [AdminController::class, 'reset']);
+    Route::get('/getOneAdmin/{id}', [AdminController::class, 'show']);
+    Route::put('/editAdminProfile/{id}', [AdminController::class, 'editProfile']);
+
     Route::post('/logout', [AdminController::class, 'logout']);
 });
 

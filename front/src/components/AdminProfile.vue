@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-5">
+  <div class="container mt-5 ">
     <div class="main-body">
       <div class="row gutters-sm">
         <div class="col-md-4 mb-3">
@@ -31,7 +31,6 @@
                 </div>
                 <div class="mt-3">
                   <h4>{{ dataAdmin.first_name }} {{ dataAdmin.last_name }}</h4>
-                  <p class="text-secondary mb-1">Major: IT</p>
                   <p class="text-muted font-size-sm">
                     <strong>University: Passerell numeriques Cambodia </strong>
                   </p>
@@ -89,8 +88,15 @@
               </div>
               <hr />
               <div class="row">
-                <div class="col-sm-12">
-                  <resetPasswordAdmin></resetPasswordAdmin>
+                <div class=" d-flex ">
+                  <div class="m-2">
+                    <resetPasswordAdmin ></resetPasswordAdmin>
+
+                  </div>
+                  <div class="m-2">
+                    <editAdminProfile ></editAdminProfile>
+
+                  </div>
                 </div>
               </div>
             </div>
@@ -101,6 +107,7 @@
   </div>
 </template>
 <script>
+  import editAdminProfile from "./edit/EditAdminProfile.vue"
   import resetPasswordAdmin from "./edit/ResetPasswordAdmin.vue"
 import axios from "../axios-http";
 export default {
@@ -113,7 +120,8 @@ export default {
     };
   },
   components:{
-    resetPasswordAdmin
+    resetPasswordAdmin,
+    editAdminProfile
   },
   methods: {
     getAdminIntoProfile() {

@@ -56,7 +56,7 @@ class AdminController extends Controller
     public function reset(Request $request,$id)
     {
         $resetPassword = Admin::findOrFail($id);
-        $resetPassword -> password = Hash::make($request->password);
+        $resetPassword -> password =Hash::make($request->password);
         $resetPassword->save();
         return response()->json(['sms'=>'reset successful'],200);
 
@@ -68,21 +68,17 @@ class AdminController extends Controller
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Admin $admin)
+    public function editProfile(Request $request, $id)
     {
-        //
+        $Upateadmin = Admin::findOrFail($id);
+        $Upateadmin -> first_name = $request->first_name;
+        $Upateadmin -> last_name = $request->last_name;
+        $Upateadmin -> email = $request->email;
+        $Upateadmin -> age = $request->age;
+        $Upateadmin->save();
+        return response()->json(['sms'=>"Update is successfull"]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Admin $admin)
-    {
-        
-    }
     public function login(Request $request) {
         $user = Admin::where('email',$request->email)->first();
         if (!$user || !Hash::check ($request->password,$user->password)) {

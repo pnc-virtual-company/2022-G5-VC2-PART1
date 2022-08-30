@@ -8,6 +8,7 @@ import studentProfile from "../components/StudentProfile.vue"
 import adminProfile from "../components/AdminProfile.vue"
 import StudentView from "../views/StudentView.vue"
 import AdminView from "../views/AminView.vue"
+
 const routes = [
   {
     path: '/',
@@ -21,18 +22,22 @@ const routes = [
     children:[
       {
         path: '/listStudent',
-        name: 'listStudent',
+        name: 'list',
         component: listStudent,
 
         meta:{
-          needLogin:true,
+          requiresAuth:true,
         }
 
       },
       {
         path: '/checkList',
-        name: 'checkList',
+        name: 'check',
         component: CheckListStudent,
+        meta:{
+          requiresAuth:true,
+        
+        }
 
         
       },
@@ -42,7 +47,7 @@ const routes = [
         component: adminProfile,
         
         meta:{
-          needLogin:true
+          requiresAuth:true,
         }
       },
       
@@ -60,19 +65,25 @@ const routes = [
         name: 'dashboard',
         component: dashboardStudent,
         meta:{
-          needLogin:true,
+          requiresAuth:true,
         }
       },
       {
         path: '/request',
         name: 'request',
         component: newRequestLeave,
+        meta:{
+          requiresAuth:true,
+        }
      
       },
       {
         path: '/profile',
         name: 'profile',
-        component: studentProfile
+        component: studentProfile,
+        meta:{
+          requiresAuth:true,
+        }
       },
     ]
   },
@@ -82,47 +93,23 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes:routes,
   linkActivelistitem:'active',
-  linkExactActiveClass:'active'
+  linkExactActiveClass:'active',
+ 
 })
+router.beforeEach((to,from,next)=>{
+  if(to.meta.requiresAuth){
+    if(!localStorage.token && !localStorage.admin_id){
+      next('/')
+    }else{
+        if(to.path=="/admin"){
+          next("/")
+        }else{
+        
+            next()
+        }
 
-// router.beforeEach((to, from, next)=>{
-//   let needLogin = to.meta.needLogin;
-//   if(needLogin){
-//     if(!localStorage.admin_id || !localStorage.student_id){
-//       next('/')
-//     }
-//   }
-//   next()
-// })
-// let authenticationGuard = (to, from, next) => {
-//   let needLogin = to.meta.needLogin;
-//   if (needLogin) {
-//     if (!localStorage.admin_id || !localStorage.student_id) {
-//       next("/")
-//     } else {
-//       if (to.path === "/"){
-//         if(localStorage.admin_id){
-//           next("/listStudent'");
-//         }else{
-//           next("/dashboard");
-//         }
-//       }
-//     }
-//   } else {
-//     if (localStorage.admin_id) {
-//       if (to.path === "/") {
-//         if(localStorage.admin_id){
-//           next("/listStudent'");
-//         }else{
-//           next("/dashboard");
-//         }
-//       }
-//     }
-//   }
-//   next()
-// }
-
-// router.beforeEach(authenticationGuard);
-
-
+      }
+  }
+  next()
+})
 export default router
