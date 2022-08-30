@@ -63,6 +63,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 Route::post('/reset-password-student/{id}',[StudentController::class,'resetPassword']);
 Route::put('/reset-password-student/{id}',[StudentController::class,'update']);
 
-// Uplaod Profile 
+// Uplaod Profile Student
 Route::put('/updateProfile/{id}',[StudentController::class,'updateProfile']);
+
+// Upload Profile Admin 
+Route::put('/uploadProfileAdmin/{id}',[AdminController::class,'uploadProfileAdmin']);
+
 

@@ -96,20 +96,20 @@ const router = createRouter({
   linkExactActiveClass:'active',
  
 })
-router.beforeEach((to,from,next)=>{
-  if(to.meta.requiresAuth){
-    if(!localStorage.token && !localStorage.admin_id){
-      next('/')
-    }else{
-        if(to.path=="/admin"){
-          next("/")
-        }else{
+// router.beforeEach((to,from,next)=>{
+//   if(to.meta.requiresAuth){
+//     if(!localStorage.token && !localStorage.admin_id){
+//       next('/')
+//     }else{
+//         if(to.path=="/admin"){
+//           next("/")
+//         }else{
         
-            next()
-        }
+//             next()
+//         }
 
-      }
-  }
-  next()
-})
+//       }
+//   }
+//   next()
+// })
 export default router
