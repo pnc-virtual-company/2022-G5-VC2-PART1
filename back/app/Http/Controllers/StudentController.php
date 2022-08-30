@@ -32,20 +32,6 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
-         
-        $path = public_path('images');
-
-        if ( ! file_exists($path) ) {
-            mkdir($path, 0777, true);
-        }
-
-        $file = $request->file('image');
-
-        $fileName = uniqid() . '_' . trim($file->getClientOriginalName());
-                
-        $file->move($path, $fileName);
-
         $student = new student();
         $student -> first_name = $request->first_name;
         $student -> last_name = $request->last_name;
@@ -54,7 +40,6 @@ class StudentController extends Controller
         $student -> email = $request->email;
         $student -> password = Hash::make($request->password);
         $student -> phone = $request->phone;
-        $student -> profile_image = asset('images/' . $fileName);
         $student -> admin_id = $request->admin_id;
         $student->save();
         $token=$student->createToken('student-token')->plainTextToken;
@@ -67,11 +52,6 @@ class StudentController extends Controller
      * @param  \App\Models\student  $student
      * @return \Illuminate\Http\Response
      */
-    
-    // Uplaod Image
-    public function uplaodImage(Request $request){
-
-    }
     public function show($id)
     {
         //
@@ -95,10 +75,22 @@ class StudentController extends Controller
          $student -> password = Hash::make($request->password);
          $student->save();
     }
-    public function updatePhoto(Request $request, $id)
+
+    public function updateProfile(Request $request, $id)
     {
+        $path = public_path('images');
+
+        if ( ! file_exists($path) ) {
+            mkdir($path, 0777, true);
+        }
+        $file = $request->file('profile_image');
+
+        $fileName = uniqid() . '_' . trim($file->getClientOriginalName());
+                
+        $file->move($path, $fileName);
+
          $student = student::findOrFail($id);
-         $student -> profile_image = $request->profile_image;
+         $student -> profile_image = asset('images/' . $fileName);
          $student->save();
          return response()->json(['sms'=>$student]);
 
