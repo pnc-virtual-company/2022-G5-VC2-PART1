@@ -69,18 +69,18 @@ export default {
           });
         } else if (this.isStudent) {
           axios.post("/loginStudent", loginInfo).then((response) => {
-            if (response.data.sms != "invalid") {
+            if(response.data.sms == "Invalid Password"){
+              alert("Invalid Password");
+            }else if(response.data.sms == "Invalid Email"){
+              alert("Invalid Email")
+            }else{
               console.log(response,"token student");
               localStorage.setItem("student_id",this.studentId.id);
               localStorage.setItem("student_token", response.data.token);
               this.$router.push("/dashboard");
-            } else {
-              alert("Password is invalid");
             }
-            
+             
           });
-        } else {
-          alert("Invalid Email");
         }
       } else {
         alert("Fill in everything");
@@ -128,43 +128,6 @@ export default {
   },
 };
 
-// =======
-//     myFunction() {
-//       let x = document.getElementById("myInput");
-//       if (x.type === "password") {
-//         x.type = "text";
-//       } else {
-//         x.type = "password";
-//       }
-//     },
-//     getStudents() {
-//       axios.get("students").then((response) => {
-//         this.students = response.data;
-//         console.log(response);
-//       });
-//     },
-//     getAdmin() {
-//       axios.get("admin").then((response) => {
-//         this.admin = response.data;
-//       });
-//     },
-//   },
-//   computed: {
-//     getAllStudents() {
-//       return this.getStudents();
-//     },
-//     getAllAdmin() {
-//       return this.getAdmin();
-//     },
-//     // getLoginData(){
-//     //     return this.getLoginInfo();
-//     // }
-//   },
-//   mounted() {
-//     this.getAdmin();
-//     this.getStudents();
-//   },
-// };
 </script>
 
 <style scoped>

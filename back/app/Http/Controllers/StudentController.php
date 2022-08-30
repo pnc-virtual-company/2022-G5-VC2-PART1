@@ -79,7 +79,6 @@ class StudentController extends Controller
     }
     public function updatePhoto(Request $request, $id)
     {
-
          $student = student::findOrFail($id);
          $student -> profile_image = $request->profile_image;
          $student->save();
@@ -105,8 +104,10 @@ class StudentController extends Controller
      */
     public function login(Request $request) {
         $student = student::where('email', $request->email)->first();
-        if(!$student || !Hash::check($request->password, $student->password)){
-            return response()->json(['sms'=>false]);
+        if(!$student){
+            return response()->json(['sms'=>"Invalid Email"]);
+        }else if(!Hash::check($request->password, $student->password)){
+            return response()->json(['sms'=>"Invalid Password"]);
         }
         $token = $student->createToken('my-token')->plainTextToken;
         return response()->json(['sms'=>'"Successfully"','token'=>$token]);
@@ -114,6 +115,20 @@ class StudentController extends Controller
     public function signOut(){
         auth()->user()->tokens()->delete();
         return response()->json(['sms'=>'Logout is successful']);
+    }
+
+    // Reset Password 
+    public function resetPassword(Request $request, $id)
+    {
+        $student =  student::findOrFail($id);
+        if(Hash::check($request->password,$student['password']))
+        {
+            $student->password = $request->new_password;
+            $student->save();
+            return response()->json(['sms' => 'Password updated!'],201);
+        }
+        return response()->json(['sms' => 'Password incorrect!'], 404);
+
     }
 }
 

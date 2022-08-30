@@ -30,9 +30,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // // For Student Leave
 Route::apiResource("leaves", LeaveController::class);
 
+// Send Email
 Route::get('/send-mail', [MailController::class, 'sendEmail']);
-
-// // -----------------------
 
 // -------------------admin--------------------
 Route::post('/create', [AdminController::class, 'store']);
@@ -44,6 +43,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::put('/resetPassword/{id}', [AdminController::class, 'reset']);
     Route::get('/getOneAdmin/{id}', [AdminController::class, 'show']);
     Route::put('/editAdminProfile/{id}', [AdminController::class, 'editProfile']);
+
     Route::post('/logout', [AdminController::class, 'logout']);
 });
 
@@ -58,3 +58,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get("/getOneStudent/{id}",[StudentController::class,'getOneStudent']);
     Route::post('/logOutStudent',[StudentController::class, 'signOut']);
 });
+
+// Reset Password of student
+Route::post('/reset-password-student/{id}',[StudentController::class,'resetPassword']);
+Route::put('/reset-password-student/{id}',[StudentController::class,'update']);
+

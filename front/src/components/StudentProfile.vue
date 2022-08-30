@@ -29,7 +29,7 @@
                   <h4>
                     {{ studentData.first_name }} {{ studentData.last_name }}
                   </h4>
-                  <p class="text-secondary mb-4">Major: IT</p>
+                  <p class="text-primary mb-4">Major: IT</p>
                   <p class="text-muted font-size-sm">
                     <strong>University: Passerell numeriques Cambodia </strong>
                   </p>
@@ -45,7 +45,7 @@
                 <div class="col-sm-3">
                   <h6 class="mb-0">Full Name:</h6>
                 </div>
-                <div class="col-sm-9 text-secondary">
+                <div class="col-sm-9 text-primary">
                   {{ studentData.first_name }} {{ studentData.last_name }}
                 </div>
               </div>
@@ -54,7 +54,7 @@
                 <div class="col-sm-3">
                   <h6 class="mb-0 mr-5">Email:</h6>
                 </div>
-                <div class="col-sm-9 text-secondary">
+                <div class="col-sm-9 text-primary">
                   {{ studentData.email }}
                 </div>
               </div>
@@ -63,7 +63,7 @@
                 <div class="col-sm-3">
                   <h6 class="mb-0">Sex:</h6>
                 </div>
-                <div class="col-sm-9 text-secondary">
+                <div class="col-sm-9 text-primary">
                   {{ studentData.gender }}
                 </div>
               </div>
@@ -72,7 +72,7 @@
                 <div class="col-sm-3">
                   <h6 class="mb-0">Batch:</h6>
                 </div>
-                <div class="col-sm-9 text-secondary">
+                <div class="col-sm-9 text-primary">
                   {{ studentData.batch }}
                 </div>
               </div>
@@ -81,7 +81,7 @@
                 <div class="col-sm-3">
                   <h6 class="mb-0">Password:</h6>
                 </div>
-                <div class="col-sm-9 text-secondary">
+                <div class="col-sm-9 text-primary">
                   {{ studentData.password }}
                 </div>
               </div>
@@ -90,7 +90,7 @@
                 <div class="col-sm-3">
                   <h6 class="mb-0">Phone:</h6>
                 </div>
-                <div class="col-sm-9 text-secondary">
+                <div class="col-sm-9 text-primary">
                   {{ studentData.phone }}
                 </div>
               </div>
@@ -100,15 +100,14 @@
                 <div class="col-sm-3">
                   <h6 class="mb-0">Address:</h6>
                 </div>
-                <div class="col-sm-9 text-secondary">
+                <div class="col-sm-9 text-primary">
                   Bay Area, San Francisco, CA
                 </div>
               </div>
               <hr />
               <div class="row">
                 <div class="col-sm-12">
-
-                  <a>Reset Password</a>
+                   <resetPasswordStudent></resetPasswordStudent>
                 </div>
               </div>
             </div>
@@ -121,6 +120,7 @@
 </template>
 <script>
 import axios from "../axios-http";
+import resetPasswordStudent from "../components/edit/ResetPasswordStudent.vue";
 export default {
   data() {
     return {
@@ -138,6 +138,9 @@ export default {
         },
       },
     };
+  },
+  components:{
+    resetPasswordStudent,
   },
   methods: {
     getStudentIntoProfile() {
@@ -177,12 +180,12 @@ export default {
 }
 .card-profile{
   height: 77vh;
-  border-top: 5px solid rgb(65, 34, 176);
+  border-top: 5px solid rgb(103, 74, 210);
 
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 .card-list-info {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  border-left: 5px solid  rgb(65, 34, 176);
+  border-left: 5px solid   rgb(103, 74, 210);
 }
 </style>
