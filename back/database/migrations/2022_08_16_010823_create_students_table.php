@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string("password")->default("12345678");
             $table->string("phone")->unique();
-            $table->string("profile_image");
+            $table->string("profile_image")->nullable();
             $table->foreignId('admin_id')->constrained()->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
