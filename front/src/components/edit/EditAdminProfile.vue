@@ -91,6 +91,7 @@ export default {
             this.token
           )
             this.dialog=false
+            
         }else{
             this.dialog=true
         }

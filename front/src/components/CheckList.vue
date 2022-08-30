@@ -235,6 +235,7 @@ import CardAdminAllow from "./status/CardAdminAllow.vue";
 import AdminStatusVue from "./AdminStatus.vue";
 import axios from "../axios-http";
 export default {
+  name:'checkList',
   components: {
     CardAdminAllow,
     AdminStatusVue,

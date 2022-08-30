@@ -8,12 +8,11 @@ import studentProfile from "../components/StudentProfile.vue"
 import adminProfile from "../components/AdminProfile.vue"
 import StudentView from "../views/StudentView.vue"
 import AdminView from "../views/AminView.vue"
-
 const routes = [
   {
     path: '/',
     name: 'login',
-    component: formLogin
+    component: formLogin,
   },
   {
     path: '/admin',
@@ -27,6 +26,8 @@ const routes = [
 
         meta:{
           requiresAuth:true,
+          isAdmin:true,
+
         }
 
       },
@@ -36,6 +37,7 @@ const routes = [
         component: CheckListStudent,
         meta:{
           requiresAuth:true,
+          isAdmin:true,
         
         }
 
@@ -48,6 +50,7 @@ const routes = [
         
         meta:{
           requiresAuth:true,
+          isAdmin:true,
         }
       },
       
@@ -66,6 +69,7 @@ const routes = [
         component: dashboardStudent,
         meta:{
           requiresAuth:true,
+          isStudent:true,
         }
       },
       {
@@ -74,6 +78,8 @@ const routes = [
         component: newRequestLeave,
         meta:{
           requiresAuth:true,
+          isStudent:true,
+          
         }
      
       },
@@ -83,6 +89,7 @@ const routes = [
         component: studentProfile,
         meta:{
           requiresAuth:true,
+          isStudent:true,
         }
       },
     ]
@@ -98,17 +105,30 @@ const router = createRouter({
 })
 router.beforeEach((to,from,next)=>{
   if(to.meta.requiresAuth){
-    if(!localStorage.token && !localStorage.admin_id){
-      next('/')
-    }else{
-        if(to.path=="/admin"){
-          next("/")
+    if(to.meta.isAdmin){
+      if(!localStorage.admin_token){
+        next('/')
+      }else{
+        if(to.path == "/"){
+            next('/listStudent')
         }else{
-        
+          next()
+        }
+      }
+    }else{
+      if(to.meta.isStudent){
+        if(!localStorage.student_token){
+          next('/')
+        }else{
+          if(to.path == "/"){
+            next('/dashboard')
+          }else{
             next()
+          }
         }
 
       }
+    }
   }
   next()
 })

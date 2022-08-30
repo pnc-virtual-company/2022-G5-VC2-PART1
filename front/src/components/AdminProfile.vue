@@ -127,7 +127,6 @@ export default {
     getAdminIntoProfile() {
       axios.get("/admin/" +this.adminID ,this.token).then((res) => {
         this.dataAdmin = res.data;
-        console.log(res.data);
       });
     },
     uploadImage() {

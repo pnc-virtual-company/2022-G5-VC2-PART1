@@ -160,6 +160,7 @@ import axios from "../axios-http";
 import FormRegisterVue from "../views/FormRegister.vue";
 import swal from "sweetalert";
 export default {
+  name:'listStudent',
   components: {
     FormRegisterVue,
   },
