@@ -1,5 +1,4 @@
 <template>
-  <v-row class="p-4">
     <v-btn
       color="primary"
       dark
@@ -43,10 +42,10 @@
         </form>
       </v-card>
     </v-dialog>
-  </v-row>
 </template>
 <script>
 import axios from "../../axios-http";
+import swal from 'sweetalert'
 export default {
   data() {
     return {
@@ -69,13 +68,19 @@ export default {
     resetPassword() {
       if (this.newPassword != null && this.confirmPassword != null) {
         if (this.newPassword == this.confirmPassword) {
-          axios.post(
-            "/reset/" + this.adminID,
+          axios.put(
+            "/resetPassword/" + this.adminID,
             { password: this.newPassword },
             this.token
           );
           this.dialog = false;
-          console.log('change is successful');
+          swal({
+            position: "center",
+            icon: "success",
+            title: "Reset successfull!!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         } else {
           this.isNotMatch = true;
           this.newPassword = "";
@@ -84,6 +89,9 @@ export default {
       }
     },
   },
+  mounted(){
+   
+  }
 };
 </script>
 <style scoped>

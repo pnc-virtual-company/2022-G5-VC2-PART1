@@ -20,8 +20,16 @@
           </div>
           <Button-View
             class=" font-weight-bold text-center bg-green "
-            ><stron class="text-white" @click="sendAdminStatus(value.status)">see more {{stutusList}}</stron></Button-View
-          >
+            >
+            <strong class="text-white" @click="sendAdminStatus(value.status)">see more </strong>
+          
+          </Button-View>
+          <!-- <Button-View v-if="value.status == 'Student'"
+            class=" font-weight-bold text-center bg-green "
+            >
+            <strong class="text-white" @click="sendAdminStatus(value.status)">see more </strong>
+          
+          </Button-View> -->
         </v-card>
       </v-col>
     </v-row>

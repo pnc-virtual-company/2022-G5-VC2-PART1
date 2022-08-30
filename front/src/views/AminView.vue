@@ -75,7 +75,7 @@ export default {
     pendingName: null,
     drawer: null,
     items: [
-      { title: "List Student", icon: "mdi-home", to: "/listStudent" },
+      { title: "List Student", icon: "mdi-home", to: "/listStudent"},
       { title: "Check List", icon: "mdi-view-dashboard", to: "/checkList" },
     ],
     right: null,
@@ -116,6 +116,7 @@ export default {
     },
     setPendingToLocalStorage() {
       localStorage.setItem("sendPending", this.pendingString);
+      this.$router.push('/checkList')
     },
   },
   computed: {

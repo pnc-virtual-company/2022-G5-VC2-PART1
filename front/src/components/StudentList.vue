@@ -3,15 +3,14 @@
     LIST STUDENTS
   </div>
   <!-- -------/register/-------- -->
-  <div class=" ml-8 mt-4">
-   <FormRegisterVue :studentNames="studentnames"/>
+  <div class="ml-8 mt-4">
+    <FormRegisterVue :studentNames="studentnames" />
   </div>
   <div class="overflow-auto mt-5 w-overflow" style="height: 50vh">
- 
     <div class="m-3" v-if="studentnames != null">
       <div
         class="m-2 card-top card h-card"
-        v-for="(student,index) of studentnames"
+        v-for="(student, index) of studentnames"
         :key="student"
       >
         <div class="d-flex-align h-card">
@@ -32,51 +31,61 @@
           </div>
           <div class="">
             <v-btn
-              color="white"
+              class="bg-red p-1 m-1"
+         
               @click.stop="dialogDelete = true"
               @click="alertDialog(index)"
             >
-              <i class="fa-solid fa-trash-can fa-2xl text-red"></i>
+              <strong class="text-white"
+                ><i class="fa-solid fa-trash-can text-white m-1"></i
+                >Delete</strong
+              >
             </v-btn>
             <v-btn @click="showPopup(index)" class="bg-blue p-1 m-1"
-              ><strong class="text-white"> VIEW DETAIL</strong></v-btn
+              ><strong class="text-white"
+                ><i class="fa-solid fa-user-plus"></i> VIEW</strong
+              ></v-btn
             >
           </div>
         </div>
-      <div class="ma-auto">
-        <v-row class="d-flex justify-content-center">
-          <v-dialog
-            v-model="dialogDelete"
-            class="w-dialog-confirmed mlp4 m-auto"
-          >
-            <v-card>
-              <v-card-title class="text-h5 color-confirmed">
-                Confirmed
-              </v-card-title>
+        <div class="ma-auto">
+          <v-row class="d-flex justify-content-center">
+            <v-dialog
+              v-model="dialogDelete"
+              class="w-dialog-confirmed mlp4 m-auto"
+            >
+              <v-card>
+                <v-card-title class="text-h5 color-confirmed">
+                  Confirmed
+                </v-card-title>
 
-              <v-card-text class="text-red">
-                Are you sure want to delete student?
-              </v-card-text>
+                <v-card-text class="text-red">
+                  Are you sure want to delete student?
+                </v-card-text>
 
-              <v-card-actions>
-                <v-spacer></v-spacer>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
 
-                <v-btn
-                  color="green darken-1"
-                  text
-                  @click="dialogDelete = false"
-                >
-                  Cancel
-                </v-btn>
+                  <v-btn
+                    color="green darken-1"
+                    text
+                    @click="dialogDelete = false"
+                  >
+                    Cancel
+                  </v-btn>
 
-                <v-btn  color="red darken-1" text @click="onDeleteStudent(student.id)">
-                  <p >DELETE </p> 
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-row>
-      </div>
+                  <v-btn
+                    color="red darken-1"
+                    text
+                    @click="onDeleteStudent(student.id)"
+                  >
+                    <p>DELETE</p>
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-row>
+        </div>
       </div>
     </div>
   </div>
@@ -95,7 +104,7 @@
             <div>
               <div class="card-img">
                 <v-img
-                  class="image  secondary d-inline-block"
+                  class="image secondary d-inline-block"
                   :src="studentnames[index].profile_image"
                 ></v-img>
               </div>
@@ -105,80 +114,96 @@
           </div>
         </div>
 
-      <v-card  height="200" class="overflow-auto w-100 mt-5">
-        <v-card-text>
-          <div v-if="!isClick"></div>
-          <div class="mb-3 row">
-            <table
-              class="secondary text-no-wrap rounded-t-lg"
-              width="100%"
-              height="100vh"
-            >
-              <tr>
-                <th>Star Date</th>
-                <th>End Date</th>
-                <th>Reason</th>
-                <th>Duration</th>
-                <th>Leave Type</th>
-                <th>Status</th>
-                <th>Request Date</th>
-              </tr>
-              <tr
-                v-for="studentDetail of studentnames[index].leave"
-                :key="studentDetail"
+        <v-card height="200" class="overflow-auto w-100 mt-5">
+          <v-card-text>
+            <div v-if="!isClick"></div>
+            <div class="mb-3 row">
+              <table
+                class="secondary text-no-wrap rounded-t-lg"
+                width="100%"
+                height="100vh"
               >
-                <td>{{ studentDetail.start_date }}</td>
-                <td>{{ studentDetail.end_date }}</td>
-                <td>{{ studentDetail.reason }}</td>
-                <td>{{ studentDetail.duration }}</td>
-                <td>{{ studentDetail.leave_type }}</td>
-                <td>{{ studentDetail.status }}</td>
-                <td>{{ studentDetail.request_date }}</td>
-              </tr>
-            </table>
-          </div>
-        </v-card-text>
-      </v-card>
+                <tr>
+                  <th>Star Date</th>
+                  <th>End Date</th>
+                  <th>Reason</th>
+                  <th>Duration</th>
+                  <th>Leave Type</th>
+                  <th>Status</th>
+                  <th>Request Date</th>
+                </tr>
+                <tr
+                  v-for="studentDetail of studentnames[index].leave"
+                  :key="studentDetail"
+                >
+                  <td>{{ studentDetail.start_date }}</td>
+                  <td>{{ studentDetail.end_date }}</td>
+                  <td>{{ studentDetail.reason }}</td>
+                  <td>{{ studentDetail.duration }}</td>
+                  <td>{{ studentDetail.leave_type }}</td>
+                  <td>{{ studentDetail.status }}</td>
+                  <td>{{ studentDetail.request_date }}</td>
+                </tr>
+              </table>
+            </div>
+          </v-card-text>
+        </v-card>
       </v-card>
     </v-dialog>
   </div>
-  <form-register :studentNames="studentnames"/>
+  <form-register :studentNames="studentnames" />
   <!------------------------------------------------- cardstudent -------------------------------------->
 </template>
 
 <script>
 import axios from "../axios-http";
 import FormRegisterVue from "../views/FormRegister.vue";
-
-
+import swal from "sweetalert";
 export default {
-  components:{
+  components: {
     FormRegisterVue,
   },
   data() {
     return {
-     
-      studentnames: [
-      ],
+      studentnames: [],
       dialog: false,
       index: null,
       popup: false,
       dialogDelete: false,
-      aroundPage:null,
-       page: 1,
+      aroundPage: null,
+      page: 1,
     };
   },
   methods: {
     getStudent() {
-      axios.get("/studentsInAdmin/",{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}}).then((res) => {
-        this.studentnames = res.data;
-      });
+      axios
+        .get("/studentsInAdmin/", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
+          },
+        })
+        .then((res) => {
+          this.studentnames = res.data;
+        });
     },
     onDeleteStudent(id) {
-      this.dialogDelete=false
-      axios.delete("/studentsInAdmin/" + id,{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}}).then(() => {
-        this.getStudent();
-      });
+      this.dialogDelete = false;
+      axios
+        .delete("/studentsInAdmin/" + id, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
+          },
+        })
+        .then(() => {
+          this.getStudent();
+          swal({
+            position: "center",
+            icon: "success",
+            title: "Student Delete Successfully!!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        });
     },
     showPopup(index) {
       this.dialog = true;
@@ -188,23 +213,21 @@ export default {
       this.popup = true;
       this.index = index;
     },
-   
   },
   mounted() {
     this.getStudent();
   },
-    computed: {
+  computed: {
     filterSearchListStudent() {
       if (!this.search) {
-        return this.studentnames ;
-
+        return this.studentnames;
       } else {
-        return this.studentnames.filter(({name,Class}) =>
-          name.toLowerCase().includes(this.search.toLowerCase()) || 
-          Class.toLowerCase().includes(this.search.toLowerCase()) 
+        return this.studentnames.filter(
+          ({ name, Class }) =>
+            name.toLowerCase().includes(this.search.toLowerCase()) ||
+            Class.toLowerCase().includes(this.search.toLowerCase())
         );
       }
-
     },
   },
 };
