@@ -6,24 +6,23 @@
           <div class="card card-profile">
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
-                <div class="account p-3 mt-15">
-                <img v-if="studentData.profile_image!=''"
-                    class="ml-5 border-radius rounded-pill" src="" alt="">
-                  <img v-else
-                    class="ml-5 border-radius rounded-pill"
-                    src="https://www.homeagainsaintjohns.org/wp-content/uploads/2021/05/No-Picture-Yet-Home-Again-St-Johns-Board-Members.png"
-                    alt=""
-                    width="100"
-                    height="100"
-                  >
-                  <div class="d-flex position-absolute">
-                    <input type="file" accept="image/*" @change="onChangeFile" />
-                    />
-                    <button @click="onChangeFile">
-                      <i class="fa-solid fa-camera"></i>
-
-                    </button>
-                  </div>
+                <div class="account p-1 mt-5">
+                  <h3>Personal Data</h3>
+                   <img 
+                   :src="studentData.profile_image!=null?studentData.profile_image:avataImage"
+                    alt="" width="150" height="150" >
+                    <div class="update">
+                      <label for="profile_image">
+                        <img 
+                        src="https://www.freeiconspng.com/thumbs/camera-icon/camera-icon-21.png" 
+                        alt="" width="30" height="30" >
+                      </label>
+                       <input 
+                       type="file" 
+                       hidden="true"
+                       id="profile_image"
+                       @change="changeProfileStudent">
+                    </div>
                 </div>
                 <div class="mt-3">
                   <h4>
@@ -120,6 +119,7 @@
 </template>
 <script>
 import axios from "../axios-http";
+import Swal from 'sweetalert2'
 import resetPasswordStudent from "../components/edit/ResetPasswordStudent.vue";
 export default {
   data() {
@@ -148,22 +148,36 @@ export default {
         this.studentData = res.data[0];
       });
     },
-    onChangeFile(e) {
-      this.imageFile = e.target.files[0];
-      this.imageToDisplay = URL.createObjectURL(this.imageFile);
-      this.updateProfile()
+    // Select Image
+    async changeProfileStudent(event){
+      console.log(this.studentData.profile_image)
+          Swal.fire({
+              title: 'Are you sure, to select it?',
+              showCancelButton: true,
+              confirmButtonText: 'Confirm',
+              customClass: {
+                actions: 'my-actions',
+                cancelButton: 'order-1 right-gap',
+                confirmButton: 'order-2 left-gap',
+              }
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire('Saved!', '', 'success')
+                this.onUpload(event.target.files[0])
+              }else {
+                console.log('Cancled')
+              }
+          })
     },
-     updateProfile() {
-      let profile = new FormData();
-      profile.append("picture", this.imageFile);
-      profile.append("_method", "PUT");
-      console.log(this.imageToDisplay.name);
-      axios
-        .put("/updatePhoto/" + this.studentId, {profile_image:this.imageFile.name},this.token)
-        .then((res) => {
-          this.name_img = res.data.img.picture;
-          this.getAllData();
-        });
+    // uplaod image
+    onUpload(profile_image){
+      const profileStudent = new FormData();
+            profileStudent.append('profile_image', profile_image)
+            profileStudent.append('_method', 'PUT')
+      axios.post('/updateProfile/'+this.studentData.id,profileStudent)
+      .then((response)=>{
+          console.log(response)
+        })
     },
   },
   mounted() {

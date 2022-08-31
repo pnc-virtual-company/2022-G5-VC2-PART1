@@ -6,30 +6,25 @@
           <div class="card">
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
-                <div class="account p-3 mt-15">
-                  <img
-                    class="ml-5 border-radius rounded-pill"
-                    :src="dataAdmin.profile_image"
-                    alt=""
-                    width="100"
-                    height="100"
-                  />
-                  <div >
-                    <input
-                      type="file"
-                      accept="image/*"
-                      class="hidden"
-                      ref="file"
-                      prepend-icon="mdi-camera"
-                      @change="onFileChange"
-                      multiple
-                    />
-                    <button @click="onChnage">
-                      <i class="fa-solid fa-camera"></i>
-                    </button>
-                  </div>
+                <div class="account p-1 mt-5">
+                  <h3>Personal Data</h3>
+                   <img 
+                   :src="dataAdmin.profile_image!=null?dataAdmin.profile_image:avataImage"
+                    alt="" width="150" height="150" >
+                    <div class="update">
+                      <label for="profile_image">
+                        <img 
+                        src="https://www.freeiconspng.com/thumbs/camera-icon/camera-icon-21.png" 
+                        alt="" width="30" height="30" >
+                      </label>
+                       <input 
+                       type="file" 
+                       hidden="true"
+                       id="profile_image"
+                       @change="changeProfile">
+                    </div>
                 </div>
-                <div class="mt-3">
+                <div>
                   <h4>{{ dataAdmin.first_name }} {{ dataAdmin.last_name }}</h4>
                   <p class="text-muted font-size-sm">
                     <strong>University: Passerell numeriques Cambodia </strong>
@@ -91,11 +86,9 @@
                 <div class=" d-flex ">
                   <div class="m-2">
                     <resetPasswordAdmin ></resetPasswordAdmin>
-
                   </div>
                   <div class="m-2">
                     <editAdminProfile ></editAdminProfile>
-
                   </div>
                 </div>
               </div>
@@ -107,8 +100,9 @@
   </div>
 </template>
 <script>
-  import editAdminProfile from "./edit/EditAdminProfile.vue"
-  import resetPasswordAdmin from "./edit/ResetPasswordAdmin.vue"
+import Swal from 'sweetalert2'
+import editAdminProfile from "./edit/EditAdminProfile.vue"
+import resetPasswordAdmin from "./edit/ResetPasswordAdmin.vue"
 import axios from "../axios-http";
 export default {
   data() {
@@ -125,23 +119,41 @@ export default {
   },
   methods: {
     getAdminIntoProfile() {
-      axios.get("/admin/" +this.adminID ,this.token).then((res) => {
+      axios.get("/admin/" + this.adminID ,this.token).then((res) => {
         this.dataAdmin = res.data;
         console.log(res.data);
       });
     },
-    uploadImage() {
-      axios.put("/students/" + this.adminID,this.dataAdmin.profile_image,this.token).then(() => {
-        this.getStudentIntoProfile()
-      });
+    // Select Image
+    async changeProfile(event){
+      console.log(this.dataAdmin.profile_image)
+          Swal.fire({
+              title: 'Are you sure, to select it?',
+              showCancelButton: true,
+              confirmButtonText: 'Confirm',
+              customClass: {
+                actions: 'my-actions',
+                cancelButton: 'order-1 right-gap',
+                confirmButton: 'order-2 left-gap',
+              }
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire('Saved!', '', 'success')
+                this.onUpload(event.target.files[0])
+              }else {
+                console.log('Cancled')
+              }
+          })
     },
-    onFileChange(e) {
-      const file = e.target.files[0];
-      this.dataAdmin.profile_image = URL.createObjectURL(file);
-    },
-    onChnage() {
-      this.$refs.file.click();
-      this.uploadImage()
+    // uplaod image
+    onUpload(profile_image){
+      const profileAdmin = new FormData();
+            profileAdmin.append('profile_image', profile_image)
+            profileAdmin.append('_method', 'PUT')
+      axios.post('/uploadProfileAdmin/1',profileAdmin)
+      .then((response)=>{
+          console.log(response)
+        })
     },
   },
   mounted() {
