@@ -1,17 +1,17 @@
 <template>
-  <!-- <div class="container mt-5 ">
-    <div class="main-body">-->
+  <div class="container mt-5 ">
+    <div class="main-body">
       <div class="row gutters-sm">
-        <!-- <div class="col-md-4 mb-3 ">  -->
-          <div class="card cold-sm-4">
+        <div class="col-md-4 mb-3">
+          <div class="card">
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
                 <div class="account p-1 mt-5">
                   <h3>Personal Data</h3>
-                   <img 
+                   <img class="account_image"
                    :src="dataAdmin.profile_image!=null?dataAdmin.profile_image:avataImage"
                     alt=""  >
-                    <div class="update">
+                    <div class="update"> 
                       <label for="profile_image">
                         <img 
                         src="https://www.freeiconspng.com/thumbs/camera-icon/camera-icon-21.png" 
@@ -33,8 +33,8 @@
               </div>
             </div>
           </div>
-        <!-- </div> -->
-        <div class="cold-sm-4">
+        </div>
+        <div class="col-md-8">
           <div class="card mb-3">
             <div class="card-body">
               <div class="row">
@@ -96,11 +96,11 @@
           </div>
         </div>
       </div>
-    <!-- </div> -->
-  <!--</div> -->
+    </div>
+  </div>
 </template>
 <script>
-import Swal from 'sweetalert'
+import Swal from 'sweetalert2'
 import editAdminProfile from "./edit/EditAdminProfile.vue"
 import resetPasswordAdmin from "./edit/ResetPasswordAdmin.vue"
 import axios from "../axios-http";
@@ -121,6 +121,7 @@ export default {
 
     getAdminIntoProfile() {
       axios.get("/admin/" + this.adminID ,this.token).then((res) => {
+
         this.dataAdmin = res.data;
       });
     },
@@ -150,7 +151,7 @@ export default {
       const profileAdmin = new FormData();
             profileAdmin.append('profile_image', profile_image)
             profileAdmin.append('_method', 'PUT')
-      axios.post('/uploadProfileAdmin/1',profileAdmin)
+      axios.post('/uploadProfileAdmin/5',profileAdmin)
       .then((response)=>{
           console.log(response)
         })
@@ -168,5 +169,11 @@ export default {
 }
 .border-radius {
   border-radius: 40px;
+}
+.account_image{
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  object-fit: fill;
 }
 </style>

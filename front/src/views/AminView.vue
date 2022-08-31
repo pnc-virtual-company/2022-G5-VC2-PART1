@@ -7,7 +7,7 @@
             <div>
        
                 <img v-if="adiminAccount.profile_image != '' "
-                  class="rounded-pill"
+                  class="img-profile"
                   :src="adiminAccount.profile_image"
                   alt="John"
                   width="70"
@@ -174,5 +174,14 @@ img {
 }
 .test {
   background: #000;
+}
+.img-profile{
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: fill;
+
+
 }
 </style>

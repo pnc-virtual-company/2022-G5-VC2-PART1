@@ -1,13 +1,16 @@
 <template>
-
+  <div class="container mt-5">
+    <div class="main-body">
+      <div class="row gutters-sm">
+        <div class="col-md-4 mb-3">
           <div class="card card-profile">
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
                 <div class="account p-1 mt-5">
                   <h3>Personal Data</h3>
-                   <img 
+                   <img  class="account_image"
                    :src="studentData.profile_image!=null?studentData.profile_image:avataImage"
-                    alt="" width="150" height="150" >
+                    alt="" >
                     <div class="update">
                       <label for="profile_image">
                         <img 
@@ -33,7 +36,7 @@
               </div>
             </div>
           </div>
-  
+        </div>
         <div class="col-md-8">
           <div class="card mb-3 card-list-info">
             <div class="card-body">
@@ -91,11 +94,13 @@
             </div>
           </div>
         </div>
-
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 import axios from "../axios-http";
-import Swal from 'sweetalert'
+import Swal from 'sweetalert2'
 import resetPasswordStudent from "../components/edit/ResetPasswordStudent.vue";
 export default {
   data() {
@@ -182,7 +187,6 @@ export default {
   display: inline-block;
   width: 150px;
   height: 150px;
-  border-radius: 50%;
   object-fit: cover;
 }
 </style>
