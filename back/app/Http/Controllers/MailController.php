@@ -15,7 +15,7 @@ class MailController extends Controller
             'body' => 'Hello teacher.I hope your day is going well. I am writing for ask permission from you'
         ];
          
-        Mail::to($request->email)->send(new requestMail($mailData));
+        Mail::to("sreyne.ven@student.passerellesnumeriques.org")->send(new requestMail($mailData));
            
         return("Email is sent successfully.");
     }

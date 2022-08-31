@@ -40,6 +40,7 @@ class StudentController extends Controller
         $student -> email = $request->email;
         $student -> password = Hash::make($request->password);
         $student -> phone = $request->phone;
+        $student -> profile_image = $request->profile_image;
         $student -> admin_id = $request->admin_id;
         $student->save();
         $token=$student->createToken('student-token')->plainTextToken;

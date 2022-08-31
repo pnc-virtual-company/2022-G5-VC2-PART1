@@ -79,6 +79,24 @@ class AdminController extends Controller
         return response()->json(['sms'=>"Update is successfull"]);
     }
 
+    // Uplaod Image Admin
+    public function uploadProfileAdmin(Request $request , $id)
+    {
+        $path = public_path('images');
+        if ( ! file_exists($path) ) {
+            mkdir($path, 0777, true);
+        }
+        $file = $request->file('profile_image');
+        $fileName = uniqid() . '_' . trim($file->getClientOriginalName());
+        $file->move($path, $fileName);
+
+         $admin = Admin::findOrFail($id);
+         $admin -> profile_image = asset('images/' . $fileName);
+         $admin ->save();
+         return response()->json(['sms'=> $admin ]);
+    }
+
+    // Login Admin
     public function login(Request $request) {
         $user = Admin::where('email',$request->email)->first();
         if (!$user || !Hash::check ($request->password,$user->password)) {

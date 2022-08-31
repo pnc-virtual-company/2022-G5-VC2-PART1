@@ -25,10 +25,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-// // For Student Leave
-Route::apiResource("leaves", LeaveController::class);
-
 // Send Email
 Route::get('/send-mail', [MailController::class, 'sendEmail']);
 
@@ -62,6 +58,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 // Reset Password of student
 Route::post('/reset-password-student/{id}',[StudentController::class,'resetPassword']);
 Route::put('/reset-password-student/{id}',[StudentController::class,'update']);
-
+// Uplaod Profile Student
+Route::put('/updateProfile/{id}',[StudentController::class,'updateProfile']);
+// Upload Profile Admin 
+Route::put('/uploadProfileAdmin/{id}',[AdminController::class,'uploadProfileAdmin']);
 
 
