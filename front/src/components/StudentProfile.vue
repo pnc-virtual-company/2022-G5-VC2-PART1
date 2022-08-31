@@ -1,43 +1,25 @@
 <template>
-  <div class="container mt-5">
-    <div class="main-body">
-      <div class="row gutters-sm">
-        <div class="col-md-4 mb-3">
-          <div class="card card-profile ">
-            <div class="card-body ">
-              <div class="d-flex flex-column align-items-center text-center ">
-                <div class="account p-3 mt-15">
-                  <div>
-                    <img class="account_image"
-                      :src="
-                        studentData.profile_image != null
-                          ? studentData.profile_image
-                          : avataImage
-                      "
-                      alt=""
-                      width="150"
-                      height="150"
-                    />
-                    <div class="update">
-                      <label for="images">
-                        <img
-                          src="https://www.freeiconspng.com/thumbs/camera-icon/camera-icon-21.png"
-                          alt=""
-                          width="50"
-                          height="50"
-                        />
-                      </label>
-                      <input
-                        type="file"
-                        id="images"
-                        accept="image/*"
-                        hidden="true"
-                        @change="onFileSelected"
-                      />
-                    </div>
 
-                    <div class="change">Chang your photos</div>
-                  </div>
+          <div class="card card-profile">
+            <div class="card-body">
+              <div class="d-flex flex-column align-items-center text-center">
+                <div class="account p-1 mt-5">
+                  <h3>Personal Data</h3>
+                   <img 
+                   :src="studentData.profile_image!=null?studentData.profile_image:avataImage"
+                    alt="" width="150" height="150" >
+                    <div class="update">
+                      <label for="profile_image">
+                        <img 
+                        src="https://www.freeiconspng.com/thumbs/camera-icon/camera-icon-21.png" 
+                        alt="" width="30" height="30" >
+                      </label>
+                       <input 
+                       type="file" 
+                       hidden="true"
+                       id="profile_image"
+                       @change="changeProfileStudent">
+                    </div>
                 </div>
                 <div class="mt-3">
                   <h4>
@@ -51,7 +33,7 @@
               </div>
             </div>
           </div>
-        </div>
+  
         <div class="col-md-8">
           <div class="card mb-3 card-list-info">
             <div class="card-body">
@@ -109,12 +91,11 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
+
 </template>
 <script>
 import axios from "../axios-http";
+import Swal from 'sweetalert'
 import resetPasswordStudent from "../components/edit/ResetPasswordStudent.vue";
 export default {
   data() {
@@ -143,14 +124,37 @@ export default {
         this.studentData = res.data[0];
       });
     },
-    onFileSelected(event) { this.onUpload(event.target.files[0]); },
-    onUpload(image){ 
-      // console.log(image.name);  
-      // const fd = new FormData();  
-      //  fd.append('image', image)  
-      //  fd.append('_method', 'PUT')
-      console.log(image.name);
-        axios.put('/updateProfile/'+this.studentId,{profile_image:image.name},this.token) },
+    // Select Image
+    async changeProfileStudent(event){
+      console.log(this.studentData.profile_image)
+          Swal.fire({
+              title: 'Are you sure, to select it?',
+              showCancelButton: true,
+              confirmButtonText: 'Confirm',
+              customClass: {
+                actions: 'my-actions',
+                cancelButton: 'order-1 right-gap',
+                confirmButton: 'order-2 left-gap',
+              }
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire('Saved!', '', 'success')
+                this.onUpload(event.target.files[0])
+              }else {
+                console.log('Cancled')
+              }
+          })
+    },
+    // uplaod image
+    onUpload(profile_image){
+      const profileStudent = new FormData();
+            profileStudent.append('profile_image', profile_image)
+            profileStudent.append('_method', 'PUT')
+      axios.post('/updateProfile/'+this.studentData.id,profileStudent)
+      .then((response)=>{
+          console.log(response)
+        })
+    },
   },
   mounted() {
     this.getStudentIntoProfile();
