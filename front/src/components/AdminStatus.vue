@@ -12,9 +12,9 @@
                 {{ value.status }}
               </div>
               <div class="card-number-status">
-                <p v-if="value.status == 'Approved'">{{ getApproved }}</p>
-                <p v-if="value.status == 'Rejected'">{{ getRejected }}</p>
-                <p v-if="value.status == 'Student'">{{ countStudent }}</p>
+                <p v-if="value.status == 'Approved'"><strong style="color:#0073ff;">{{ getApproved }}</strong> </p>
+                <p v-if="value.status == 'Rejected'"><strong style="color:#0073ff;"> {{ getRejected }}</strong></p>
+                <p v-if="value.status == 'Student'"><strong style="color:#0073ff;">{{ countStudent }}</strong></p>
               </div>
             </div>
           </div>
@@ -24,12 +24,7 @@
             <strong class="text-white" @click="sendAdminStatus(value.status)">see more </strong>
           
           </Button-View>
-          <!-- <Button-View v-if="value.status == 'Student'"
-            class=" font-weight-bold text-center bg-green "
-            >
-            <strong class="text-white" @click="sendAdminStatus(value.status)">see more </strong>
-          
-          </Button-View> -->
+
         </v-card>
       </v-col>
     </v-row>
@@ -72,7 +67,7 @@ export default {
     },
     
   },
- 
+  
   computed: {
     getRejected(){
       let count =null
@@ -126,7 +121,7 @@ strong:hover {
   transition: 0.5s;
 }
 .bg-left{
-  border-left: solid 5px purple;
+  border-left: solid 5px #0073ff;
 }
 .bg-green{
   background: green;

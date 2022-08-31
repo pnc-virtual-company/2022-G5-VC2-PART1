@@ -79,16 +79,13 @@ class StudentController extends Controller
     public function updateProfile(Request $request, $id)
     {
         $path = public_path('images');
-
         if ( ! file_exists($path) ) {
             mkdir($path, 0777, true);
         }
         $file = $request->file('profile_image');
 
         $fileName = uniqid() . '_' . trim($file->getClientOriginalName());
-                
         $file->move($path, $fileName);
-
          $student = student::findOrFail($id);
          $student -> profile_image = asset('images/' . $fileName);
          $student->save();

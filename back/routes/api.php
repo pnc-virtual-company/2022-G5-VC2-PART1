@@ -43,7 +43,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::put('/resetPassword/{id}', [AdminController::class, 'reset']);
     Route::get('/getOneAdmin/{id}', [AdminController::class, 'show']);
     Route::put('/editAdminProfile/{id}', [AdminController::class, 'editProfile']);
-
+    // Uplaod Profile 
+    Route::put('/updateProfile/{id}',[StudentController::class,'updateProfile']);
     Route::post('/logout', [AdminController::class, 'logout']);
 });
 
@@ -63,6 +64,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 Route::post('/reset-password-student/{id}',[StudentController::class,'resetPassword']);
 Route::put('/reset-password-student/{id}',[StudentController::class,'update']);
 
-// Uplaod Profile 
-Route::put('/updateProfile/{id}',[StudentController::class,'updateProfile']);
+
 

@@ -1,6 +1,7 @@
 <template>
     <v-btn
-      color="primary"
+    style=" background:#0073ff; color:white;"
+    
       dark
       @click.stop="dialog = true"
       @click="onModalPopUp()"

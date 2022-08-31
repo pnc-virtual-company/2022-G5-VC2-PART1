@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-shodow rounded p-3 mt-5 text-white font-weight-bold">
+  <div  class="bg-shodow rounded p-3 mt-5 text-white font-weight-bold">
     LIST STUDENTS
   </div>
   <!-- -------/register/-------- -->
@@ -15,11 +15,12 @@
       >
         <div class="d-flex-align h-card">
           <div class="">
-            <v-img
-              class="profile_img rounded-circle"
-              width="80"
+  
+            <img v-if="student.profile_image!=''"
+              class="profile_img "
               :src="student.profile_image"
-            ></v-img>
+            >
+            <img v-else class="profile_img " src="https://cdn4.iconfinder.com/data/icons/business-and-e-commerce/64/Employee_man-256.png" alt="">
           </div>
           <div class="card-body d-flex row">
             <div class="col-sm-4 ml-0">
@@ -102,11 +103,12 @@
           </div>
           <div class="profile">
             <div>
-              <div class="card-img">
-                <v-img
-                  class="image secondary d-inline-block"
+              <div>
+                <img v-if="studentnames[index].profile_image!=''"
+                class="profile_img_account "
                   :src="studentnames[index].profile_image"
-                ></v-img>
+                >
+                <img v-else class="profile_img_account " src="https://cdn4.iconfinder.com/data/icons/business-and-e-commerce/64/Employee_man-256.png" alt="">
               </div>
               <p>{{ studentnames[index].phone }}</p>
               <p class="text-caption mt-1">{{ studentnames[index].email }}</p>
@@ -271,10 +273,9 @@ li {
 }
 .bg-shodow {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  background: rgb(46, 4, 229);
+  background:#0073ff;
   width: 95%;
   margin: auto;
-  border-top: solid rgb(215, 213, 213) 5px;
 }
 .v-btn {
   box-shadow: rgb(255, 255, 255) 0px 0px 0px 0px;
@@ -291,21 +292,23 @@ li {
   width: 80%;
   margin: auto;
 }
-.card-body {
-  padding: 10px;
-}
 .card-user {
   background: rgb(189, 212, 252);
 }
 
 .profile_img {
-  width: 100px;
-  height: 15vh;
-  border-radius: 40px;
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
 }
-.image {
-  width: 20%;
-  border-radius: 40px;
+.profile_img_account {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 .card-form {
   justify-content: center;
@@ -356,10 +359,7 @@ tr:nth-child(even) {
 .profile {
   text-align: center;
 }
-.card-img {
-  width: 80%;
-  margin: auto;
-}
+
 .cencel-delete {
   margin-left: 850px;
   padding: 12px;

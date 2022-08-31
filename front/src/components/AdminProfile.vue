@@ -124,8 +124,8 @@ export default {
     editAdminProfile
   },
   methods: {
-    getAdminIntoProfile() {
-      axios.get("/admin/" +this.adminID ,this.token).then((res) => {
+      getAdminIntoProfile() {
+       axios.get("/admin/" +this.adminID ,this.token).then((res) => {
         this.dataAdmin = res.data;
       });
     },
@@ -142,10 +142,11 @@ export default {
       this.$refs.file.click();
       this.uploadImage()
     },
+   
   },
   mounted() {
     this.getAdminIntoProfile();
-  },
+  }
 };
 </script>
 <style scoped>

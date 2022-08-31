@@ -9,7 +9,7 @@
   >
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header bg-primary">
+            <div class="modal-header " style=" background:#0073ff;">
                 <button
                     type="button"
                     class="btn-close"

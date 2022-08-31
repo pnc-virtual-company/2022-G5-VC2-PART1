@@ -1,11 +1,11 @@
 <template>
   <v-app id="inspire">
     <div id="bg-color">
-      <v-navigation-drawer v-model="drawer"  style="background: #037c5f;" app>
+      <v-navigation-drawer v-model="drawer" style="background:#0073ff" class="bg" app>
         <div >
             <slot name="account"></slot>
         </div>
-        <v-list style="background: #037c5f">
+        <v-list class="bg" >
           <slot name="v-list-item"></slot>
         </v-list>
         <div class="button">
@@ -55,7 +55,7 @@ img {
   bottom: 1em;
   top: 14em;
   border-top: 2px solid;
-  color: white;
+  color: rgb(255, 255, 255);
   font-size: 20px;
   font-weight: bold;
 }
@@ -68,6 +68,9 @@ i {
 }
 .bg-h{
   height: 30vh;
+}
+.bg{
+  background:#0073ff
 }
 
 </style>

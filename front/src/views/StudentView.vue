@@ -7,10 +7,10 @@
             <div>
 
               <img v-if="studentAccount.profile_image!=''"
-                class="rounded-pill"
+                class="img-profile"
                 :src="studentAccount.profile_image"
                 alt="John"
-                width="70"
+                
               />
               <img v-else
                 class="rounded-pill"
@@ -93,8 +93,15 @@ export default {
 };
 </script>
 <style scoped>
-img {
-  border-radius: 40px;
+
+.img-profile{
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+
+
 }
 .account {
   border-bottom: solid 2px rgb(255, 255, 255);

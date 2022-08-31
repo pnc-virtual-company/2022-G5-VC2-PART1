@@ -68,6 +68,7 @@ export default {
     last_name:null,
     age:null,
     email:null,
+    timer: "",
     token: {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
@@ -79,24 +80,26 @@ export default {
     onPopUp(){
         this.dialog=true
     },
-    onEditProfileAdmin(){
-        let object={}
-        object.first_name=this.first_name
-        object.last_name=this.last_name
-        object.age=this.age
-        object.email=this.email
-        if(this.first_name!='' && this.last_name!='' && this.age!='' && this.email!=''){
-            axios.put(
+     onEditProfileAdmin(){
+       let object={}
+       object.first_name=this.first_name
+       object.last_name=this.last_name
+       object.age=this.age
+       object.email=this.email
+       if(this.first_name!='' && this.last_name!='' && this.age!='' && this.email!=''){
+        axios.put(
             "/editAdminProfile/" + this.adminID,object,
-            this.token
-          )
-            this.dialog=false
-            
+            this.token).then(()=>{
+              
+              console.log();
+                this.dialog=false
+            })
         }else{
             this.dialog=true
         }
     },
-    getAdminData(){
+     getAdminData(){
+
         axios.get(
         "/getOneAdmin/" + this.adminID,
         this.token
@@ -105,12 +108,21 @@ export default {
         this.last_name=res.data.last_name
         this.age=res.data.age
         this.email=res.data.email
+       
+        
       });
     }
   },
   mounted(){
-    this.getAdminData()
-  }
+    this.getAdminData();
+
+    
+    
+  },
+ 
+    
+   
+
 }
 </script>
 <style scoped>

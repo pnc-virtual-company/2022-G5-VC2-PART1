@@ -3,34 +3,48 @@
     <div class="main-body">
       <div class="row gutters-sm">
         <div class="col-md-4 mb-3">
-          <div class="card card-profile">
-            <div class="card-body">
-              <div class="d-flex flex-column align-items-center text-center">
+          <div class="card card-profile ">
+            <div class="card-body ">
+              <div class="d-flex flex-column align-items-center text-center ">
                 <div class="account p-3 mt-15">
-                <img v-if="studentData.profile_image!=''"
-                    class="ml-5 border-radius rounded-pill" src="" alt="">
-                  <img v-else
-                    class="ml-5 border-radius rounded-pill"
-                    src="https://www.homeagainsaintjohns.org/wp-content/uploads/2021/05/No-Picture-Yet-Home-Again-St-Johns-Board-Members.png"
-                    alt=""
-                    width="100"
-                    height="100"
-                  >
-                  <div class="d-flex position-absolute">
-                    <input type="file" accept="image/*" @change="onChangeFile" />
+                  <div>
+                    <img class="account_image"
+                      :src="
+                        studentData.profile_image != null
+                          ? studentData.profile_image
+                          : avataImage
+                      "
+                      alt=""
+                      width="150"
+                      height="150"
                     />
-                    <button @click="onChangeFile">
-                      <i class="fa-solid fa-camera"></i>
+                    <div class="update">
+                      <label for="images">
+                        <img
+                          src="https://www.freeiconspng.com/thumbs/camera-icon/camera-icon-21.png"
+                          alt=""
+                          width="50"
+                          height="50"
+                        />
+                      </label>
+                      <input
+                        type="file"
+                        id="images"
+                        accept="image/*"
+                        hidden="true"
+                        @change="onFileSelected"
+                      />
+                    </div>
 
-                    </button>
+                    <div class="change">Chang your photos</div>
                   </div>
                 </div>
                 <div class="mt-3">
                   <h4>
                     {{ studentData.first_name }} {{ studentData.last_name }}
                   </h4>
-                  <p class="text-primary mb-4">Major: IT</p>
-                  <p class="text-muted font-size-sm">
+                  <p class="text-primary mb-1">Major: IT</p>
+                  <p class="text-muted font-size-sm ">
                     <strong>University: Passerell numeriques Cambodia </strong>
                   </p>
                 </div>
@@ -79,15 +93,6 @@
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Password:</h6>
-                </div>
-                <div class="col-sm-9 text-primary">
-                  {{ studentData.password }}
-                </div>
-              </div>
-              <hr />
-              <div class="row">
-                <div class="col-sm-3">
                   <h6 class="mb-0">Phone:</h6>
                 </div>
                 <div class="col-sm-9 text-primary">
@@ -97,17 +102,8 @@
 
               <hr />
               <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Address:</h6>
-                </div>
-                <div class="col-sm-9 text-primary">
-                  Bay Area, San Francisco, CA
-                </div>
-              </div>
-              <hr />
-              <div class="row">
                 <div class="col-sm-12">
-                   <resetPasswordStudent></resetPasswordStudent>
+                  <resetPasswordStudent></resetPasswordStudent>
                 </div>
               </div>
             </div>
@@ -116,7 +112,6 @@
       </div>
     </div>
   </div>
- 
 </template>
 <script>
 import axios from "../axios-http";
@@ -139,32 +134,23 @@ export default {
       },
     };
   },
-  components:{
+  components: {
     resetPasswordStudent,
   },
   methods: {
     getStudentIntoProfile() {
-      axios.get("/students/" + this.studentId,this.token).then((res) => {
+      axios.get("/students/" + this.studentId, this.token).then((res) => {
         this.studentData = res.data[0];
       });
     },
-    onChangeFile(e) {
-      this.imageFile = e.target.files[0];
-      this.imageToDisplay = URL.createObjectURL(this.imageFile);
-      this.updateProfile()
-    },
-     updateProfile() {
-      let profile = new FormData();
-      profile.append("picture", this.imageFile);
-      profile.append("_method", "PUT");
-      console.log(this.imageToDisplay.name);
-      axios
-        .put("/updatePhoto/" + this.studentId, {profile_image:this.imageFile.name},this.token)
-        .then((res) => {
-          this.name_img = res.data.img.picture;
-          this.getAllData();
-        });
-    },
+    onFileSelected(event) { this.onUpload(event.target.files[0]); },
+    onUpload(image){ 
+      // console.log(image.name);  
+      // const fd = new FormData();  
+      //  fd.append('image', image)  
+      //  fd.append('_method', 'PUT')
+      console.log(image.name);
+        axios.put('/updateProfile/'+this.studentId,{profile_image:image.name},this.token) },
   },
   mounted() {
     this.getStudentIntoProfile();
@@ -178,7 +164,7 @@ export default {
 .border-radius {
   border-radius: 40px;
 }
-.card-profile{
+.card-profile {
   height: 77vh;
   border-top: 5px solid rgb(103, 74, 210);
 
@@ -186,6 +172,13 @@ export default {
 }
 .card-list-info {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  border-left: 5px solid   rgb(103, 74, 210);
+  border-left: 5px solid rgb(103, 74, 210);
+}
+.account_image{
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 </style>

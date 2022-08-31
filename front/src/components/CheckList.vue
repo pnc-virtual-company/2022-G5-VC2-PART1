@@ -56,7 +56,7 @@
             <template #cause>{{ reject.cause }}</template>
             <template #duration>{{ reject.duration }}</template>
             <template #type>{{ reject.type }}</template>
-            <template #requestDate>{{ reject.request_date }}</template>
+            <template #requestDate> {{ reject.created_at }}</template>
           </CardAdminAllow>
         </div>
         <div v-if="isApproved">
@@ -118,7 +118,7 @@
           </CardAdminAllow>
         </div>
 
-        <div v-if="isPending">
+        <div v-if="isPending" >
           <div
             class="card"
             v-for="(value, index) in listPendingLeave"
@@ -135,10 +135,10 @@
                   <div class="textli" v-for="getId in listStudent" :key="getId">
                     <div class="d-flex">
                       <li v-if="value.student_id == getId.id">
-                        <v-img
+                        <img
                           class="profile mt-3"
                           :src="getId.profile_image"
-                        ></v-img>
+                        >
                       </li>
                       <div
                         class="d-flex justify-content-center mt-3 flex-column"
@@ -160,7 +160,7 @@
                     </div>
                   </div>
                 </ul>
-                <div class="button justify-content">
+                <div class="button ">
                   <a
                     class="btn btn-link nav-button"
                     data-toggle="collapse"
@@ -193,34 +193,25 @@
               aria-labelledby="headingOne"
               data-parent="#accordion"
             >
-              <div class="card-body">
-                <div>
-                  <div class="accordion-body">
-                    <div class="mb-1 row">
-                      <table
-                        class="secondary text-no-wrap rounded-t-lg"
-                        width="100%"
-                      >
-                        <tr class="bg-blue" type>
-                          <th>Star Date</th>
-                          <th>End Date</th>
-                          <th>Reason</th>
-                          <th>Duration</th>
-                          <th>Leave Type</th>
-                          <th>Request Date</th>
-                        </tr>
-                        <tr>
-                          <td>{{ value.start_date }}</td>
-                          <td>{{ value.end_date }}</td>
-                          <td>{{ value.cause }}</td>
-                          <td>{{ value.duration }}</td>
-                          <td>{{ value.type }}</td>
-                          <td>{{ value.request_date }}</td>
-                        </tr>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+                    <div class="row p-3">
+                      <div class="col-sm-5 d-flex">
+                        <p class="fw-bold m-1">Star Date: </p> <p class="m-1">{{ value.start_date }}</p>
+                      </div>
+                      <div class="col-sm-5 d-flex">
+                        <p class="fw-bold m-1">End Date: </p> <p class="m-1">{{ value.end_date }}</p>
+                      </div>
+                      <div class="col-sm-5 ml-left d-flex">
+                        <p class="fw-bold m-1">Duration: </p> <p class="m-1">{{ value.duration }}</p>
+                      </div>
+                      <div class="col-sm-5 d-flex">
+                        <p class="fw-bold m-1">Leave Type: </p> <p class="m-1">{{ value.type }}</p>
+                      </div>
+                      <div class="col-sm-5 d-flex">
+                        <p class="fw-bold m-1">Request Date: </p> <p class="m-1">{{ value.created_at }}</p>
+                      </div>
+                      <div class="col-sm-5 d-flex">
+                        <p class="fw-bold m-1">Reason: </p> <p class="m-1">{{ value.cause }}</p>
+                      </div>
               </div>
             </div>
           </div>
@@ -251,7 +242,6 @@ export default {
       isApproved: false,
       isRejected: false,
       isPending: true,
-      // statusName:null,
     };
   },
 
@@ -296,11 +286,13 @@ export default {
       if (statusLeave == "rejected") {
         axios.put("/leaves/" + index, { status: statusLeave },{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}});
       } else {
+      
         axios.put("/leaves/" + index, { status: statusLeave },{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}});
       }
     },
     getPending() {
       if (localStorage.getItem("sendPending")) {
+     
         this.isPending = true;
         this.isApproved = false;
         this.isRejected = false;
@@ -318,7 +310,6 @@ export default {
 
 <style scoped>
 h2 {
-  /* background-color:#e7f1ff; */
   height: 10vh;
 }
 ul {
@@ -341,11 +332,11 @@ button {
   text-decoration: none;
 }
 .profile {
-  justify-content: center;
+  display: inline-block;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  margin-right: 50px;
-  width: 50px;
-  font-size: 5px;
+  object-fit: cover;
 }
 ul.space-img {
   list-style: none;

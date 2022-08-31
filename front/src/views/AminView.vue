@@ -50,6 +50,7 @@
           v-for="item in items"
           :key="item.title"
           :to="item.to"
+        
           link
           class="mt-5"
         >
@@ -75,8 +76,8 @@ export default {
     pendingName: null,
     drawer: null,
     items: [
-      { title: "List Student", icon: "mdi-home", to: "/listStudent"},
-      { title: "Check List", icon: "mdi-view-dashboard", to: "/checkList" },
+      { title: "List Student", icon: "mdi-home", to:"/listStudent"},
+      { title: "Check List", icon: "mdi-view-dashboard", to:"/checkList"},
     ],
     right: null,
     studentLists: [],

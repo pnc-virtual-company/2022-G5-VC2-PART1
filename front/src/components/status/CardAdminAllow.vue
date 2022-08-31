@@ -32,29 +32,31 @@
         <div>
           <div class="accordion-body">
             <div class="mb-1 row">
-              <table class="secondary text-no-wrap rounded-t-lg" width="100%">
-                <tr class="bg-blue" type>
-                  <th>Star Date</th>
-                  <th>End Date</th>
-                  <th>Reason</th>
-                  <th>Duration</th>
-                  <th>Leave Type</th>
-                  <th>Request Date</th>
-                </tr>
-                <tr>
-                  <td><slot name="startDate"></slot></td>
-                  <td><slot name="endDate"></slot></td>
-                  <td><slot name="cause"></slot></td>
-                  <td><slot name="duration"></slot></td>
-                  <td><slot name="type"></slot></td>
-                  <td><slot name="requestDate"></slot></td>
-                </tr>
-              </table>
+              <div class="row p-1">
+                <div class="col-sm-5 d-flex">
+                  <p class="fw-bold m-1">Star Date: </p> <p class="m-1"><slot name="startDate"></slot></p>
+                </div>
+                <div class="col-sm-5 d-flex">
+                  <p class="fw-bold m-1">End Date: </p> <p class="m-1"><slot name="endDate"></slot></p>
+                </div>
+                <div class="col-sm-5 ml-left d-flex">
+                  <p class="fw-bold m-1">Duration: </p> <p class="m-1"><slot name="cause"></slot></p>
+                </div>
+                <div class="col-sm-5 d-flex">
+                  <p class="fw-bold m-1">Leave Type: </p> <p class="m-1"><slot name="duration"></slot></p>
+                </div>
+                <div class="col-sm-5 d-flex">
+                  <p class="fw-bold m-1">Request Date: </p> <p class="m-1"><slot name="type"></slot></p>
+                </div>
+                <div class="col-sm-5 d-flex">
+                  <p class="fw-bold m-1">Reason: </p> <p class="m-1"><slot name="requestDate"></slot></p>
+                </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
