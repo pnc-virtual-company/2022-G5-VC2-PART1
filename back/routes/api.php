@@ -33,34 +33,33 @@ Route::post('/create', [AdminController::class, 'store']);
 Route::post('/login', [AdminController::class, 'login']);
 Route::apiResource("/admin", AdminController::class);
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::apiResource('/studentsInAdmin',StudentController::class);
+    Route::apiResource('/studentsInAdmin', StudentController::class);
     Route::apiResource("leaves", LeaveController::class);
     Route::put('/resetPassword/{id}', [AdminController::class, 'reset']);
     Route::get('/getOneAdmin/{id}', [AdminController::class, 'show']);
     Route::put('/editAdminProfile/{id}', [AdminController::class, 'editProfile']);
+    Route::put("/edit/{id}", [StudentController::class, 'editStudentAdmin']);
     // Uplaod Profile 
-    Route::put('/updateProfile/{id}',[StudentController::class,'updateProfile']);
+    Route::put('/updateProfile/{id}', [StudentController::class, 'updateProfile']);
     Route::post('/logout', [AdminController::class, 'logout']);
 });
 
 // -------------------student--------------------
 Route::post('/loginStudent', [StudentController::class, 'login']);
-Route::get('/studentCompare',[StudentController::class,'index']);
+Route::get('/studentCompare', [StudentController::class, 'index']);
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::put('/updatePhoto/{id}', [StudentController::class, 'updatePhoto']);
-    Route::apiResource('/students',StudentController::class);
+    Route::apiResource('/students', StudentController::class);
     Route::apiResource("leaves", LeaveController::class);
-    Route::get("/getAdminId",[AdminController::class,'index']);
-    Route::get("/getOneStudent/{id}",[StudentController::class,'getOneStudent']);
-    Route::post('/logOutStudent',[StudentController::class, 'signOut']);
+    Route::get("/getAdminId", [AdminController::class, 'index']);
+    Route::get("/getOneStudent/{id}", [StudentController::class, 'getOneStudent']);
+    Route::post('/logOutStudent', [StudentController::class, 'signOut']);
 });
 
 // Reset Password of student
-Route::post('/reset-password-student/{id}',[StudentController::class,'resetPassword']);
-Route::put('/reset-password-student/{id}',[StudentController::class,'update']);
+Route::post('/reset-password-student/{id}', [StudentController::class, 'resetPassword']);
+Route::put('/reset-password-student/{id}', [StudentController::class, 'update']);
 // Uplaod Profile Student
-Route::put('/updateProfile/{id}',[StudentController::class,'updateProfile']);
+Route::put('/updateProfile/{id}', [StudentController::class, 'updateProfile']);
 // Upload Profile Admin 
-Route::put('/uploadProfileAdmin/{id}',[AdminController::class,'uploadProfileAdmin']);
-
-
+Route::put('/uploadProfileAdmin/{id}', [AdminController::class, 'uploadProfileAdmin']);

@@ -63,6 +63,7 @@
 import axios from "../../axios-http";
 export default {
   data: () => ({
+    // props:['studentData'],
     dialog: false,
     first_name:null,
     last_name:null,
@@ -90,9 +91,9 @@ export default {
         axios.put(
             "/editAdminProfile/" + this.adminID,object,
             this.token).then(()=>{
-              
-              console.log();
                 this.dialog=false
+                this.getAdminData()
+                
             })
         }else{
             this.dialog=true
@@ -108,8 +109,7 @@ export default {
         this.last_name=res.data.last_name
         this.age=res.data.age
         this.email=res.data.email
-       
-        
+        this.$emit('studentId',this.adminID)
       });
     }
   },

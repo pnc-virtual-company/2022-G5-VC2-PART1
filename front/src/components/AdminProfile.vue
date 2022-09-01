@@ -65,30 +65,12 @@
               </div>
               <hr />
               <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Password</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  {{ dataAdmin.password }}
-                </div>
-              </div>
-              <hr />
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Address</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  Bay Area, San Francisco, CA
-                </div>
-              </div>
-              <hr />
-              <div class="row">
                 <div class=" d-flex ">
                   <div class="m-2">
                     <resetPasswordAdmin ></resetPasswordAdmin>
                   </div>
                   <div class="m-2">
-                    <editAdminProfile ></editAdminProfile>
+                    <editAdminProfile @studentId="getUpdateId"></editAdminProfile>
                   </div>
                 </div>
               </div>
@@ -110,7 +92,7 @@ export default {
       url: null,
       dataAdmin: {},
       token:{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}},
-      adminID:localStorage.getItem('user_id')
+      adminID:null,
     };
   },
   components:{
@@ -118,10 +100,12 @@ export default {
     editAdminProfile
   },
   methods: {
-
+    getUpdateId(id){
+        this.adminID=id
+        this.getAdminIntoProfile()
+    },
     getAdminIntoProfile() {
       axios.get("/admin/" + this.adminID ,this.token).then((res) => {
-
         this.dataAdmin = res.data;
       });
     },
@@ -151,15 +135,16 @@ export default {
       const profileAdmin = new FormData();
             profileAdmin.append('profile_image', profile_image)
             profileAdmin.append('_method', 'PUT')
-      axios.post('/uploadProfileAdmin/5',profileAdmin)
+      axios.post('/uploadProfileAdmin/'+this.adminID,profileAdmin)
       .then((response)=>{
           console.log(response)
+          this.getAdminIntoProfile()
         })
     },
    
   },
   mounted() {
-    this.getAdminIntoProfile();
+  
   }
 };
 </script>

@@ -171,7 +171,7 @@
                     <i class="fa-solid fa-eye"></i>
                   </a>
                   <button
-                    class="bg-danger btn"
+                    class="bg-danger btn text-white"
                     @click="changeStatus('rejected', value.id)"
                   >
                     Rejected
@@ -284,9 +284,10 @@ export default {
     },
     changeStatus(statusLeave, index) {
       if (statusLeave == "rejected") {
+         this.listPendingLeave.splice(statusLeave,1)
         axios.put("/leaves/" + index, { status: statusLeave },{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}});
       } else {
-      
+        this.listPendingLeave.splice(statusLeave,1)
         axios.put("/leaves/" + index, { status: statusLeave },{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}});
       }
     },

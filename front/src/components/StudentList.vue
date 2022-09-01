@@ -1,26 +1,50 @@
 <template>
-  <div  class="bg-shodow rounded p-3 mt-5 text-white font-weight-bold">
+  <div class="bg-shodow rounded p-3 mt-5 text-white font-weight-bold">
     LIST STUDENTS
   </div>
-  <!-- -------/register/-------- -->
-  <div class="ml-8 mt-4">
-    <FormRegisterVue :studentNames="studentnames" />
+  <!--search button-->
+  <div class="ml-5 d-flex">
+    <div>
+      <div class="input-group mb-3 pa-3 mt-3">
+        <input v-model="searchName" type="text" class="form-control p-2" placeholder="Search by name">
+        <button @click="onSearchByName()"  class="bg-blue p-1 text-white">search</button>
+      </div>
+
+    </div>
+    <div class="w-25 d-flex p-4 ">
+      <select class="form-select p-2" v-model="searchByBatch" aria-label="Default select">
+        <option selected>Searh by batch</option>
+        <option value="WEP-2022-A">WEP-2022-A</option>
+        <option value="WEP-2022-B">WEP-2022-B</option>
+        <option value="SNA-2022">SNA-2022</option>
+        <option value="WEP-2023-A">WEP-2023-A</option>
+        <option value="WEP-2023-B">WEP-2023-B</option>
+        <option value="SNA-2023">SNA-2023</option>
+      </select>
+    </div>
   </div>
+  <!-- -------/register/-------- -->
+
   <div class="overflow-auto mt-5 w-overflow" style="height: 50vh">
-    <div class="m-3" v-if="studentnames != null">
+    <div class="m-3" v-if="filterSearchListStudent != null">
       <div
         class="m-2 card-top card h-card"
-        v-for="(student, index) of studentnames"
+        v-for="(student, index) of filterSearchListStudent"
         :key="student"
       >
         <div class="d-flex-align h-card">
           <div class="">
-  
-            <img v-if="student.profile_image!=''"
-              class="profile_img "
+            <img
+              v-if="student.profile_image != ''"
+              class="profile_img"
               :src="student.profile_image"
-            >
-            <img v-else class="profile_img " src="https://cdn4.iconfinder.com/data/icons/business-and-e-commerce/64/Employee_man-256.png" alt="">
+            />
+            <img
+              v-else
+              class="profile_img"
+              src="https://cdn4.iconfinder.com/data/icons/business-and-e-commerce/64/Employee_man-256.png"
+              alt=""
+            />
           </div>
           <div class="card-body d-flex row">
             <div class="col-sm-4 ml-0">
@@ -33,18 +57,17 @@
           <div class="">
             <v-btn
               class="bg-red p-1 m-1"
-         
               @click.stop="dialogDelete = true"
-              @click="alertDialog(index)"
+              @click="alertDialog(index,student.id)"
             >
               <strong class="text-white"
                 ><i class="fa-solid fa-trash-can text-white m-1"></i
-                >Delete</strong
+                >Delete </strong
               >
             </v-btn>
             <v-btn @click="showPopup(index)" class="bg-blue p-1 m-1"
               ><strong class="text-white"
-                ><i class="fa-solid fa-user-plus"></i> VIEW</strong
+                ><i class="fa-solid fa-user-plus"></i> VIEW </strong
               ></v-btn
             >
           </div>
@@ -74,13 +97,10 @@
                   >
                     Cancel
                   </v-btn>
-
                   <v-btn
-                    color="red darken-1"
-                    text
-                    @click="onDeleteStudent(student.id)"
+                    @click="onDeleteStudent()"
                   >
-                    <p>DELETE</p>
+                    <p>DELETE </p>
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -94,24 +114,34 @@
     <v-dialog v-model="dialog" width="100%">
       <v-card class="modal justify-center w-80 border-style-top" sm="6">
         <div class="img-class relative">
-          <div>
-            <div class="d-flex">
-              <button @click="dialog = false" class="btn btn-danger ml-60 p-1">
-                X
+          <div class="d-flex flex-row-reverse">
+            <div class="d-flex m-2">
+              <EditStudentProfileVue
+                :id="studentnames[index].id"
+                @sendStudentData="getStudentDateEmit"
+              ></EditStudentProfileVue>
+              <button @click="dialog = false" class="ml-60 p-1">
+                <i class="fa-solid fa-share fa-xl mb-3"></i>
               </button>
             </div>
           </div>
           <div class="profile">
             <div>
               <div>
-                <img v-if="studentnames[index].profile_image!=''"
-                class="profile_img_account "
-                  :src="studentnames[index].profile_image"
-                >
-                <img v-else class="profile_img_account " src="https://cdn4.iconfinder.com/data/icons/business-and-e-commerce/64/Employee_man-256.png" alt="">
+                <img
+                  v-if="filterSearchListStudent[index].profile_image != ''"
+                  class="profile_img_account"
+                  :src="filterSearchListStudent[index].profile_image"
+                />
+                <img
+                  v-else
+                  class="profile_img_account"
+                  src="https://cdn4.iconfinder.com/data/icons/business-and-e-commerce/64/Employee_man-256.png"
+                  alt=""
+                />
               </div>
-              <p>{{ studentnames[index].phone }}</p>
-              <p class="text-caption mt-1">{{ studentnames[index].email }}</p>
+              <p>{{ filterSearchListStudent[index].phone }}</p>
+              <p class="text-caption mt-1">{{ filterSearchListStudent[index].email }}</p>
             </div>
           </div>
         </div>
@@ -120,7 +150,7 @@
           <v-card-text>
             <div v-if="!isClick"></div>
             <div class="mb-3 row">
-              <table
+              <table v-if="filterSearchListStudent[index].leave!=''"
                 class="secondary text-no-wrap rounded-t-lg"
                 width="100%"
                 height="100vh"
@@ -134,8 +164,8 @@
                   <th>Status</th>
                   <th>Request Date</th>
                 </tr>
-                <tr
-                  v-for="studentDetail of studentnames[index].leave"
+                <tr 
+                  v-for="studentDetail of filterSearchListStudent[index].leave"
                   :key="studentDetail"
                 >
                   <td>{{ studentDetail.start_date }}</td>
@@ -153,31 +183,45 @@
       </v-card>
     </v-dialog>
   </div>
-  <form-register :studentNames="studentnames" />
+  <div class="ml-8 mt-4">
+    <FormRegisterVue :studentNames="studentnames" @sendStudents="getEmitData" />
+  </div>
   <!------------------------------------------------- cardstudent -------------------------------------->
 </template>
 
 <script>
+import EditStudentProfileVue from "./edit/EditStudentProfile.vue";
 import axios from "../axios-http";
 import FormRegisterVue from "../views/FormRegister.vue";
 import swal from "sweetalert";
 export default {
-  name:'listStudent',
+  name: "listStudent",
   components: {
     FormRegisterVue,
+    EditStudentProfileVue,
   },
   data() {
     return {
+      searchByName: '',
+      searchName:'',
+      searchByBatch: null,
       studentnames: [],
       dialog: false,
       index: null,
+      studentid:null,
       popup: false,
       dialogDelete: false,
       aroundPage: null,
-      page: 1,
     };
   },
   methods: {
+    getEmitData(students){
+      this.studentnames = students
+      this.getStudent()
+    },
+    getStudentDateEmit(){
+      this.getStudent()
+    },
     getStudent() {
       axios
         .get("/studentsInAdmin/", {
@@ -189,10 +233,10 @@ export default {
           this.studentnames = res.data;
         });
     },
-    onDeleteStudent(id) {
+    onDeleteStudent() {
       this.dialogDelete = false;
       axios
-        .delete("/studentsInAdmin/" + id, {
+        .delete("/studentsInAdmin/" + this.studentid, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
           },
@@ -204,31 +248,35 @@ export default {
             icon: "success",
             title: "Student Delete Successfully!!",
             showConfirmButton: false,
-            timer: 1500,
+            timer: 500,
           });
         });
     },
     showPopup(index) {
       this.dialog = true;
       this.index = index;
+      
     },
-    alertDialog(index) {
+    alertDialog(index,id) {
       this.popup = true;
       this.index = index;
+      this.studentid=id
     },
+    onSearchByName(){
+      this.searchName=this.searchByName
+    }
   },
   mounted() {
     this.getStudent();
   },
   computed: {
     filterSearchListStudent() {
-      if (!this.search) {
+      if (!this.searchByBatch || (this.searchByBatch=='Searh by batch')) {
         return this.studentnames;
       } else {
         return this.studentnames.filter(
-          ({ name, Class }) =>
-            name.toLowerCase().includes(this.search.toLowerCase()) ||
-            Class.toLowerCase().includes(this.search.toLowerCase())
+          ({  batch }) =>
+          batch.toLowerCase().includes(this.searchByBatch.toLowerCase()),
         );
       }
     },
@@ -273,14 +321,17 @@ li {
 }
 .bg-shodow {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  background:#0073ff;
+  background: #0073ff;
   width: 95%;
   margin: auto;
 }
 .v-btn {
   box-shadow: rgb(255, 255, 255) 0px 0px 0px 0px;
 }
-
+input{
+  outline: none;
+  border-bottom: solid 2px rgb(70, 70, 70);
+}
 .w-80 {
   width: 80%;
   margin-left: 10%;

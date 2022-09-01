@@ -65,7 +65,6 @@ export default {
     sendAdminStatus(status){
       this.$emit("sendAdminStatus",status)
     },
-    
   },
   
   computed: {
@@ -97,6 +96,9 @@ export default {
       return count | 0;
     },
   },
+  mounted(){
+    
+  }
 };
 </script>
 <style scoped>

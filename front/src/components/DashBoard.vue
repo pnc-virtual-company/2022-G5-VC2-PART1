@@ -71,7 +71,6 @@
 </template>
 
 <script>
-// import NewRequestVue from "./NewRequest.vue";
 import StudentStatusVue from "./StudentStatus.vue";
 import axios from "../axios-http.js";
 export default {

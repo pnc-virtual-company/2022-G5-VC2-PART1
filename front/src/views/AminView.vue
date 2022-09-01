@@ -109,6 +109,7 @@ export default {
     },
     sendPending() {
       this.pendingName = "pending";
+      this.getAdminAccount()
     },
     onLogOut() {
       localStorage.removeItem("user_id");

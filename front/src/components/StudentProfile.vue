@@ -124,6 +124,9 @@ export default {
     resetPasswordStudent,
   },
   methods: {
+    // getEmitIdStudent(){
+
+    // },
     getStudentIntoProfile() {
       axios.get("/students/" + this.studentId, this.token).then((res) => {
         this.studentData = res.data[0];
@@ -158,6 +161,7 @@ export default {
       axios.post('/updateProfile/'+this.studentData.id,profileStudent)
       .then((response)=>{
           console.log(response)
+          this.getStudentIntoProfile()
         })
     },
   },

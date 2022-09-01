@@ -76,6 +76,7 @@ export default {
       duration: null,
       cause: null,
       isValidTime: true,
+      studentLists:[],
       adminId:null,
       studentId: localStorage.getItem("student_id"),
       token: {
@@ -86,6 +87,7 @@ export default {
     };
   },
   methods: {
+   
     addRequest() {
       if (
         this.typeLeave != null &&
