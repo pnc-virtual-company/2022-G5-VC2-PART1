@@ -2,19 +2,18 @@
   <div class="container mt-5 ">
     <div class="main-body">
       <div class="row gutters-sm">
-        <div class="col-md-4 mb-3">
-          <div class="card">
+        <div  class="col-md-4 mb-3">
+          <div style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;" class="card">
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
                 <div class="account p-1 mt-5">
-                  <h3>Personal Data</h3>
                    <img class="account_image"
                    :src="dataAdmin.profile_image!=null?dataAdmin.profile_image:avataImage"
                     alt=""  >
                     <div class="update"> 
                       <label for="profile_image">
                         <img 
-                        src="https://www.freeiconspng.com/thumbs/camera-icon/camera-icon-21.png" 
+                        src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/camera-512.png" 
                         alt="" width="30" height="30" >
                       </label>
                        <input 
@@ -25,7 +24,7 @@
                     </div>
                 </div>
                 <div>
-                  <h4>{{ dataAdmin.first_name }} {{ dataAdmin.last_name }}</h4>
+                  <h4><strong> {{ dataAdmin.first_name }} {{ dataAdmin.last_name }}</strong></h4>
                   <p class="text-muted font-size-sm">
                     <strong>University: Passerell numeriques Cambodia </strong>
                   </p>
@@ -34,33 +33,33 @@
             </div>
           </div>
         </div>
-        <div class="col-md-8">
-          <div class="card mb-3">
+        <div  class="col-md-8">
+          <div style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;" class="card mb-3">
             <div class="card-body">
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Full Name</h6>
+                  <h6 class="mb-0"><strong>Full Name</strong></h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ dataAdmin.first_name }} {{ dataAdmin.last_name }}
+                  <strong>{{ dataAdmin.first_name }} {{ dataAdmin.last_name }}</strong>
                 </div>
               </div>
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Email</h6>
+                  <h6 class="mb-0"><strong>Email</strong></h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ dataAdmin.email }}
+                  <strong>{{ dataAdmin.email }}</strong>
                 </div>
               </div>
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">age</h6>
+                  <h6 class="mb-0"><strong>age</strong></h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ dataAdmin.age }}
+                  <strong>{{ dataAdmin.age }}</strong>
                 </div>
               </div>
               <hr />
@@ -113,7 +112,7 @@ export default {
     async changeProfile(event){
       console.log(this.dataAdmin.profile_image)
           Swal.fire({
-              title: 'Are you sure, to select it?',
+              title: 'Are you want to choose this picture?',
               showCancelButton: true,
               confirmButtonText: 'Confirm',
               customClass: {
@@ -125,8 +124,6 @@ export default {
               if (result.isConfirmed) {
                 Swal.fire('Saved!', '', 'success')
                 this.onUpload(event.target.files[0])
-              }else {
-                console.log('Cancled')
               }
           })
     },
@@ -156,9 +153,9 @@ export default {
   border-radius: 40px;
 }
 .account_image{
-  display: inline-block;
-  width: 150px;
+  display: block;
+  width: 200px;
   height: 150px;
-  object-fit: fill;
+  height: auto;
 }
 </style>

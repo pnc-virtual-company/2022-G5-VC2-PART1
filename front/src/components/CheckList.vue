@@ -252,6 +252,9 @@
             </v-dialog>
           </v-row>
         </div>
+        {{getPend}}
+        {{isGet}}
+        <button @click="get">get</button>
 </template>
 <script>
   import Swal from 'sweetalert2'
@@ -275,15 +278,20 @@ export default {
       isApproved: false,
       isRejected: false,
       isPending: true,
+      isPendingTry: localStorage.getItem("sendPending"),
+      isGet:null,
     
     };
   },
 
   methods: {
+    get(){
+        this.isGet=localStorage.getItem("sendPending")
+        console.log(localStorage);
+    },
     onGetAllStudent() {
       axios.get("/students",{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}}).then((res) => {
         this.listStudent = res.data;
-        this.getData(res.data);
         for (let studentData of res.data) {
           for (let leaveStudent of studentData.leave) {
             this.allLeave.push(leaveStudent);
@@ -300,7 +308,6 @@ export default {
     },
     getStatusFromAdmin(status) {
       if (status == "Rejected") {
-        
         localStorage.setItem("sendPending", false);
         this.isApproved = false;
         this.isRejected = true;
@@ -313,9 +320,6 @@ export default {
       }else if (status == "Student"){
         this.$router.push('/listStudent')
       }
-    },
-    getData(data) {
-      this.listStudent = data;
     },
     changeStatus(statusLeave, index) {
       if (statusLeave == "rejected") {
@@ -338,22 +342,23 @@ export default {
       }
     },
     getPending() {
-      if (localStorage.getItem("sendPending")) {
-        this.isPending = true;
-        this.isApproved = false;
-        this.isRejected = false;
-       
-      }
+      console.log(localStorage.getItem("sendPending"))
     },
   },
   mounted() {
     this.onGetAllStudent();
-    this.getData();
-    this.getPending();
   },
-  computed: {},
+  computed: {
+    getPend(){
+      return this.isPendingTry
+    }
+  },
   watch:{
-    
+    isPendingTry(){
+      this.isApproved=false
+      this.isRejected= false
+      this.isPending=true
+    }
   },
 };
 </script>

@@ -27,9 +27,7 @@
     </v-app-bar>
   
     <v-main>
-      <router-view >
-        
-      </router-view>
+      <router-view ></router-view>
     </v-main>
   </v-app>
 </template>
@@ -66,7 +64,7 @@ i {
   margin: 10px;
 }
 .fs {
-  font-size: 20px;
+  font-size: 15px;
 }
 .bg-h{
   height: 30vh;

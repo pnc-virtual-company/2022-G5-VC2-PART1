@@ -111,6 +111,7 @@ export default {
       localStorage.removeItem("user_id");
       localStorage.removeItem("admin_token");
       this.$router.push("/");
+      axios.post("/logout" , this.token)
     },
     setPendingToLocalStorage() {
       localStorage.setItem("sendPending", this.pendingString);

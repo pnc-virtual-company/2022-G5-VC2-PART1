@@ -154,17 +154,20 @@
                     alt=""
                   />
                 </div>
-                <p>{{ filterSearchListStudent[index].phone }}</p>
-                <p class="text-caption mt-1">
-                  {{ filterSearchListStudent[index].email }}
-                </p>
+                <div class="">
+              
+                  <p>{{ filterSearchListStudent[index].phone }}</p>
+                  <p class="text-caption mt-1">
+                    {{ filterSearchListStudent[index].email }}
+                  </p>
+
+                </div>
               </div>
             </div>
           </div>
   
-          <v-card height="200" class="overflow-auto w-100 mt-5">
+          <v-card height="200" class="overflow-auto w-100 ">
             <v-card-text>
-              <div v-if="!isClick"></div>
               <div class="mb-3 row">
                 <table
                   v-if="filterSearchListStudent[index].leave != ''"
@@ -187,11 +190,11 @@
                   >
                     <td>{{ studentDetail.start_date }}</td>
                     <td>{{ studentDetail.end_date }}</td>
-                    <td>{{ studentDetail.reason }}</td>
+                    <td>{{ studentDetail.cause }}</td>
                     <td>{{ studentDetail.duration }}</td>
-                    <td>{{ studentDetail.leave_type }}</td>
+                    <td>{{ studentDetail.type }}</td>
                     <td>{{ studentDetail.status }}</td>
-                    <td>{{ studentDetail.request_date }}</td>
+                    <td>{{ studentDetail.created_at }}</td>
                   </tr>
                 </table>
               </div>
@@ -294,7 +297,7 @@
                 @sendStudentData="getStudentDateEmit"
               ></EditStudentProfileVue>
               <button @click="dialog = false" class="ml-60 p-1">
-                <i class="fa-solid fa-share fa-xl mb-3"></i>
+                <i class="fa-solid fa-share fa-xl mb-3 "></i>
               </button>
             </div>
           </div>
@@ -346,11 +349,11 @@
                 >
                   <td>{{ studentDetail.start_date }}</td>
                   <td>{{ studentDetail.end_date }}</td>
-                  <td>{{ studentDetail.reason }}</td>
+                  <td>{{ studentDetail.cause }}</td>
                   <td>{{ studentDetail.duration }}</td>
-                  <td>{{ studentDetail.leave_type }}</td>
+                  <td>{{ studentDetail.type }}</td>
                   <td>{{ studentDetail.status }}</td>
-                  <td>{{ studentDetail.request_date }}</td>
+                  <td>{{ studentDetail.created_at }}</td>
                 </tr>
               </table>
             </div>
