@@ -6,8 +6,8 @@
           <div class="card card-profile">
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
-                <div class="account p-1 mt-5">
-               
+                <div class="account p-1 ">
+                  <h3>Personal Data</h3>
                    <img  class="account_image"
                    :src="studentData.profile_image!=null?studentData.profile_image:avataImage"
                     alt="" >
@@ -84,10 +84,9 @@
                   <strong>{{ studentData.phone }}</strong>
                 </div>
               </div>
-
               <hr />
               <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-12  ">
                   <resetPasswordStudent></resetPasswordStudent>
                 </div>
               </div>
@@ -179,13 +178,13 @@ export default {
 }
 .card-profile {
   height: 77vh;
-  border-top: 5px solid rgb(103, 74, 210);
+  border-top: 5px solid #0073ff;
 
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 .card-list-info {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  border-left: 5px solid rgb(103, 74, 210);
+  border-left: 5px solid #0073ff;
 }
 .account_image{
   display: inline-block;

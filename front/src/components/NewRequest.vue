@@ -231,7 +231,7 @@ h3 {
   /* line-height:0.1; */
   display: block;
   margin-top: 30px;
-  padding-top: 20px;
+  padding: 10px;
 }
 .text-reason {
   width: 100%;
@@ -273,7 +273,7 @@ select{
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 h3 {
-  background: rgba(19, 129, 255, 0.644);
+  background:#0073ff;
   color: azure;
 }
 </style>

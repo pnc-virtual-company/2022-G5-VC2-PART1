@@ -12,7 +12,6 @@
                   alt="John"
                   width="70"
                 />
-       
                 <img v-else
                   class="rounded-pill"
                   src="https://cdn.vuetifyjs.com/images/john.jpg"
