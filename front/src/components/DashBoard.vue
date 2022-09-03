@@ -1,72 +1,97 @@
 <template>
   <StudentStatusVue @sendStatus="checkStatus" :listLeaves="studentLists">
   </StudentStatusVue>
-  <div class="ml-5 d-flex">
-    <v-col class="d-flex pa-1 ma-1" cols="12" sm="12" md="4" xs="12">
-      <v-select label="Leave Type  " :items="items" v-model="search"></v-select>
-      <Button-View @click="checkLeave()" class="bg-blue pa-4"
-        ><i class="fa-solid fs-5 fa-magnifying-glass"></i
-      ></Button-View>
-    </v-col>
-  </div>
-  <div v-if="!isClick" class="">
-    <table
-      class="secondary text-no-wrap rounded-t-lg"
-      :class="`elevation-${hover ? 24 : 6}`"
-    >
-      <tr>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Reason</th>
-        <th>Duration</th>
-        <th>Leave Type</th>
-        <th>Status</th>
-        <th>Request Date</th>
-      </tr>
+  <div class="ml-5 d-flex  ">
+    <div class="w-25 d-flex p-2 ml-8">
+      <select style="box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;"
+        class="form-select p-2 box-shadow"
+        v-model="searchByType"
+        aria-label="Default select"
+        
+      >
+        <option  selected>All</option>
+        <option value="Sick leave">Sick leave</option>
+        <option value="Family's event">Family's event</option>
+        <option value="Brother or Sister Marriage">Brother or Sister Marriage</option>
+        <option value="Party">Party</option>
+      </select>
+    </div>
 
-      <tr v-for="student in filterSearchListStudent" :key="student">
-        <td>{{ student.start_date }}</td>
-        <td>{{ student.end_date }}</td>
-        <td>{{ student.cause }}</td>
-        <td>{{ student.duration }}</td>
-        <td>{{ student.type }}</td>
-        <td>
-          <span :style="changeColorStatus(student.status)">{{
-            student.status
-          }}</span>
-        </td>
-        <td>{{ student.created_at }}</td>
-      </tr>
-    </table>
   </div>
-  <div v-if="isClick" class="">
-    <table
-      class="secondary text-no-wrap between-t-lg"
-      :class="`elevation-${hover ? 24 : 6}`"
-    >
-      <tr>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Reason</th>
-        <th>Duration</th>
-        <th>Leave Type</th>
-        <th>Status</th>
-        <th>Request Date</th>
-      </tr>
-      <tr v-for="value in filterCheckStatus" :key="value">
-        <td>{{ value.start_date }}</td>
-        <td>{{ value.end_date }}</td>
-        <td>{{ value.cause }}</td>
-        <td>{{ value.duration }}</td>
-        <td>{{ value.type }}</td>
-        <td>
-          <span :style="changeColorStatus(value.status)">{{
-            value.status
-          }}</span>
-        </td>
-        <td>{{ value.created_at }}</td>
-      </tr>
-    </table>
+  <div class="row col-sm-5 ">
+
+    <div class=" row  col-md-11 ">
+      <div class=" col-sm-7  bg-list-type-style p-2 rounded ">
+        <span class=" text-white"><strong>List Types</strong> </span>
+    
+      </div>
+    
+    </div>
+  </div>
+
+  <div class="mt-3" v-if="!isType">
+    <div id="wrapper" class="d-flex justify-content-center">
+      <table>
+        <thead>
+          <tr>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Reason</th>
+            <th>Duration</th>
+            <th>Types</th>
+            <th>Status</th>
+            <th>Request Date</th>
+          </tr>
+        </thead>
+        <tbody class="">
+          <tr v-for="student in filterSearchListStudent" :key="student">
+            <td>{{ student.end_date }}</td>
+            <td>{{ student.start_date }}</td>
+            <td>{{ student.cause }}</td>
+            <td>{{ student.duration }}</td>
+            <td>{{ student.type }}</td>
+            <td>
+              <span :style="changeColorStatus(student.status)">{{
+                student.status
+              }}</span>
+            </td>
+            <td>{{ student.created_at }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="" v-if="isStatus">
+    <div id="wrapper" class="d-flex justify-content-center">
+      <table>
+        <thead>
+          <tr>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Reason</th>
+            <th>Duration</th>
+            <th>Types</th>
+            <th>Status</th>
+            <th>Request Date</th>
+          </tr>
+        </thead>
+        <tbody class="">
+          <tr v-for="student in filterCheckStatus" :key="student">
+            <td>{{ student.end_date }}</td>
+            <td>{{ student.start_date }}</td>
+            <td>{{ student.cause }}</td>
+            <td>{{ student.duration }}</td>
+            <td>{{ student.type }}</td>
+            <td>
+              <span class="box-Shadonw-status" :style="changeColorStatus(student.status)">{{
+                student.status
+              }}</span>
+            </td>
+            <td>{{ student.created_at }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -79,18 +104,11 @@ export default {
   },
   data() {
     return {
-      items: [
-        "all",
-        "Sick leave",
-        "Family's event",
-        "Brother or Sister Marriage",
-        "Party",
-      ],
       studentLists: [],
-      search: null,
-      searchText: null,
+      searchByType: null,
       searchStatus: null,
-      isClick: false,
+      isType:false,
+      isStatus:false,
       padding: null,
       studentId: localStorage.getItem("student_id"),
       token: {
@@ -107,7 +125,10 @@ export default {
           backgroundColor: "red",
           color: "white",
           fontWeight: "bold",
-          padding: 4 + "px",
+          paddingLeft: 9+ "px",
+          paddingTop: 4+ "px",
+          paddingBottom: 4+ "px",
+          paddingRight: 9+ "px",
           borderRadius: 4 + "px",
         };
       } else if (status == "approved") {
@@ -124,16 +145,16 @@ export default {
           color: "white",
           padding: 4 + "px",
           borderRadius: 4 + "px",
+          paddingLeft: 9+ "px",
+          paddingTop: 4+ "px",
+          paddingBottom: 4+ "px",
+          paddingRight: 9+ "px",
         };
       }
     },
     checkStatus(status) {
       this.searchStatus = status;
-      this.isClick = true;
-    },
-    checkLeave() {
-      this.searchText = this.search;
-      this.isClick = false;
+      this.isStatus = true;
     },
     fetchDataStudent() {
       axios.get("/leaves/", this.token).then((res) => {
@@ -148,11 +169,11 @@ export default {
 
   computed: {
     filterSearchListStudent() {
-      if (!this.searchText || this.searchText == "all") {
+      if (!this.searchByType || this.searchByType == "All") {
         return this.studentLists;
       } else {
         return this.studentLists.filter(({ type }) =>
-          type.toLowerCase().includes(this.searchText.toLowerCase())
+          type.toLowerCase().includes(this.searchByType.toLowerCase())
         );
       }
     },
@@ -166,9 +187,22 @@ export default {
       }
     },
   },
-  mounted() {
+  async mounted() {
     this.fetchDataStudent();
   },
+  watch:{
+    searchByType(){
+      this.isType=false
+      this.isStatus=false
+      console.log(this.isType);
+    },
+    searchStatus(){
+      this.isType=true
+      this.isStatus=true
+      console.log(this.isType);
+    }
+   
+  }
 };
 </script>
 
@@ -177,44 +211,7 @@ label {
   font-size: 20em;
   font-weight: bold;
 }
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 95%;
-  margin: auto;
-}
-tr {
-  border-top: solid 2px rgba(128, 0, 128, 0.607);
-}
 
-td {
-  /* border: 1px solid #dddddd; */
-  text-align: center;
-  padding: 15px;
-}
-
-tr:nth-child(even) {
-  background-color: #dee1dee4;
-}
-tr:nth-child(odd) {
-  background-color: #939393cc;
-  color: white;
-}
-th {
-  background: rgb(60, 60, 251);
-  color: #fff;
-  padding: 10px;
-}
-tr th:hover {
-  background: rgb(255, 255, 255);
-  color: black;
-  transition: 0.5s;
-}
-tr:hover {
-  background: rgb(245, 242, 242);
-  color: black;
-  transition: 0.5s;
-}
 .w-25 {
   width: 25%;
 }
@@ -229,5 +226,51 @@ tr:hover {
 }
 .v-card {
   box-shadow: none;
+}
+#wrapper {
+  width: 93%;
+}
+
+table {
+  width: 300%;
+  margin-left: 4em;
+}
+th {
+  background: #0073ff;
+  color: white;
+}
+tr:nth-child(even) {
+  background: rgb(197, 193, 193);
+}
+tr:nth-child(odd) {
+  background: rgb(247, 243, 243);
+}
+th,
+td {
+  width: 149px;
+  border: 1px solid rgb(255, 255, 255);
+
+  padding: 10px;
+}
+
+thead > tr {
+  position: relative;
+  display: block;
+}
+
+tbody {
+  display: block;
+  height: 40vh;
+  overflow-y: auto;
+}
+.bg-list-type{
+  border-bottom: solid 2px ;
+}
+.bg-list-type-style{
+  background: green;
+  margin: auto;
+}
+.box-Shadonw-status{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 </style>

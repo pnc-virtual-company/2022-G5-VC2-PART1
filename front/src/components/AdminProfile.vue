@@ -67,9 +67,9 @@
               <div class="row">
                 <div class=" d-flex ">
                   <div class="m-2">
-                    <resetPasswordAdmin ></resetPasswordAdmin>
+                    <resetPasswordAdmin  ></resetPasswordAdmin>
                   </div>
-                  <div class="m-2">
+                  <div class="m-2 mt-5">
                     <editAdminProfile @studentId="getUpdateId"></editAdminProfile>
                   </div>
                 </div>

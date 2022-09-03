@@ -5,15 +5,31 @@
   <!--search button-->
   <div class="ml-5 d-flex">
     <div>
-      <div class="input-group mb-3 pa-3 mt-3">
-        <input v-model="searchName" type="text" class="form-control p-2" placeholder="Search by name">
-        <button @click="onSearchByName()"  class="bg-blue p-1 text-white">search</button>
+      <div class="input-group mb-3 pa-3 mt-3 text-white">
+        <input
+          type="test"
+          id="gsearch"
+          class="p-2 box-shadow"
+          name="gsearch"
+          placeholder="Search by name"
+          v-model="searchName"
+        />
+        <button @click="onSearchByName()"  class="bg-blue p-1 ">
+          <span class="text-white">search</span>
+        </button>
       </div>
-
     </div>
-    <div class="w-25 d-flex p-4 ">
-      <select class="form-select p-2" v-model="searchByBatch" aria-label="Default select">
-        <option selected>Searh by batch</option>
+    <!-- search by batch student -->
+    <div class="w-50 d-flex p-4">
+      <label for="" class="w-50 mt-5">Search by batch </label>
+      <select
+        class="form-select p-2 box-shadow"
+ 
+        v-model="searchByBatch"
+        aria-label="Default select"
+   
+      >
+        <option selected>All</option>
         <option value="WEP-2022-A">WEP-2022-A</option>
         <option value="WEP-2022-B">WEP-2022-B</option>
         <option value="SNA-2022">SNA-2022</option>
@@ -24,12 +40,172 @@
     </div>
   </div>
   <!-- -------/register/-------- -->
+  <div class="overflow-auto  w-overflow" style="height: 50vh">
+    <div v-if="isBatch">
+     
+      <div class="m-3" v-if="filterSearchListStudent != null">
+        <div
+          class="m-2 card-top card h-card"
+          v-for="(student, index) of filterSearchListStudent"
+          :key="student"
+        >
+          <div class="d-flex-align h-card">
+            <div class="">
+              <img
+                v-if="student.profile_image != ''"
+                class="profile_img"
+                :src="student.profile_image"
+              />
+              <img
+                v-else
+                class="profile_img"
+                src="https://cdn4.iconfinder.com/data/icons/business-and-e-commerce/64/Employee_man-256.png"
+                alt=""
+              />
+            </div>
+            <div class="card-body d-flex row">
+              <div class="col-sm-4 ml-0">
+                <p>{{ student.first_name }} {{ student.last_name }}</p>
+              </div>
+              <div class="col-sm-4">
+                <p class="ml-40">{{ student.batch }}</p>
+              </div>
+            </div>
+            <div class="d-flex">
+              <v-btn
+                class="bg-red p-1 m-1    "
+                @click.stop="dialogDelete = true"
+                @click="alertDialog(index, student.id)"
+              >
+                <strong class="text-white "
+                  ><i class="fa-solid fa-trash-can text-white m-1"></i>Delete
+                </strong>
+              </v-btn>
+              <v-btn @click="showPopup(index)" class="bg-blue p-1  m-1  "
+                ><strong class="text-white "
+                  ><i class="fa-solid fa-user-plus "></i> VIEW
+                </strong></v-btn
+              >
+            </div>
+          </div>
+          <div class="ma-auto">
+            <v-row class="d-flex justify-content-center">
+              <v-dialog
+                v-model="dialogDelete"
+                class="w-dialog-confirmed mlp4 m-auto"
+              >
+                <v-card>
+                  <v-card-title class="text-h5 color-confirmed">
+                    Confirmed
+                  </v-card-title>
+  
+                  <v-card-text class="text-red">
+                    Are you sure want to delete student?
+                  </v-card-text>
+  
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+  
+                    <v-btn
+                      color="green darken-1"
+                      text
+                      @click="dialogDelete = false"
+                    >
+                      Cancel
+                    </v-btn>
+                    <v-btn @click="onDeleteStudent()">
+                      <p>DELETE</p>
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-row>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ml-5">
+      <v-dialog v-model="dialog" width="100%">
+        <v-card class="modal justify-center w-80 border-style-top" sm="6">
+          <div class="img-class relative">
+            <div class="d-flex flex-row-reverse">
+              <div class="d-flex m-2">
+                <EditStudentProfileVue
+                  :id="studentnames[index].id"
+                  @sendStudentData="getStudentDateEmit"
+                ></EditStudentProfileVue>
+                <button @click="dialog = false" class="ml-60 p-1">
+                  <i class="fa-solid fa-share fa-xl mb-3"></i>
+                </button>
+              </div>
+            </div>
+            <div class="profile">
+              <div>
+                <div>
+                  <img
+                    v-if="filterSearchListStudent[index].profile_image != ''"
+                    class="profile_img_account"
+                    :src="filterSearchListStudent[index].profile_image"
+                  />
+                  <img
+                    v-else
+                    class="profile_img_account"
+                    src="https://cdn4.iconfinder.com/data/icons/business-and-e-commerce/64/Employee_man-256.png"
+                    alt=""
+                  />
+                </div>
+                <p>{{ filterSearchListStudent[index].phone }}</p>
+                <p class="text-caption mt-1">
+                  {{ filterSearchListStudent[index].email }}
+                </p>
+              </div>
+            </div>
+          </div>
+  
+          <v-card height="200" class="overflow-auto w-100 mt-5">
+            <v-card-text>
+              <div v-if="!isClick"></div>
+              <div class="mb-3 row">
+                <table
+                  v-if="filterSearchListStudent[index].leave != ''"
+                  class="secondary text-no-wrap rounded-t-lg"
+                  width="100%"
+                  height="100vh"
+                >
+                  <tr>
+                    <th>Star Date</th>
+                    <th>End Date</th>
+                    <th>Reason</th>
+                    <th>Duration</th>
+                    <th>Leave Type</th>
+                    <th>Status</th>
+                    <th>Request Date</th>
+                  </tr>
+                  <tr
+                    v-for="studentDetail of filterSearchListStudent[index].leave"
+                    :key="studentDetail"
+                  >
+                    <td>{{ studentDetail.start_date }}</td>
+                    <td>{{ studentDetail.end_date }}</td>
+                    <td>{{ studentDetail.reason }}</td>
+                    <td>{{ studentDetail.duration }}</td>
+                    <td>{{ studentDetail.leave_type }}</td>
+                    <td>{{ studentDetail.status }}</td>
+                    <td>{{ studentDetail.request_date }}</td>
+                  </tr>
+                </table>
+              </div>
+            </v-card-text>
+          </v-card>
+        </v-card>
+      </v-dialog>
+    </div>
+  <div v-if="isName">
 
-  <div class="overflow-auto mt-5 w-overflow" style="height: 50vh">
-    <div class="m-3" v-if="filterSearchListStudent != null">
+    <div class="m-3" v-if="filterByName != null">
       <div
         class="m-2 card-top card h-card"
-        v-for="(student, index) of filterSearchListStudent"
+        v-for="(student, index) of filterByName"
         :key="student"
       >
         <div class="d-flex-align h-card">
@@ -58,17 +234,16 @@
             <v-btn
               class="bg-red p-1 m-1"
               @click.stop="dialogDelete = true"
-              @click="alertDialog(index,student.id)"
+              @click="alertDialog(index, student.id)"
             >
               <strong class="text-white"
-                ><i class="fa-solid fa-trash-can text-white m-1"></i
-                >Delete </strong
-              >
+                ><i class="fa-solid fa-trash-can text-white m-1"></i>Delete
+              </strong>
             </v-btn>
             <v-btn @click="showPopup(index)" class="bg-blue p-1 m-1"
               ><strong class="text-white"
-                ><i class="fa-solid fa-user-plus"></i> VIEW </strong
-              ></v-btn
+                ><i class="fa-solid fa-user-plus"></i> VIEW
+              </strong></v-btn
             >
           </div>
         </div>
@@ -97,10 +272,8 @@
                   >
                     Cancel
                   </v-btn>
-                  <v-btn
-                    @click="onDeleteStudent()"
-                  >
-                    <p>DELETE </p>
+                  <v-btn @click="onDeleteStudent()">
+                    <p>DELETE</p>
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -129,9 +302,9 @@
             <div>
               <div>
                 <img
-                  v-if="filterSearchListStudent[index].profile_image != ''"
+                  v-if="filterByName[index].profile_image != ''"
                   class="profile_img_account"
-                  :src="filterSearchListStudent[index].profile_image"
+                  :src="filterByName[index].profile_image"
                 />
                 <img
                   v-else
@@ -140,8 +313,10 @@
                   alt=""
                 />
               </div>
-              <p>{{ filterSearchListStudent[index].phone }}</p>
-              <p class="text-caption mt-1">{{ filterSearchListStudent[index].email }}</p>
+              <p>{{ filterByName[index].phone }}</p>
+              <p class="text-caption mt-1">
+                {{ filterByName[index].email }}
+              </p>
             </div>
           </div>
         </div>
@@ -150,7 +325,8 @@
           <v-card-text>
             <div v-if="!isClick"></div>
             <div class="mb-3 row">
-              <table v-if="filterSearchListStudent[index].leave!=''"
+              <table
+                v-if="filterByName[index].leave != ''"
                 class="secondary text-no-wrap rounded-t-lg"
                 width="100%"
                 height="100vh"
@@ -164,8 +340,8 @@
                   <th>Status</th>
                   <th>Request Date</th>
                 </tr>
-                <tr 
-                  v-for="studentDetail of filterSearchListStudent[index].leave"
+                <tr
+                  v-for="studentDetail of filterByName[index].leave"
                   :key="studentDetail"
                 >
                   <td>{{ studentDetail.start_date }}</td>
@@ -182,6 +358,7 @@
         </v-card>
       </v-card>
     </v-dialog>
+  </div>
   </div>
   <div class="ml-8 mt-4">
     <FormRegisterVue :studentNames="studentnames" @sendStudents="getEmitData" />
@@ -202,25 +379,27 @@ export default {
   },
   data() {
     return {
-      searchByName: '',
-      searchName:'',
+      searchByName: "",
+      searchName: "",
       searchByBatch: null,
+      isBatch:true,
+      isName:false,
       studentnames: [],
       dialog: false,
       index: null,
-      studentid:null,
+      studentid: null,
       popup: false,
       dialogDelete: false,
       aroundPage: null,
     };
   },
   methods: {
-    getEmitData(students){
-      this.studentnames = students
-      this.getStudent()
+    getEmitData(students) {
+      this.studentnames = students;
+      this.getStudent();
     },
-    getStudentDateEmit(){
-      this.getStudent()
+    getStudentDateEmit() {
+      this.getStudent();
     },
     getStudent() {
       axios
@@ -255,32 +434,70 @@ export default {
     showPopup(index) {
       this.dialog = true;
       this.index = index;
-      
     },
-    alertDialog(index,id) {
+    alertDialog(index, id) {
       this.popup = true;
       this.index = index;
-      this.studentid=id
+      this.studentid = id;
     },
-    onSearchByName(){
-      this.searchName=this.searchByName
-    }
+    onSearchByName() {
+      if (this.searchName!='') {
+        this.searchByName = this.searchName;
+        this.isBatch=false
+        this.isName=true
+      }else{
+        this.searchByName =''
+      }
+      // this.searchName=''
+    },
   },
   mounted() {
     this.getStudent();
   },
   computed: {
+    //
+     //search student  by batch in admin//
+     //
     filterSearchListStudent() {
-      if (!this.searchByBatch || (this.searchByBatch=='Searh by batch')) {
+      let result = "";
+      if (!this.searchByBatch || this.searchByBatch == "All" ) {
         return this.studentnames;
       } else {
-        return this.studentnames.filter(
-          ({  batch }) =>
-          batch.toLowerCase().includes(this.searchByBatch.toLowerCase()),
+        if(this.searchByBatch){
+          console.log(this.searchByBatch);
+          result = this.studentnames.filter(({ batch }) =>
+          batch.toLowerCase().includes(this.searchByBatch.toLowerCase())
+          );
+        }
+       
+      }
+      return result;
+    },
+    //
+    //search student  by name in admin//
+    //
+    filterByName() {
+      let result = "";
+      if (!this.searchByName) {
+        return this.studentnames;
+      } else if (this.searchByName) {
+        result = this.studentnames.filter(({ first_name }) =>
+          first_name.toLowerCase().includes(this.searchByName.toLowerCase())
         );
       }
+      return result;
     },
   },
+  watch:{
+    searchByBatch(){
+      this.isBatch=true
+      this.isName=false
+    },
+    searchName(){
+      this.isBatch=false
+      this.isName=true
+    }
+  }
 };
 </script>
 
@@ -328,7 +545,7 @@ li {
 .v-btn {
   box-shadow: rgb(255, 255, 255) 0px 0px 0px 0px;
 }
-input{
+input {
   outline: none;
   border-bottom: solid 2px rgb(70, 70, 70);
 }
@@ -439,5 +656,11 @@ h5 {
   margin-top: 12px;
   color: blue;
   margin-left: 860px;
+}
+.box-shadow{
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+.btn-remove-review {
+  padding-left: 10em;
 }
 </style>

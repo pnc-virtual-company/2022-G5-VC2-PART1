@@ -53,14 +53,24 @@ class AdminController extends Controller
     {
         return Admin::findOrFail($id);
     }
-    public function reset(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $resetPassword = Admin::findOrFail($id);
-        $resetPassword -> password =Hash::make($request->password);
-        $resetPassword->save();
-        return response()->json(['sms'=>'reset successful'],200);
-
+        $admin = Admin::findOrFail($id);
+        $admin->password = Hash::make($request->password);
+        $admin->save();
     }
+     // Reset Password 
+     public function resetPassword(Request $request, $id)
+     {
+         $admin =  Admin::findOrFail($id);
+         if (Hash::check($request->password, $admin['password'])) {
+             $admin->password = bcrypt($request->new_password);
+             $admin->save();
+             return response()->json(['sms' => 'Password updated!'], 201);
+         }
+         return response()->json(['sms' => 'Password incorrect!'], 404);
+     }
+   
     /**
      * Update the specified resource in storage.
      *

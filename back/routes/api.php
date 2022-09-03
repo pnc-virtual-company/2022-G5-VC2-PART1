@@ -35,7 +35,7 @@ Route::apiResource("/admin", AdminController::class);
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('/studentsInAdmin', StudentController::class);
     Route::apiResource("leaves", LeaveController::class);
-    Route::put('/resetPassword/{id}', [AdminController::class, 'reset']);
+   
     Route::get('/getOneAdmin/{id}', [AdminController::class, 'show']);
     Route::put('/editAdminProfile/{id}', [AdminController::class, 'editProfile']);
     Route::put("/edit/{id}", [StudentController::class, 'editStudentAdmin']);
@@ -43,7 +43,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::put('/updateProfile/{id}', [StudentController::class, 'updateProfile']);
     Route::post('/logout', [AdminController::class, 'logout']);
 });
-
+Route::post('/resetPaswordAdmin/{id}', [AdminController::class, 'resetPassword']);
+Route::put('/resetPaswordAdmin/{id}', [AdminController::class, 'update']);
 // -------------------student--------------------
 Route::post('/loginStudent', [StudentController::class, 'login']);
 Route::get('/studentCompare', [StudentController::class, 'index']);

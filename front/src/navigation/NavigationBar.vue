@@ -66,7 +66,7 @@ i {
   margin: 10px;
 }
 .fs {
-  font-size: 25px;
+  font-size: 20px;
 }
 .bg-h{
   height: 30vh;

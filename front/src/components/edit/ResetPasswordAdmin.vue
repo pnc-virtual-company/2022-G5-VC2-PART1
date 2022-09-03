@@ -1,7 +1,7 @@
 <template>
+  <v-row class="p-4">
     <v-btn
-    style=" background:#0073ff; color:white;"
-    
+      color="primary"
       dark
       @click.stop="dialog = true"
       @click="onModalPopUp()"
@@ -10,14 +10,28 @@
     </v-btn>
 
     <v-dialog v-model="dialog" max-width="1000">
-      <v-card width="250">
+      <v-card width="500">
         <v-card-title class="text-h5 text-white bg-head-change-password">
-          New Password
+          Reset Password
         </v-card-title>
         <form @submit.prevent="resetPassword" class="m-3">
-          <div>
+          <div class="pnclogo mb-3">
+            <v-img :src="require('@/assets/reset.png')" class="pnclo"></v-img>
+          </div>
+        <div>
             <input
               class="form-control"
+              type="password"
+              placeholder="Old Password"
+              v-model="oldPassword"
+            />
+            <span v-if="isPasswordOldNotMatch" class="text-red text-center"
+              ><i class="fa-solid fa-circle-xmark"></i> Old Password is not match !!</span
+            >
+          </div>
+          <div>
+            <input
+              class="form-control mt-3"
               type="password"
               placeholder="New Password"
               v-model="newPassword"
@@ -35,18 +49,18 @@
             >
           </div>
           <hr />
-          <div class="d-flex justify-center bg-indigo mt-3 rounded">
+          <div class="d-flex justify-center bg-primary mt-3 rounded">
             <div>
-              <button color="white darken-1">Reset Password</button>
+              <button color="white">Reset Password</button>
             </div>
           </div>
         </form>
       </v-card>
     </v-dialog>
+  </v-row>
 </template>
 <script>
 import axios from "../../axios-http";
-import swal from 'sweetalert'
 export default {
   data() {
     return {
@@ -60,6 +74,8 @@ export default {
       newPassword: null,
       confirmPassword: null,
       isNotMatch: false,
+      isPasswordOldNotMatch:false,
+      oldPassword:'',
     };
   },
   methods: {
@@ -69,30 +85,30 @@ export default {
     resetPassword() {
       if (this.newPassword != null && this.confirmPassword != null) {
         if (this.newPassword == this.confirmPassword) {
-          axios.put(
-            "/resetPassword/" + this.adminID,
-            { password: this.newPassword },
-            this.token
-          );
-          this.dialog = false;
-          swal({
-            position: "center",
-            icon: "success",
-            title: "Reset successfull!!",
-            showConfirmButton: false,
-            timer: 1500,
+          axios.post(
+            "/resetPaswordAdmin/" + this.adminID,
+            { password: this.oldPassword, new_password: this.newPassword},
+            
+          ).then((response) => {
+            if(response.data.sms == "Password updated!"){
+              axios.put("/resetPaswordAdmin/"+this.adminID,
+              {password:this.newPassword})
+            }
+            else{
+              this.isPasswordOldNotMatch = true;
+               this.dialog = true;
+            }
           });
+          this.dialog = false;
         } else {
           this.isNotMatch = true;
           this.newPassword = "";
+          this.dialog = true;
           this.confirmPassword = "";
         }
       }
     },
   },
-  mounted(){
-   
-  }
 };
 </script>
 <style scoped>
@@ -104,6 +120,13 @@ button {
   padding: 10px;
 }
 .bg-head-change-password {
-  background: rgba(19, 129, 255, 0.644);
+  background: rgb(101, 69, 215);
+}
+.pnclo { 
+  width: 150px;
+  margin-left: 160px;
+}
+v-img {
+  width: 90px;
 }
 </style>

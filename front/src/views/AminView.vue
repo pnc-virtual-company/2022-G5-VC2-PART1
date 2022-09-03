@@ -107,10 +107,6 @@ export default {
         this.adiminAccount = res.data;
       });
     },
-    sendPending() {
-      this.pendingName = "pending";
-      this.getAdminAccount()
-    },
     onLogOut() {
       localStorage.removeItem("user_id");
       localStorage.removeItem("admin_token");
@@ -137,6 +133,7 @@ export default {
   mounted() {
     this.getData();
     this.getAdminAccount();
+   
   },
 };
 </script>

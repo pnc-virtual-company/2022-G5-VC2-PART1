@@ -23,7 +23,6 @@ const routes = [
         path: '/listStudent',
         name: 'list',
         component: listStudent,
-
         meta:{
           requiresAuth:true,
           isAdmin:true,
@@ -35,6 +34,7 @@ const routes = [
         path: '/checkList',
         name: 'check',
         component: CheckListStudent,
+        props:true,
         meta:{
           requiresAuth:true,
           isAdmin:true,
@@ -110,6 +110,7 @@ router.beforeEach((to,from,next)=>{
         next('/')
       }else{
         if(to.path == "/"){
+
             next('/listStudent')
         }else{
           next()
@@ -129,6 +130,7 @@ router.beforeEach((to,from,next)=>{
 
       }
     }
+  
   }
   next()
 })

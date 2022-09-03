@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-5">
+  <div class="container mt-5" >
     <div class="main-body">
       <div class="row gutters-sm">
         <div class="col-md-4 mb-3">
@@ -7,7 +7,7 @@
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
                 <div class="account p-1 mt-5">
-                  <h3>Personal Data</h3>
+               
                    <img  class="account_image"
                    :src="studentData.profile_image!=null?studentData.profile_image:avataImage"
                     alt="" >
@@ -42,46 +42,46 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Full Name:</h6>
+                  <h6 class="mb-0"><strong>Full Name:</strong></h6>
                 </div>
                 <div class="col-sm-9 text-primary">
-                  {{ studentData.first_name }} {{ studentData.last_name }}
+                 <strong> {{ studentData.first_name }} {{ studentData.last_name }}</strong>
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-sm-3  ">
+                  <h6 class="mb-0 mr-5"><strong>Email:</strong></h6>
+                </div>
+                <div class="col-sm-9 text-primary">
+                  <strong>{{ studentData.email }}</strong> 
                 </div>
               </div>
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0 mr-5">Email:</h6>
+                  <h6 class="mb-0"><strong>Sex:</strong></h6>
                 </div>
                 <div class="col-sm-9 text-primary">
-                  {{ studentData.email }}
+                  <strong>{{ studentData.gender }}</strong>
                 </div>
               </div>
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Sex:</h6>
+                  <h6 class="mb-0"><strong>Batch:</strong></h6>
                 </div>
                 <div class="col-sm-9 text-primary">
-                  {{ studentData.gender }}
+                  <strong>{{ studentData.batch }}</strong>
                 </div>
               </div>
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Batch:</h6>
+                  <h6 class="mb-0"><strong>Phone:</strong></h6>
                 </div>
                 <div class="col-sm-9 text-primary">
-                  {{ studentData.batch }}
-                </div>
-              </div>
-              <hr />
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Phone:</h6>
-                </div>
-                <div class="col-sm-9 text-primary">
-                  {{ studentData.phone }}
+                  <strong>{{ studentData.phone }}</strong>
                 </div>
               </div>
 
@@ -191,6 +191,6 @@ export default {
   display: inline-block;
   width: 150px;
   height: 150px;
-  object-fit: cover;
+  object-fit: fill;
 }
 </style>

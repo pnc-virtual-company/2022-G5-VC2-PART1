@@ -3,9 +3,9 @@
     <template #header> </template>
   </LIstViewVue>
   <v-container class="grey lighten-5 ">
-    <v-row class="d-flex justify-content-evenly">
+    <v-row class="d-flex justify-content-evenly " >
       <v-col v-for="value in studentStatus" :key="value" xs="12" sm="12" md="4">
-        <v-card class="w-card w-75 m-auto">
+        <v-card class="w-card w-75 m-auto " style="box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;">
           <div class="d-flex  bg-top">
             <div :class="value.background">
               <img :src="value.img" width="70" alt="" />
@@ -126,7 +126,7 @@ strong:hover {
   transition: 0.5s;
 }
 .bg-top{
-  border-left:  5px solid purple;
+  border-left:  5px solid #0073ff;
 }
 .bg{
   background: rgb(0, 198, 0);

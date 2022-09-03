@@ -88,7 +88,7 @@ export default {
     },
     countStudent(){
       let count=null
-      this.studentName.forEach(student => {
+      this.studentName.forEach((student) => {
         if(student){
           count++
         }

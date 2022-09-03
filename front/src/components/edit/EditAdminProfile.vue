@@ -50,11 +50,12 @@
             </v-row>
           </v-container>
         </v-card-text>
-        <v-card-actions class=" d-flex justify-center" >
-            <v-btn color="white darken-1 darken-1 bg-indigo " text @click="onEditProfileAdmin()">
+          <div class="bg-button w-80 m-4  text-center p-2 text-white">
+            <button text @click="onEditProfileAdmin()">
               Save
-            </v-btn>
-        </v-card-actions>
+            </button>
+
+          </div>
       </v-card>
     </v-dialog>
 
@@ -131,5 +132,10 @@ export default {
     background: rgba(19, 129, 255, 0.644);
     color: azure;
   }
+  .bg-button{
+    background: rgb(101, 69, 215);
+    border-radius: 5px;
+  }
+
   
 </style>

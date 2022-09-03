@@ -219,9 +219,42 @@
       </div>
     </v-card>
   </div>
+<div class="ma-auto">
+          <v-row class="d-flex justify-content-center">
+            <v-dialog
+              v-model="dialogDelete"
+              class="w-dialog-confirmed mlp4 m-auto"
+            >
+              <v-card>
+                <v-card-title class="text-h5 color-confirmed">
+                  Confirmed
+                </v-card-title>
 
+                <v-card-text class="text-red">
+                  Are you sure want to delete student?
+                </v-card-text>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+
+                  <v-btn
+                    color="green darken-1"
+                    text
+                    @click="dialogDelete = false"
+                  >
+                    Cancel
+                  </v-btn>
+                  <v-btn @click="onDeleteStudent()">
+                    <p>DELETE</p>
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-row>
+        </div>
 </template>
 <script>
+  import Swal from 'sweetalert2'
 import CardAdminAllow from "./status/CardAdminAllow.vue";
 import AdminStatusVue from "./AdminStatus.vue";
 import axios from "../axios-http";
@@ -242,6 +275,7 @@ export default {
       isApproved: false,
       isRejected: false,
       isPending: true,
+    
     };
   },
 
@@ -266,6 +300,7 @@ export default {
     },
     getStatusFromAdmin(status) {
       if (status == "Rejected") {
+        
         localStorage.setItem("sendPending", false);
         this.isApproved = false;
         this.isRejected = true;
@@ -284,8 +319,19 @@ export default {
     },
     changeStatus(statusLeave, index) {
       if (statusLeave == "rejected") {
-         this.listPendingLeave.splice(statusLeave,1)
-        axios.put("/leaves/" + index, { status: statusLeave },{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}});
+        Swal.fire({
+          title: 'Are you sure you want to reject?',
+          showCancelButton: true,
+          confirmButtonText: 'Rejected',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire('Rejected is successful !', '', 'success')
+            this.listPendingLeave.splice(statusLeave,1)
+            axios.put("/leaves/" + index, { status: statusLeave },{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}});
+          } else if (result.isDenied) {
+            Swal.fire('Changes are not saved', '', 'info')
+          }
+        })
       } else {
         this.listPendingLeave.splice(statusLeave,1)
         axios.put("/leaves/" + index, { status: statusLeave },{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}});
@@ -293,10 +339,10 @@ export default {
     },
     getPending() {
       if (localStorage.getItem("sendPending")) {
-     
         this.isPending = true;
         this.isApproved = false;
         this.isRejected = false;
+       
       }
     },
   },
@@ -306,6 +352,9 @@ export default {
     this.getPending();
   },
   computed: {},
+  watch:{
+    
+  },
 };
 </script>
 
