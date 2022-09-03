@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Auth\Middleware\Authenticate;
 
+use Mail;
+use App\Mail\registerMail;
+
 
 class StudentController extends Controller
 {
@@ -148,5 +151,19 @@ class StudentController extends Controller
         $student->phone = $request->phone;
         $student->save();
         return response()->json(['sms' => 'successful']);
+    }
+
+    // Send mail when admin create student
+    public function smlsEmail(Request $request)
+    {
+        $details = [
+            'title' => 'Dear Student',
+            'body' => 'Here is your account of 
+            Student Management Leave System and password is 12345678',
+        ];
+         
+        Mail::to($request->email)->send(new registerMail($details));
+           
+        return("Email is sent successfully.");
     }
 }

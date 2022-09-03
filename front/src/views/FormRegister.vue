@@ -223,6 +223,15 @@ export default {
       this.batch = "";
       this.gender = "";
     },
+    smlsMail(){
+      axios.post("/account-smls",
+      {
+        'email':this.email,
+      })
+      .then((response)=>{
+        console.log(response.data);
+      })
+    },
     addStudent() {
       if (this.isRequired) {
         if (this.gender == "female") {
@@ -259,6 +268,7 @@ export default {
               });
               this.onEmitData()
             });
+              this.smlsMail();
             this.clearInfo();
             this.onEmitData()
         }

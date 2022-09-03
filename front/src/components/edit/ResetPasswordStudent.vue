@@ -49,9 +49,9 @@
             >
           </div>
           <hr />
-          <div class="d-flex justify-center bg-primary mt-3 rounded">
+          <div class="d-flex justify-center mt-3 text-white ">
             <div>
-              <button color="white">Reset Password</button>
+              <button class="rounded">Reset Password</button>
             </div>
           </div>
         </form>
@@ -118,9 +118,10 @@ button {
   list-style: none;
   cursor: pointer;
   padding: 10px;
+  background: #0073ff;
 }
 .bg-head-change-password {
-  background: rgb(101, 69, 215);
+  background: #0073ff;
 }
 .pnclo {
   width: 150px;

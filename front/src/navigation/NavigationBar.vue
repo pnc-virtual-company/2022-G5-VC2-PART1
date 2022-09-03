@@ -15,7 +15,7 @@
     </div>
     <v-app-bar app>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-app-bar-title class="fw-bold fs"
+      <v-app-bar-title class="fw-bold fs "
         >Student Management System</v-app-bar-title
       >
       <v-spacer></v-spacer>
@@ -67,6 +67,7 @@ i {
 }
 .fs {
   font-size: 25px;
+  color:#0073ff;
 }
 .bg-h{
   height: 30vh;

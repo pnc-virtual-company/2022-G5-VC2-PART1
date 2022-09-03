@@ -28,6 +28,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Send Email
 Route::get('/send-mail', [MailController::class, 'sendEmail']);
 
+// Send Email When Admin Create Student To Student
+Route::post('/account-smls', [StudentController::class,'smlsEmail']);
+
+
 // -------------------admin--------------------
 Route::post('/create', [AdminController::class, 'store']);
 Route::post('/login', [AdminController::class, 'login']);
