@@ -1,6 +1,6 @@
 <template>
   <div class="container d-flex justify-content-center">
-    <div class="pnclogo mt-6">
+    <div class="pnclogo mt-2">
       <v-img :src="require('@/assets/logo.jpg')" class="pnclo"></v-img>
       <h2>SMLS</h2>
     </div>
@@ -10,21 +10,31 @@
       </div>
       <div class="inp">
         <input
+        class="border"
           type="text"
           id="email"
           name="Email"
           placeholder="Email"
           v-model="email"
         />
-        <input
-          type="password"
-          id="myInput"
-          name="Password"
-          placeholder="Password"
-          v-model="password"
-        />
-        <input type="checkbox" @click="myFunction()" class="showpassword" />Show
-        Password
+        <div class="d-flex ">
+          <input 
+          class="border"
+            type="password"
+            id="myInput"
+            name="Password"
+            placeholder="Password"
+            v-model="password"
+          />
+          
+          <span class="mt-2 mb-2 border-eye d-flex flex-column justify-content-center" @click="myFunction()">
+            <i
+              class="fas"
+              :class="{ 'fa-eye-slash': showPassword, 'fa-eye': !showPassword }"
+            ></i
+          ></span>
+
+        </div>
         <button class="mt-3">login</button>
       </div>
     </form>
@@ -51,6 +61,7 @@ export default {
       isTeacher: false,
       studentIndex: null,
       token: null,
+      showPassword:false
     };
   },
   methods: {
@@ -137,8 +148,10 @@ export default {
       let x = document.getElementById("myInput");
       if (x.type === "password") {
         x.type = "text";
+        this.showPassword =true;
       } else {
         x.type = "password";
+        this.showPassword =false ;
       }
     },
     getStudents() {
@@ -178,6 +191,9 @@ export default {
 </script>
 
 <style scoped>
+*{
+  background-image: url();
+}
 .pnclo {
   width: 150px;
 }
@@ -203,7 +219,7 @@ select {
   padding: 10px 20px;
   margin: 8px 0;
   display: inline-block;
-  border: 1px solid rgb(235, 228, 228);
+
   border-radius: 5px;
   box-sizing: border-box;
   outline: none;
@@ -238,5 +254,12 @@ button:hover {
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   margin-top: 180px;
 }
-
+.border-eye{
+  border: solid 1px rgb(161, 161, 161);
+  border-radius:0px 5px 5px 0px;
+}
+.border-left{
+  
+  border-radius:5px 0px 5px 0px;
+}
 </style>

@@ -18,24 +18,29 @@
           <div class="pnclogo mb-3">
             <v-img :src="require('@/assets/reset.png')" class="pnclo"></v-img>
           </div>
-        <div>
-            <input
+          <div>
+           
+            <input id="myInput"
               class="form-control"
               type="password"
               placeholder="Old Password"
               v-model="oldPassword"
             />
+          <Hide-Show />
             <span v-if="isPasswordOldNotMatch" class="text-red text-center"
-              ><i class="fa-solid fa-circle-xmark"></i> Old Password is not match !!</span
+              ><i class="fa-solid fa-circle-xmark"></i> Old Password is not
+              match !!</span
             >
           </div>
+          
           <div>
-            <input
+            <input  id="myInput"
               class="form-control mt-3"
               type="password"
               placeholder="New Password"
               v-model="newPassword"
             />
+            <Hide-Show/>
           </div>
           <div>
             <input
@@ -49,7 +54,7 @@
             >
           </div>
           <hr />
-          <div class="d-flex justify-center mt-3 text-white ">
+          <div class="d-flex justify-center mt-3 text-white">
             <div>
               <button class="rounded">Reset Password</button>
             </div>
@@ -64,6 +69,8 @@ import axios from "../../axios-http";
 export default {
   data() {
     return {
+      showPassword:false,
+      password:false,
       dialog: false,
       token: {
         headers: {
@@ -74,31 +81,37 @@ export default {
       newPassword: null,
       confirmPassword: null,
       isNotMatch: false,
-      isPasswordOldNotMatch:false,
-      oldPassword:'',
+      isPasswordOldNotMatch: false,
+      oldPassword: "",
     };
   },
   methods: {
+    // onShowPassword(password) {
+    //   if()
+    //   this.showPassword=!this.showPassword
+    // },
     onModalPopUp() {
       this.dialog = true;
     },
     resetPassword() {
       if (this.newPassword != null && this.confirmPassword != null) {
         if (this.newPassword == this.confirmPassword) {
-          axios.post(
-            "/reset-password-student/" + this.studentID,
-            { password: this.oldPassword, new_password: this.newPassword},
-            this.token
-          ).then((response) => {
-            if(response.data.sms == "Password updated!"){
-              axios.put("/reset-password-student/"+this.studentID,
-              {password:this.newPassword})
-            }
-            else{
-              this.isPasswordOldNotMatch = true;
-               this.dialog = true;
-            }
-          });
+          axios
+            .post(
+              "/reset-password-student/" + this.studentID,
+              { password: this.oldPassword, new_password: this.newPassword },
+              this.token
+            )
+            .then((response) => {
+              if (response.data.sms == "Password updated!") {
+                axios.put("/reset-password-student/" + this.studentID, {
+                  password: this.newPassword,
+                });
+              } else {
+                this.isPasswordOldNotMatch = true;
+                this.dialog = true;
+              }
+            });
           this.dialog = false;
         } else {
           this.isNotMatch = true;
@@ -108,7 +121,13 @@ export default {
         }
       }
     },
+    
   },
+  computed:{
+    onButtonShow(){
+        return this.password
+    }
+  }
 };
 </script>
 <style scoped>
