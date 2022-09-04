@@ -33,6 +33,7 @@
 
 <script>
 import axios from "../axios-http.js";
+import Swal from "sweetalert2"
 export default {
   components: {},
   data() {
@@ -59,31 +60,77 @@ export default {
         this.checkStudent();
         if (this.admin[0].email == this.email) {
           axios.post("/login", loginInfo).then((response) => {
-            if (response.data.sms != "invalid") {
+            console.log(response.data.sms)
+            if(response.data.sms == "Invalid Password"){
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Invalid Password',
+                showConfirmButton: false,
+                timer: 1000
+              })
+            }else{
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Login Successfully',
+                showConfirmButton: false,
+                timer: 1000
+              })
               this.$router.push("/listStudent");
               localStorage.setItem("user_id", this.admin[0].id);
               localStorage.setItem("admin_token", response.data.token);
-            } else {
-              alert("Password is invalid");
             }
           });
         } else if (this.isStudent) {
           axios.post("/loginStudent", loginInfo).then((response) => {
             if(response.data.sms == "Invalid Password"){
-              alert("Invalid Password");
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Invalid Password',
+                showConfirmButton: false,
+                timer: 1000
+              })
             }else if(response.data.sms == "Invalid Email"){
-              alert("Invalid Email")
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Invalid Email',
+                showConfirmButton: false,
+                timer: 1000
+              })
             }else{
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Login Successfully',
+                showConfirmButton: false,
+                timer: 1000
+              })
               console.log(response,"token student");
               localStorage.setItem("student_id",this.studentId.id);
               localStorage.setItem("student_token", response.data.token);
               this.$router.push("/dashboard");
             }
-             
           });
+        }else{
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Invalid Email',
+            showConfirmButton: false,
+            timer: 1000
+          })
         }
       } else {
-        alert("Fill in everything");
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Need to fill in all required fields',
+          showConfirmButton: false,
+          timer: 1000
+        })
       }
     },
     myFunction() {

@@ -119,6 +119,9 @@
               <p class="text-danger" v-if="checkExist[0]">
                 This email already exist.
               </p>
+              <p class="text-danger" v-if="!checkPasserelles">
+                Need to be passerelles mail.
+              </p>
             </div>
             <div class="col-md-6 mb-4 pb-2">
               <div class="form-outline">
@@ -127,12 +130,14 @@
                     <span class="text-white leading">+855</span>
                   </div>
                   <input
-                    type="tel"
+                    type="text"
                     id="phoneNumber"
                     class="form-control number"
                     placeholder="Phone Number"
                     v-model="phoneNumber"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                     required
+                    maxlength="9"
                   />
                 </div>
                 <p class="text-danger" v-if="checkExist[1]">
@@ -195,6 +200,7 @@ export default {
       allRequired: false,
       alreadyExistMail: false,
       alreadyExistPhone: false,
+      isPasserelles:false,
       token: {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
@@ -214,6 +220,14 @@ export default {
         .then((res) => {
           this.$emit('sendStudents',res.data)
         });
+    },
+    checkMail(){
+      let index = this.email.indexOf('@');
+      let endEmail = this.email.substring(index,this.email.length)
+      if(endEmail=="@student.passerellesnumeriques.org"){
+        this.isPasserelles=true
+      }
+      return this.isPasserelles;
     },
     clearInfo() {
       this.firstName = "";
@@ -324,6 +338,9 @@ export default {
     checkAll() {
       return this.checkRequired();
     },
+    checkPasserelles(){
+      return this.checkMail();
+    }
   },
 };
 </script>
