@@ -31,6 +31,12 @@ Route::get('/send-mail', [MailController::class, 'sendEmail']);
 // Send Email When Admin Create Student To Student
 Route::post('/account-smls', [StudentController::class,'smlsEmail']);
 
+// Send Email Reject to student
+Route::post('/reject-mail/{id}', [StudentController::class,'rejectEMail']);
+
+// Send Email Reject to student 
+Route::post('/approved-mail/{id}', [StudentController::class,'approvedMail']);
+
 
 // -------------------admin--------------------
 Route::post('/create', [AdminController::class, 'store']);

@@ -172,14 +172,14 @@
                   </a>
                   <button
                     class="bg-danger btn text-white"
-                    @click="changeStatus('rejected', value.id)"
+                    @click="changeStatus('rejected', value.id,value.student_id)"
                   >
                     Rejected
                   </button>
 
                   <button
                     class="bg-success btn"
-                    @click="changeStatus('approved', value.id)"
+                    @click="changeStatus('approved', value.id,value.student_id)"
                   >
                     Approved
                   </button>
@@ -251,10 +251,7 @@
               </v-card>
             </v-dialog>
           </v-row>
-        </div>
-        {{getPend}}
-        {{isGet}}
-        <button @click="get">get</button>
+        </div>      
 </template>
 <script>
   import Swal from 'sweetalert2'
@@ -285,10 +282,6 @@ export default {
   },
 
   methods: {
-    get(){
-        this.isGet=localStorage.getItem("sendPending")
-        console.log(localStorage);
-    },
     onGetAllStudent() {
       axios.get("/students",{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}}).then((res) => {
         this.listStudent = res.data;
@@ -321,7 +314,26 @@ export default {
         this.$router.push('/listStudent')
       }
     },
-    changeStatus(statusLeave, index) {
+    rejectEmail(id){
+      let body =  {
+        email: this.email,
+      }
+      axios.post('/reject-mail/'+ id, body)
+      .then((response) =>{
+        console.log(response.data)
+      })
+    },
+    approvedEmail(id)
+    {
+      let body = {
+        email: this.email,
+      }
+      axios.post('/approved-mail/'+ id, body)
+      .then((response) =>{
+        console.log(response.data);
+      })
+    },
+    changeStatus(statusLeave, index,studentId) {
       if (statusLeave == "rejected") {
         Swal.fire({
           title: 'Are you sure you want to reject?',
@@ -332,6 +344,7 @@ export default {
             Swal.fire('Rejected is successful !', '', 'success')
             this.listPendingLeave.splice(statusLeave,1)
             axios.put("/leaves/" + index, { status: statusLeave },{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}});
+            this.rejectEmail(studentId);
           } else if (result.isDenied) {
             Swal.fire('Changes are not saved', '', 'info')
           }
@@ -339,6 +352,7 @@ export default {
       } else {
         this.listPendingLeave.splice(statusLeave,1)
         axios.put("/leaves/" + index, { status: statusLeave },{headers:{ Authorization: `Bearer ${localStorage.getItem('admin_token')}`}});
+        this. approvedEmail(studentId)
       }
     },
     getPending() {

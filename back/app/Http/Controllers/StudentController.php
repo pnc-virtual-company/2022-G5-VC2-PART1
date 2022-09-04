@@ -12,6 +12,8 @@ use Illuminate\Auth\Middleware\Authenticate;
 
 use Mail;
 use App\Mail\registerMail;
+use App\Mail\rejectMail;
+use App\Mail\approveMail;
 
 
 class StudentController extends Controller
@@ -166,5 +168,35 @@ class StudentController extends Controller
         Mail::to($request->email)->send(new registerMail($details));
            
         return("Email is sent successfully.");
+    }
+
+    
+    // Send Email when Admin reject
+    public function rejectEMail(Request $request ,$id)
+    {
+
+        $student = student::findOrFail($id);
+
+        $reject = [
+            'title' => 'Dear student ,',
+            'body' =>'I am do not allow you ',
+        ];
+
+        Mail::to($student)->send(new rejectMail($reject));
+
+        return("Email is sent successfully.");
+    }
+    public function approvedMail(Request $request , $id)
+    {
+        $student = student::findOrFail($id);
+
+        $approve = [
+            'title' => 'Dear Student ,',
+            'body' => 'I am allowed you !',
+        ];
+
+        Mail::to($student)->send(new approveMail($approve));
+        
+        return ("Email is sent successfully !!");
     }
 }
