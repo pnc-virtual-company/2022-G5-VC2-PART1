@@ -55,7 +55,7 @@ Route::get('/studentCompare', [StudentController::class, 'index']);
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::put('/updatePhoto/{id}', [StudentController::class, 'updatePhoto']);
     Route::apiResource('/students', StudentController::class);
-    Route::apiResource("leaves", LeaveController::class);
+    Route::apiResource("/leaves", LeaveController::class);
     Route::get("/getAdminId", [AdminController::class, 'index']);
     Route::get("/getOneStudent/{id}", [StudentController::class, 'getOneStudent']);
     Route::post('/logOutStudent', [StudentController::class, 'signOut']);

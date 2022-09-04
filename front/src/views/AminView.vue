@@ -178,7 +178,7 @@ img {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  object-fit: fill;
+  object-fit: cover;
 
 
 }

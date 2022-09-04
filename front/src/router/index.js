@@ -8,11 +8,16 @@ import studentProfile from "../components/StudentProfile.vue"
 import adminProfile from "../components/AdminProfile.vue"
 import StudentView from "../views/StudentView.vue"
 import AdminView from "../views/AminView.vue"
+import NotFoundPage from "../components/PageNotFound.vue"
 const routes = [
   {
     path: '/',
     name: 'login',
     component: formLogin,
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    component: NotFoundPage,
   },
   {
     path: '/admin',

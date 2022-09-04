@@ -58,13 +58,18 @@ export default {
       },
     ],
     studentLists: [],
+      token: {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("student_token")}`,
+        },
+      },
   }),
   methods: {
     checkStatus(status) {
       this.$emit("sendStatus", status);
     },
     fetchDataStudent() {
-      axios.get("/leaves").then((res) => {
+      axios.get("/leaves",this.token).then((res) => {
         this.studentLists = res.data;
       });
     },

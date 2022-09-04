@@ -255,7 +255,7 @@ export default {
         } else {
           this.profile = "https://cdn0.iconfinder.com/data/icons/avatars-3/512/avatar_basketball_guy-512.png";
         }
-        if (!this.checkExist[0] && !this.checkExist[1]) {
+        if (!this.checkExist[0] && !this.checkExist[1] && this.isPasserelles) {
           axios
             .post(
               "/studentsInAdmin/",
