@@ -7,19 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class registerMail extends Mailable
+class rejectMail extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $details;
+     public $reject;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($details)
+    public function __construct($reject)
     {
-        $this->details = $details;
+        $this->reject = $reject;
     }
 
     /**
@@ -29,7 +28,7 @@ class registerMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('SLMS Account')
-                    ->view('emails.smsAccoutMail');
+        return $this->subject('The result of request permission')
+                    ->view('emails.rejectstudentMail');
     }
 }
