@@ -178,7 +178,7 @@ class StudentController extends Controller
         $student = student::findOrFail($id);
 
         $reject = [
-            'title' => 'Dear student ',
+            'title' => 'Dear student ,',
             'body' =>'I am do not allow you ',
         ];
 
@@ -191,7 +191,7 @@ class StudentController extends Controller
         $student = student::findOrFail($id);
 
         $approve = [
-            'title' => 'Dear Student',
+            'title' => 'Dear Student ,',
             'body' => 'I am allowed you !',
         ];
 
