@@ -108,10 +108,13 @@ class AdminController extends Controller
 
     // Login Admin
     public function login(Request $request) {
-        $user = Admin::where('email',$request->email)->first();
-        if (!$user || !Hash::check ($request->password,$user->password)) {
-            return response()->json(['sms'=>'invalid']);
-        } 
+        $user = Admin::where('email', $request->email)->first();
+        if (!$user) {
+            return response()->json(['sms' => "Invalid Email"]);
+        }
+        if (!Hash::check($request->password, $user->password)) {
+            return response()->json(['sms' => "Invalid Password"]);
+        }
         $token = $user->createToken('token_admin')->plainTextToken;
         return response()->json(['sms'=>'Successfully','token'=>$token]);
     }

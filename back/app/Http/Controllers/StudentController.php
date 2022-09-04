@@ -117,7 +117,8 @@ class StudentController extends Controller
         $student = student::where('email', $request->email)->first();
         if (!$student) {
             return response()->json(['sms' => "Invalid Email"]);
-        } else if (!Hash::check($request->password, $student->password)) {
+        }
+        if (!Hash::check($request->password, $student->password)) {
             return response()->json(['sms' => "Invalid Password"]);
         }
         $token = $student->createToken('my-token')->plainTextToken;
